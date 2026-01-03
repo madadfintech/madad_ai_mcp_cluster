@@ -1,0 +1,920 @@
+
+
+======================================================================
+Starting Agent Host at 2025-09-29 16:46:06
+======================================================================
+
+Started server process [1022986]
+Waiting for application startup.
+[2m2025-09-29T11:16:06.707009Z[0m [[32m[1minfo     [0m] [1mStarting Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+[2m2025-09-29T11:16:06.733628Z[0m [[32m[1minfo     [0m] [1mInitializing MCP servers      [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T11:16:06.733780Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8001[0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T11:16:06.733869Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8001 (attempt 1)[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+HTTP Request: GET http://localhost:8001/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T11:16:06.760220Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8001, tools: 7[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+[2m2025-09-29T11:16:06.760397Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mquery_server[0m [36mtools_count[0m=[35m7[0m
+[2m2025-09-29T11:16:06.760477Z[0m [[32m[1minfo     [0m] [1m✓ Connected to MCP server     [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T11:16:06.760541Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8002[0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T11:16:06.760614Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8002 (attempt 1)[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+[2m2025-09-29T11:16:06.780981Z[0m [[33m[1mwarning  [0m] [1mConnection attempt 1 failed: All connection attempts failed[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+[2m2025-09-29T11:16:07.781348Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8002 (attempt 2)[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+[2m2025-09-29T11:16:07.798784Z[0m [[33m[1mwarning  [0m] [1mConnection attempt 2 failed: All connection attempts failed[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+[2m2025-09-29T11:16:09.798995Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8002 (attempt 3)[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+[2m2025-09-29T11:16:09.816778Z[0m [[33m[1mwarning  [0m] [1mConnection attempt 3 failed: All connection attempts failed[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+[2m2025-09-29T11:16:09.830115Z[0m [[31m[1merror    [0m] [1m✗ Exception connecting to MCP server[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Failed to connect to MCP server at http://localhost:8002'[0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T11:16:09.830274Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8003[0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T11:16:09.830350Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8003 (attempt 1)[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+HTTP Request: GET http://localhost:8003/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T11:16:09.852572Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8003, tools: 6[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+[2m2025-09-29T11:16:09.852711Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m [36mtools_count[0m=[35m6[0m
+[2m2025-09-29T11:16:09.852782Z[0m [[32m[1minfo     [0m] [1m✓ Connected to MCP server     [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T11:16:09.852826Z[0m [[32m[1minfo     [0m] [1mMCP server initialization completed[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mresults[0m=[35m{'query_server': True, 'transactional_server': False, 'external_api_server': True}[0m
+[2m2025-09-29T11:16:09.852863Z[0m [[32m[1minfo     [0m] [1mAgent Host initialized successfully[0m [[0m[1m[34m__main__[0m][0m [36minitialization_results[0m=[35m{'query_server': True, 'transactional_server': False, 'external_api_server': True}[0m
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+[2m2025-09-29T11:16:10.240694Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+[2m2025-09-29T11:16:10.240907Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+[2m2025-09-29T11:16:10.278156Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T11:16:10.278318Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.037636756896972656[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+127.0.0.1:40816 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+[2m2025-09-29T11:19:32.457846Z[0m [[32m[1minfo     [0m] [1mShutting down Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+Application shutdown complete.
+Finished server process [1022986]
+
+
+======================================================================
+Starting Agent Host at 2025-09-29 16:49:38
+======================================================================
+
+Started server process [1023425]
+Waiting for application startup.
+[2m2025-09-29T11:19:38.559143Z[0m [[32m[1minfo     [0m] [1mStarting Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+[2m2025-09-29T11:19:38.585968Z[0m [[32m[1minfo     [0m] [1mInitializing MCP servers      [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T11:19:38.586120Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8001[0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T11:19:38.586221Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8001 (attempt 1)[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+HTTP Request: GET http://localhost:8001/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T11:19:38.613005Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8001, tools: 7[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+[2m2025-09-29T11:19:38.613174Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mquery_server[0m [36mtools_count[0m=[35m7[0m
+[2m2025-09-29T11:19:38.613240Z[0m [[32m[1minfo     [0m] [1m✓ Connected to MCP server     [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T11:19:38.613288Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8002[0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T11:19:38.613362Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8002 (attempt 1)[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+HTTP Request: GET http://localhost:8002/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T11:19:38.636008Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8002, tools: 4[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+[2m2025-09-29T11:19:38.636254Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mtransactional_server[0m [36mtools_count[0m=[35m4[0m
+[2m2025-09-29T11:19:38.636362Z[0m [[32m[1minfo     [0m] [1m✓ Connected to MCP server     [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T11:19:38.636432Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8003[0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T11:19:38.636530Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8003 (attempt 1)[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+HTTP Request: GET http://localhost:8003/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T11:19:38.659386Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8003, tools: 6[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+[2m2025-09-29T11:19:38.659543Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m [36mtools_count[0m=[35m6[0m
+[2m2025-09-29T11:19:38.659609Z[0m [[32m[1minfo     [0m] [1m✓ Connected to MCP server     [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T11:19:38.659656Z[0m [[32m[1minfo     [0m] [1mMCP server initialization completed[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mresults[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T11:19:38.659705Z[0m [[32m[1minfo     [0m] [1mAgent Host initialized successfully[0m [[0m[1m[34m__main__[0m][0m [36minitialization_results[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+[2m2025-09-29T11:19:39.089247Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+[2m2025-09-29T11:19:39.089488Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+[2m2025-09-29T11:19:39.147441Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T11:19:39.147616Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.058380126953125[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+127.0.0.1:51342 - "GET /health HTTP/1.1" 200
+[2m2025-09-29T11:24:15.271829Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/status[0m
+[2m2025-09-29T11:24:15.272395Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+[2m2025-09-29T11:24:15.343447Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T11:24:15.343689Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.07189011573791504[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/status[0m
+127.0.0.1:44478 - "GET /status HTTP/1.1" 200
+[2m2025-09-29T11:24:15.345420Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/tools[0m
+[2m2025-09-29T11:24:15.345983Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.0005726814270019531[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/tools[0m
+127.0.0.1:44478 - "GET /tools HTTP/1.1" 200
+[2m2025-09-29T11:24:15.347163Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T11:24:15.347681Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mquery[0m=[35m'Tell me about our company'[0m [36mrequest_id[0m=[35mreq_1_1759145055.347655[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:16.491152Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:19.394764Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:22.393878Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T11:24:22.394058Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'RetryError[<Future at 0x7a947ad933b0 state=finished raised BadRequestError>]'[0m [36mexecution_time_seconds[0m=[35m7.046263[0m [36mrequest_id[0m=[35mreq_1_1759145055.347655[0m
+[2m2025-09-29T11:24:22.394265Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m7.047101974487305[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:44478 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T11:24:23.396594Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T11:24:23.397231Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mquery[0m=[35m'Show me all users in the system'[0m [36mrequest_id[0m=[35mreq_2_1759145063.397207[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:24.970227Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:27.906212Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:30.310547Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T11:24:30.310722Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'RetryError[<Future at 0x7a947ad92210 state=finished raised BadRequestError>]'[0m [36mexecution_time_seconds[0m=[35m6.913395[0m [36mrequest_id[0m=[35mreq_2_1759145063.397207[0m
+[2m2025-09-29T11:24:30.310881Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m6.914323806762695[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:44478 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T11:24:31.313243Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T11:24:31.313769Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mquery[0m=[35m'Find electronics products under $1000'[0m [36mrequest_id[0m=[35mreq_3_1759145071.313745[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:32.780214Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:35.093305Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:38.076776Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T11:24:38.077105Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'RetryError[<Future at 0x7a947ad925a0 state=finished raised BadRequestError>]'[0m [36mexecution_time_seconds[0m=[35m6.763228[0m [36mrequest_id[0m=[35mreq_3_1759145071.313745[0m
+[2m2025-09-29T11:24:38.078279Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m6.764206886291504[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:44478 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T11:24:39.081219Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T11:24:39.081912Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mquery[0m=[35m"What's our system status?"[0m [36mrequest_id[0m=[35mreq_4_1759145079.081866[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:39.473278Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:41.847475Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:44.199675Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T11:24:44.199841Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'RetryError[<Future at 0x7a947afedac0 state=finished raised BadRequestError>]'[0m [36mexecution_time_seconds[0m=[35m5.117773[0m [36mrequest_id[0m=[35mreq_4_1759145079.081866[0m
+[2m2025-09-29T11:24:44.200006Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m5.118803024291992[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:44478 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T11:24:45.202472Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T11:24:45.202982Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mquery[0m=[35m'Create an order for user 1, product 2, quantity 3'[0m [36mrequest_id[0m=[35mreq_5_1759145085.202962[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:45.615462Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:47.985574Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:50.393834Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T11:24:50.393998Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'RetryError[<Future at 0x7a947adc7680 state=finished raised BadRequestError>]'[0m [36mexecution_time_seconds[0m=[35m5.190929[0m [36mrequest_id[0m=[35mreq_5_1759145085.202962[0m
+[2m2025-09-29T11:24:50.394165Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m5.191707611083984[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:44478 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T11:24:51.396965Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T11:24:51.397766Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mquery[0m=[35m"Add 50 units to product 1 inventory with reason 'restocking'"[0m [36mrequest_id[0m=[35mreq_6_1759145091.397718[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:52.850094Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:55.533037Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:24:59.199359Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T11:24:59.199587Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'RetryError[<Future at 0x7a947ad90110 state=finished raised BadRequestError>]'[0m [36mexecution_time_seconds[0m=[35m7.80168[0m [36mrequest_id[0m=[35mreq_6_1759145091.397718[0m
+[2m2025-09-29T11:24:59.199794Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m7.802905082702637[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:44478 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T11:25:00.202741Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T11:25:00.203325Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mquery[0m=[35m"Search the web for 'latest AI developments'"[0m [36mrequest_id[0m=[35mreq_7_1759145100.203301[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:25:00.633932Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:25:02.975298Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:25:05.341815Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T11:25:05.341992Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'RetryError[<Future at 0x7a9480ac7620 state=finished raised BadRequestError>]'[0m [36mexecution_time_seconds[0m=[35m5.13857[0m [36mrequest_id[0m=[35mreq_7_1759145100.203301[0m
+[2m2025-09-29T11:25:05.342207Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m5.139481782913208[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:44478 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T11:25:06.345277Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T11:25:06.346047Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mquery[0m=[35m"What's the weather like in San Francisco?"[0m [36mrequest_id[0m=[35mreq_8_1759145106.346023[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:25:06.983342Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:25:09.432876Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:25:11.899793Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T11:25:11.900044Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'RetryError[<Future at 0x7a947adf5040 state=finished raised BadRequestError>]'[0m [36mexecution_time_seconds[0m=[35m5.553896[0m [36mrequest_id[0m=[35mreq_8_1759145106.346023[0m
+[2m2025-09-29T11:25:11.900271Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m5.555038690567017[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:44478 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T11:25:12.902329Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T11:25:12.903096Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mquery[0m=[35m'Get our company information and list all users'[0m [36mrequest_id[0m=[35mreq_9_1759145112.903076[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:25:13.207644Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:25:15.514610Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:25:17.871887Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T11:25:17.872072Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'RetryError[<Future at 0x7a947adc6120 state=finished raised BadRequestError>]'[0m [36mexecution_time_seconds[0m=[35m4.968892[0m [36mrequest_id[0m=[35mreq_9_1759145112.903076[0m
+[2m2025-09-29T11:25:17.872267Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m4.969959497451782[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:44478 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T11:25:18.874613Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T11:25:18.875245Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mquery[0m=[35m'Give me a summary of our analytics data'[0m [36mrequest_id[0m=[35mreq_10_1759145118.875206[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:25:19.301822Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:25:21.728165Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:25:24.071705Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T11:25:24.071980Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'RetryError[<Future at 0x7a947adf7bc0 state=finished raised BadRequestError>]'[0m [36mexecution_time_seconds[0m=[35m5.19662[0m [36mrequest_id[0m=[35mreq_10_1759145118.875206[0m
+[2m2025-09-29T11:25:24.072249Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m5.197648048400879[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:44478 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T11:25:25.077528Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+[2m2025-09-29T11:25:25.078125Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+[2m2025-09-29T11:25:25.142387Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T11:25:25.142687Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.06518697738647461[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+127.0.0.1:44478 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+[2m2025-09-29T11:46:36.911347Z[0m [[32m[1minfo     [0m] [1mShutting down Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+Application shutdown complete.
+Finished server process [1023425]
+
+
+======================================================================
+Starting Agent Host at 2025-09-29 17:16:49
+======================================================================
+
+Started server process [1026781]
+Waiting for application startup.
+[2m2025-09-29T11:46:50.061898Z[0m [[32m[1minfo     [0m] [1mStarting Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+[2m2025-09-29T11:46:50.086977Z[0m [[32m[1minfo     [0m] [1mInitializing MCP servers      [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T11:46:50.087115Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8001[0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T11:46:50.087198Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8001 (attempt 1)[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+HTTP Request: GET http://localhost:8001/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T11:46:50.115622Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8001, tools: 7[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+[2m2025-09-29T11:46:50.115827Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mquery_server[0m [36mtools_count[0m=[35m7[0m
+[2m2025-09-29T11:46:50.115910Z[0m [[32m[1minfo     [0m] [1m✓ Connected to MCP server     [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T11:46:50.115960Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8002[0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T11:46:50.116046Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8002 (attempt 1)[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+HTTP Request: GET http://localhost:8002/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T11:46:50.137626Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8002, tools: 4[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+[2m2025-09-29T11:46:50.137787Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mtransactional_server[0m [36mtools_count[0m=[35m4[0m
+[2m2025-09-29T11:46:50.137849Z[0m [[32m[1minfo     [0m] [1m✓ Connected to MCP server     [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T11:46:50.137892Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8003[0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T11:46:50.137953Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8003 (attempt 1)[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+HTTP Request: GET http://localhost:8003/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T11:46:50.160482Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8003, tools: 6[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+[2m2025-09-29T11:46:50.160770Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m [36mtools_count[0m=[35m6[0m
+[2m2025-09-29T11:46:50.160865Z[0m [[32m[1minfo     [0m] [1m✓ Connected to MCP server     [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T11:46:50.160933Z[0m [[32m[1minfo     [0m] [1mMCP server initialization completed[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mresults[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T11:46:50.160981Z[0m [[32m[1minfo     [0m] [1mAgent Host initialized successfully[0m [[0m[1m[34m__main__[0m][0m [36minitialization_results[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+[2m2025-09-29T11:46:50.577325Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+[2m2025-09-29T11:46:50.577635Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+[2m2025-09-29T11:46:50.638368Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T11:46:50.638553Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.06124591827392578[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+127.0.0.1:60566 - "GET /health HTTP/1.1" 200
+[2m2025-09-29T11:46:57.135699Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/status[0m
+[2m2025-09-29T11:46:57.135923Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+[2m2025-09-29T11:46:57.202806Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T11:46:57.203041Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.06735420227050781[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/status[0m
+127.0.0.1:37716 - "GET /status HTTP/1.1" 200
+[2m2025-09-29T11:46:57.204553Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/tools[0m
+[2m2025-09-29T11:46:57.205092Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.0005450248718261719[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/tools[0m
+127.0.0.1:37716 - "GET /tools HTTP/1.1" 200
+[2m2025-09-29T11:46:57.206621Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T11:46:57.207231Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mquery[0m=[35m'Tell me about our company'[0m [36mrequest_id[0m=[35mreq_1_1759146417.207211[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:46:57.840343Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:47:00.521958Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:47:03.152451Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T11:47:03.152658Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'RetryError[<Future at 0x74e9069ff680 state=finished raised BadRequestError>]'[0m [36mexecution_time_seconds[0m=[35m5.945329[0m [36mrequest_id[0m=[35mreq_1_1759146417.207211[0m
+[2m2025-09-29T11:47:03.152850Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m5.9462361335754395[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:37716 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T11:47:04.155377Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T11:47:04.155960Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mquery[0m=[35m'Show me all users in the system'[0m [36mrequest_id[0m=[35mreq_2_1759146424.155937[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:47:04.595613Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:47:07.126049Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:47:09.677433Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T11:47:09.677646Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'RetryError[<Future at 0x74e9069fecc0 state=finished raised BadRequestError>]'[0m [36mexecution_time_seconds[0m=[35m5.521594[0m [36mrequest_id[0m=[35mreq_2_1759146424.155937[0m
+[2m2025-09-29T11:47:09.677868Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m5.522506475448608[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:37716 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T11:47:10.680797Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T11:47:10.681295Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mquery[0m=[35m'Find electronics products under $1000'[0m [36mrequest_id[0m=[35mreq_3_1759146430.681267[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:47:11.083232Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:47:13.765311Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:47:16.142582Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T11:47:16.142750Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'RetryError[<Future at 0x74e9069fea80 state=finished raised BadRequestError>]'[0m [36mexecution_time_seconds[0m=[35m5.461351[0m [36mrequest_id[0m=[35mreq_3_1759146430.681267[0m
+[2m2025-09-29T11:47:16.142924Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m5.462142705917358[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:37716 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T11:47:17.145466Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T11:47:17.145991Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mquery[0m=[35m"What's our system status?"[0m [36mrequest_id[0m=[35mreq_4_1759146437.14597[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:47:18.345277Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:47:20.705908Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:47:23.099916Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T11:47:23.100169Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'RetryError[<Future at 0x74e906a1da60 state=finished raised BadRequestError>]'[0m [36mexecution_time_seconds[0m=[35m5.954091[0m [36mrequest_id[0m=[35mreq_4_1759146437.14597[0m
+[2m2025-09-29T11:47:23.100354Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m5.954913854598999[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:37716 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T11:47:24.102504Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T11:47:24.103089Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mquery[0m=[35m'Create an order for user 1, product 2, quantity 3'[0m [36mrequest_id[0m=[35mreq_5_1759146444.103067[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:47:25.221869Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:47:27.782914Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T11:47:30.244305Z[0m [[31m[1merror    [0m] [1mLLM API error                 [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T11:47:30.244529Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'RetryError[<Future at 0x74e906a35640 state=finished raised BadRequestError>]'[0m [36mexecution_time_seconds[0m=[35m6.141343[0m [36mrequest_id[0m=[35mreq_5_1759146444.103067[0m
+[2m2025-09-29T11:47:30.244729Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m6.142239809036255[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+Shutting down
+Waiting for application shutdown.
+[2m2025-09-29T11:47:30.631666Z[0m [[32m[1minfo     [0m] [1mShutting down Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+Application shutdown complete.
+Finished server process [1026781]
+
+
+======================================================================
+Starting Agent Host at 2025-09-29 17:36:33
+======================================================================
+
+Started server process [1029330]
+Waiting for application startup.
+[2m2025-09-29T12:06:33.844109Z[0m [[32m[1minfo     [0m] [1mStarting Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+[2m2025-09-29T12:06:33.870080Z[0m [[32m[1minfo     [0m] [1mInitialized with model: gpt-4.1-mini[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T12:06:33.870207Z[0m [[32m[1minfo     [0m] [1mInitializing MCP servers      [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T12:06:33.870276Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8001[0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T12:06:33.870354Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8001 (attempt 1)[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+HTTP Request: GET http://localhost:8001/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T12:06:33.895843Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8001, tools: 7[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+[2m2025-09-29T12:06:33.896004Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mquery_server[0m [36mtools_count[0m=[35m7[0m
+[2m2025-09-29T12:06:33.896069Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T12:06:33.896115Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8002[0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T12:06:33.896183Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8002 (attempt 1)[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+HTTP Request: GET http://localhost:8002/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T12:06:33.921595Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8002, tools: 4[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+[2m2025-09-29T12:06:33.921815Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mtransactional_server[0m [36mtools_count[0m=[35m4[0m
+[2m2025-09-29T12:06:33.921907Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T12:06:33.921976Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8003[0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T12:06:33.922085Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8003 (attempt 1)[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+HTTP Request: GET http://localhost:8003/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T12:06:33.944017Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8003, tools: 6[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+[2m2025-09-29T12:06:33.944183Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m [36mtools_count[0m=[35m6[0m
+[2m2025-09-29T12:06:33.944246Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T12:06:33.944302Z[0m [[32m[1minfo     [0m] [1mMCP server initialization completed[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mresults[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T12:06:33.944356Z[0m [[32m[1minfo     [0m] [1mAgent Host initialized successfully[0m [[0m[1m[34m__main__[0m][0m [36minitialization_results[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+[2m2025-09-29T12:06:34.380495Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+[2m2025-09-29T12:06:34.380750Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+[2m2025-09-29T12:06:34.445762Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T12:06:34.445981Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.06553316116333008[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+127.0.0.1:38862 - "GET /health HTTP/1.1" 200
+[2m2025-09-29T12:06:41.464446Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/status[0m
+[2m2025-09-29T12:06:41.464764Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+[2m2025-09-29T12:06:41.529113Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T12:06:41.529310Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.06490349769592285[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/status[0m
+127.0.0.1:36646 - "GET /status HTTP/1.1" 200
+[2m2025-09-29T12:06:41.530906Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/tools[0m
+[2m2025-09-29T12:06:41.531479Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.0005831718444824219[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/tools[0m
+127.0.0.1:36646 - "GET /tools HTTP/1.1" 200
+[2m2025-09-29T12:06:41.533101Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T12:06:41.533958Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Tell me about our company'[0m [36mrequest_id[0m=[35mreq_1_1759147601.533935[0m
+[2m2025-09-29T12:06:41.534118Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T12:06:42.383986Z[0m [[31m[1merror    [0m] [1mOpenAI BadRequestError        [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mdetails[0m=[35m{'model': 'gpt-4.1-mini', 'messages_count': 2, 'tools_count': 17, 'body': {'message': "Invalid 'tools[0].function.name': string does not match pattern. Expected a string that matches the pattern '^[a-zA-Z0-9_-]+$'.", 'type': 'invalid_request_error', 'param': 'tools[0].function.name', 'code': 'invalid_value'}}[0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T12:06:42.384086Z[0m [[31m[1merror    [0m] [1mLLM call failed               [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Tool format error. Check MCP tool definitions. Error: Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T12:06:42.384273Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m0.8511931896209717[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:36646 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T12:06:43.386905Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T12:06:43.387500Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Show me all users in the system'[0m [36mrequest_id[0m=[35mreq_2_1759147603.387475[0m
+[2m2025-09-29T12:06:43.387608Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T12:06:43.815888Z[0m [[31m[1merror    [0m] [1mOpenAI BadRequestError        [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mdetails[0m=[35m{'model': 'gpt-4.1-mini', 'messages_count': 2, 'tools_count': 17, 'body': {'message': "Invalid 'tools[0].function.name': string does not match pattern. Expected a string that matches the pattern '^[a-zA-Z0-9_-]+$'.", 'type': 'invalid_request_error', 'param': 'tools[0].function.name', 'code': 'invalid_value'}}[0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T12:06:43.815989Z[0m [[31m[1merror    [0m] [1mLLM call failed               [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Tool format error. Check MCP tool definitions. Error: Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T12:06:43.816174Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m0.42928385734558105[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:36646 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T12:06:44.818274Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T12:06:44.818732Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Find electronics products under $1000'[0m [36mrequest_id[0m=[35mreq_3_1759147604.818712[0m
+[2m2025-09-29T12:06:44.818863Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 400 Bad Request"
+[2m2025-09-29T12:06:45.455159Z[0m [[31m[1merror    [0m] [1mOpenAI BadRequestError        [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mdetails[0m=[35m{'model': 'gpt-4.1-mini', 'messages_count': 2, 'tools_count': 17, 'body': {'message': "Invalid 'tools[0].function.name': string does not match pattern. Expected a string that matches the pattern '^[a-zA-Z0-9_-]+$'.", 'type': 'invalid_request_error', 'param': 'tools[0].function.name', 'code': 'invalid_value'}}[0m [36merror[0m=[35m'Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T12:06:45.455256Z[0m [[31m[1merror    [0m] [1mLLM call failed               [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m'Tool format error. Check MCP tool definitions. Error: Error code: 400 - {\'error\': {\'message\': "Invalid \'tools[0].function.name\': string does not match pattern. Expected a string that matches the pattern \'^[a-zA-Z0-9_-]+$\'.", \'type\': \'invalid_request_error\', \'param\': \'tools[0].function.name\', \'code\': \'invalid_value\'}}'[0m
+[2m2025-09-29T12:06:45.455441Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m0.6371777057647705[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:36646 - "POST /query HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+[2m2025-09-29T16:08:57.073341Z[0m [[32m[1minfo     [0m] [1mShutting down Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+Application shutdown complete.
+Finished server process [1029330]
+
+
+======================================================================
+Starting Agent Host at 2025-09-29 21:39:02
+======================================================================
+
+Started server process [1051496]
+Waiting for application startup.
+[2m2025-09-29T16:09:03.425312Z[0m [[32m[1minfo     [0m] [1mStarting Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+[2m2025-09-29T16:09:03.457509Z[0m [[32m[1minfo     [0m] [1mInitialized with model: gpt-4.1-mini[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:09:03.457634Z[0m [[32m[1minfo     [0m] [1mInitializing MCP servers      [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:09:03.457690Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8001[0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T16:09:03.457768Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8001 (attempt 1)[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+HTTP Request: GET http://localhost:8001/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:09:03.486574Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8001, tools: 7[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+[2m2025-09-29T16:09:03.486796Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mquery_server[0m [36mtools_count[0m=[35m7[0m
+[2m2025-09-29T16:09:03.486887Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T16:09:03.486939Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8002[0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T16:09:03.487019Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8002 (attempt 1)[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+HTTP Request: GET http://localhost:8002/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:09:03.508633Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8002, tools: 4[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+[2m2025-09-29T16:09:03.508793Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mtransactional_server[0m [36mtools_count[0m=[35m4[0m
+[2m2025-09-29T16:09:03.508855Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T16:09:03.508894Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8003[0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T16:09:03.508954Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8003 (attempt 1)[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+HTTP Request: GET http://localhost:8003/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:09:03.532070Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8003, tools: 6[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+[2m2025-09-29T16:09:03.532370Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m [36mtools_count[0m=[35m6[0m
+[2m2025-09-29T16:09:03.532522Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T16:09:03.532600Z[0m [[32m[1minfo     [0m] [1mMCP server initialization completed[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mresults[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T16:09:03.532674Z[0m [[32m[1minfo     [0m] [1mAgent Host initialized successfully[0m [[0m[1m[34m__main__[0m][0m [36minitialization_results[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+[2m2025-09-29T16:09:03.880024Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+[2m2025-09-29T16:09:03.880305Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+[2m2025-09-29T16:09:03.943200Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T16:09:03.943384Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.06337809562683105[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+127.0.0.1:50036 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+[2m2025-09-29T16:09:19.777457Z[0m [[32m[1minfo     [0m] [1mShutting down Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+Application shutdown complete.
+Finished server process [1051496]
+
+
+======================================================================
+Starting Agent Host at 2025-09-29 21:39:25
+======================================================================
+
+Started server process [1051661]
+Waiting for application startup.
+[2m2025-09-29T16:09:26.161033Z[0m [[32m[1minfo     [0m] [1mStarting Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+[2m2025-09-29T16:09:26.201514Z[0m [[32m[1minfo     [0m] [1mInitialized with model: gpt-4.1-mini[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:09:26.201642Z[0m [[32m[1minfo     [0m] [1mInitializing MCP servers      [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:09:26.201700Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8001[0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T16:09:26.201775Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8001 (attempt 1)[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+HTTP Request: GET http://localhost:8001/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:09:26.231057Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8001, tools: 7[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+[2m2025-09-29T16:09:26.231311Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mquery_server[0m [36mtools_count[0m=[35m7[0m
+[2m2025-09-29T16:09:26.231410Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T16:09:26.231465Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8002[0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T16:09:26.231562Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8002 (attempt 1)[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+HTTP Request: GET http://localhost:8002/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:09:26.253964Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8002, tools: 4[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+[2m2025-09-29T16:09:26.254121Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mtransactional_server[0m [36mtools_count[0m=[35m4[0m
+[2m2025-09-29T16:09:26.254201Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T16:09:26.254243Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8003[0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T16:09:26.254307Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8003 (attempt 1)[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+HTTP Request: GET http://localhost:8003/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:09:26.276970Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8003, tools: 6[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+[2m2025-09-29T16:09:26.277177Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m [36mtools_count[0m=[35m6[0m
+[2m2025-09-29T16:09:26.277277Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T16:09:26.277360Z[0m [[32m[1minfo     [0m] [1mMCP server initialization completed[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mresults[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T16:09:26.277455Z[0m [[32m[1minfo     [0m] [1mAgent Host initialized successfully[0m [[0m[1m[34m__main__[0m][0m [36minitialization_results[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+[2m2025-09-29T16:09:26.548359Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+[2m2025-09-29T16:09:26.548671Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+[2m2025-09-29T16:09:26.611338Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T16:09:26.611554Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.06321287155151367[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+127.0.0.1:49234 - "GET /health HTTP/1.1" 200
+[2m2025-09-29T16:09:49.768343Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/status[0m
+[2m2025-09-29T16:09:49.768600Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+[2m2025-09-29T16:09:49.833619Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T16:09:49.833844Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.06551814079284668[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/status[0m
+127.0.0.1:37828 - "GET /status HTTP/1.1" 200
+[2m2025-09-29T16:09:49.835276Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/tools[0m
+[2m2025-09-29T16:09:49.835837Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.0005731582641601562[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/tools[0m
+127.0.0.1:37828 - "GET /tools HTTP/1.1" 200
+[2m2025-09-29T16:09:49.836776Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:09:49.837386Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Tell me about our company'[0m [36mrequest_id[0m=[35mreq_1_1759162189.83737[0m
+[2m2025-09-29T16:09:49.837501Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:09:51.602281Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:09:51.602365Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{'topic': 'company'}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_get_v1_knowledge_topic[0m
+[2m2025-09-29T16:09:51.602429Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'server_get_v1_knowledge_topic' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_1_1759162189.83737[0m
+[2m2025-09-29T16:09:51.602618Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m1.765845537185669[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:37828 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:09:52.605427Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:09:52.606035Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Show me all users in the system'[0m [36mrequest_id[0m=[35mreq_2_1759162192.606007[0m
+[2m2025-09-29T16:09:52.606165Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:09:55.282794Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:09:55.282922Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{'limit': 100, 'offset': 0}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_get_v1_users[0m
+[2m2025-09-29T16:09:55.282992Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'server_get_v1_users' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_2_1759162192.606007[0m
+[2m2025-09-29T16:09:55.283177Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m2.677769660949707[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:37828 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:09:56.285248Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:09:56.285715Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Find electronics products under $1000'[0m [36mrequest_id[0m=[35mreq_3_1759162196.285695[0m
+[2m2025-09-29T16:09:56.285830Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:09:58.738132Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:09:58.738218Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{'query': 'category:electronics price:<1000'}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_post_v1_products_search[0m
+[2m2025-09-29T16:09:58.738287Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'server_post_v1_products_search' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_3_1759162196.285695[0m
+[2m2025-09-29T16:09:58.738448Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m2.4532110691070557[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:37828 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:09:59.740531Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:09:59.741241Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m"What's our system status?"[0m [36mrequest_id[0m=[35mreq_4_1759162199.741185[0m
+[2m2025-09-29T16:09:59.741529Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:10:01.747049Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:10:01.747140Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_get_v1_dummy_status[0m
+[2m2025-09-29T16:10:01.747213Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'server_get_v1_dummy_status' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_4_1759162199.741185[0m
+[2m2025-09-29T16:10:01.747379Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m2.0068681240081787[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:37828 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:10:02.749291Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:10:02.749697Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Create an order for user 1, product 2, quantity 3'[0m [36mrequest_id[0m=[35mreq_5_1759162202.749676[0m
+[2m2025-09-29T16:10:02.749831Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:10:05.190086Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:10:05.190163Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{}[0m [36mserver_name[0m=[35mtransactional_server[0m [36mtool_name[0m=[35mtransactional_server_post_v1_orders[0m
+[2m2025-09-29T16:10:05.190237Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'server_post_v1_orders' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_5_1759162202.749676[0m
+[2m2025-09-29T16:10:05.190426Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m2.441148042678833[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:37828 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:10:06.192821Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:10:06.193868Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m"Add 50 units to product 1 inventory with reason 'restocking'"[0m [36mrequest_id[0m=[35mreq_6_1759162206.193799[0m
+[2m2025-09-29T16:10:06.194152Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:10:07.560343Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:10:07.560457Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{'product_id': 1, 'quantity': 50, 'reason': 'restocking'}[0m [36mserver_name[0m=[35mtransactional_server[0m [36mtool_name[0m=[35mtransactional_server_post_v1_inventory_update[0m
+[2m2025-09-29T16:10:07.560544Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'server_post_v1_inventory_update' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_6_1759162206.193799[0m
+[2m2025-09-29T16:10:07.560764Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m1.3679840564727783[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:37828 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:10:08.562672Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:10:08.563309Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m"Search the web for 'latest AI developments'"[0m [36mrequest_id[0m=[35mreq_7_1759162208.563273[0m
+[2m2025-09-29T16:10:08.563533Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:10:09.798249Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:10:09.828671Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{}[0m [36mserver_name[0m=[35mexternal_api_server[0m [36mtool_name[0m=[35mexternal_api_server_post_v1_search_serp[0m
+[2m2025-09-29T16:10:09.828780Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'api_server_post_v1_search_serp' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_7_1759162208.563273[0m
+[2m2025-09-29T16:10:09.828987Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m1.2663381099700928[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:37828 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:10:10.831360Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:10:10.831833Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m"What's the weather like in San Francisco?"[0m [36mrequest_id[0m=[35mreq_8_1759162210.831814[0m
+[2m2025-09-29T16:10:10.831934Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:10:12.663807Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:10:12.663902Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{}[0m [36mserver_name[0m=[35mexternal_api_server[0m [36mtool_name[0m=[35mexternal_api_server_post_v1_weather[0m
+[2m2025-09-29T16:10:12.663959Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'api_server_post_v1_weather' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_8_1759162210.831814[0m
+[2m2025-09-29T16:10:12.664111Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m1.8327813148498535[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:37828 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:10:13.666288Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:10:13.666778Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Get our company information and list all users'[0m [36mrequest_id[0m=[35mreq_9_1759162213.666754[0m
+[2m2025-09-29T16:10:13.666914Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:10:14.971304Z[0m [[32m[1minfo     [0m] [1mLLM requesting 2 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:10:14.971396Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{'topic': 'company_information'}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_get_v1_knowledge_topic[0m
+[2m2025-09-29T16:10:14.971479Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'server_get_v1_knowledge_topic' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_9_1759162213.666754[0m
+[2m2025-09-29T16:10:14.971659Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m1.3053929805755615[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:37828 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:10:15.974762Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:10:15.975323Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Give me a summary of our analytics data'[0m [36mrequest_id[0m=[35mreq_10_1759162215.975297[0m
+[2m2025-09-29T16:10:15.975481Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:10:17.011185Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:10:17.011293Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_get_v1_analytics_summary[0m
+[2m2025-09-29T16:10:17.011375Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'server_get_v1_analytics_summary' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_10_1759162215.975297[0m
+[2m2025-09-29T16:10:17.011595Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m1.036860704421997[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:37828 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:10:18.013245Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+[2m2025-09-29T16:10:18.013466Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+[2m2025-09-29T16:10:18.071153Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T16:10:18.071299Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.05807232856750488[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+127.0.0.1:37828 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+[2m2025-09-29T16:11:55.799726Z[0m [[32m[1minfo     [0m] [1mShutting down Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+Application shutdown complete.
+Finished server process [1051661]
+
+
+======================================================================
+Starting Agent Host at 2025-09-29 21:42:01
+======================================================================
+
+Started server process [1052189]
+Waiting for application startup.
+[2m2025-09-29T16:12:01.950637Z[0m [[32m[1minfo     [0m] [1mStarting Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+[2m2025-09-29T16:12:01.977234Z[0m [[32m[1minfo     [0m] [1mInitialized with model: gpt-4.1-mini[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:12:01.977356Z[0m [[32m[1minfo     [0m] [1mInitializing MCP servers      [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:12:01.977415Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8001[0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T16:12:01.977504Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8001 (attempt 1)[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+HTTP Request: GET http://localhost:8001/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:12:02.006983Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8001, tools: 7[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+[2m2025-09-29T16:12:02.007187Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mquery_server[0m [36mtools_count[0m=[35m7[0m
+[2m2025-09-29T16:12:02.007255Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T16:12:02.007301Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8002[0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T16:12:02.007371Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8002 (attempt 1)[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+HTTP Request: GET http://localhost:8002/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:12:02.031611Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8002, tools: 4[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+[2m2025-09-29T16:12:02.032006Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mtransactional_server[0m [36mtools_count[0m=[35m4[0m
+[2m2025-09-29T16:12:02.032128Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T16:12:02.032176Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8003[0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T16:12:02.032278Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8003 (attempt 1)[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+HTTP Request: GET http://localhost:8003/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:12:02.053776Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8003, tools: 6[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+[2m2025-09-29T16:12:02.053911Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m [36mtools_count[0m=[35m6[0m
+[2m2025-09-29T16:12:02.053991Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T16:12:02.054043Z[0m [[32m[1minfo     [0m] [1mMCP server initialization completed[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mresults[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T16:12:02.054078Z[0m [[32m[1minfo     [0m] [1mAgent Host initialized successfully[0m [[0m[1m[34m__main__[0m][0m [36minitialization_results[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+[2m2025-09-29T16:12:02.469877Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+[2m2025-09-29T16:12:02.470111Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+[2m2025-09-29T16:12:02.535534Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T16:12:02.535724Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.06585907936096191[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+127.0.0.1:39174 - "GET /health HTTP/1.1" 200
+[2m2025-09-29T16:12:15.297701Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/status[0m
+[2m2025-09-29T16:12:15.297958Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+[2m2025-09-29T16:12:15.359763Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T16:12:15.359957Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.062273263931274414[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/status[0m
+127.0.0.1:59982 - "GET /status HTTP/1.1" 200
+[2m2025-09-29T16:12:15.361505Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/tools[0m
+[2m2025-09-29T16:12:15.362045Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.0005524158477783203[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/tools[0m
+127.0.0.1:59982 - "GET /tools HTTP/1.1" 200
+[2m2025-09-29T16:12:15.363041Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:12:15.363419Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Tell me about our company'[0m [36mrequest_id[0m=[35mreq_1_1759162335.363403[0m
+[2m2025-09-29T16:12:15.363530Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:12:18.331803Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:12:18.331904Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{'topic': 'company'}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_get_v1_knowledge_topic[0m
+[2m2025-09-29T16:12:18.331973Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'server_get_v1_knowledge_topic' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_1_1759162335.363403[0m
+[2m2025-09-29T16:12:18.332160Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m2.9691221714019775[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:59982 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:12:19.333980Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:12:19.334401Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Show me all users in the system'[0m [36mrequest_id[0m=[35mreq_2_1759162339.334376[0m
+[2m2025-09-29T16:12:19.334534Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:12:21.100313Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:12:21.100411Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{'limit': 100, 'offset': 0}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_get_v1_users[0m
+[2m2025-09-29T16:12:21.100483Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'server_get_v1_users' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_2_1759162339.334376[0m
+[2m2025-09-29T16:12:21.100744Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m1.7667765617370605[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:59982 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:12:22.103362Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:12:22.103915Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Find electronics products under $1000'[0m [36mrequest_id[0m=[35mreq_3_1759162342.103891[0m
+[2m2025-09-29T16:12:22.104061Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:12:23.077801Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:12:23.077894Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{'query': 'category:electronics price:<1000'}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_post_v1_products_search[0m
+[2m2025-09-29T16:12:23.077951Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'server_post_v1_products_search' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_3_1759162342.103891[0m
+[2m2025-09-29T16:12:23.078124Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m0.9747872352600098[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:59982 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:12:24.080476Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:12:24.081039Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m"What's our system status?"[0m [36mrequest_id[0m=[35mreq_4_1759162344.08102[0m
+[2m2025-09-29T16:12:24.081145Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:12:24.912761Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:12:24.912855Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_get_v1_dummy_status[0m
+[2m2025-09-29T16:12:24.912916Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'server_get_v1_dummy_status' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_4_1759162344.08102[0m
+[2m2025-09-29T16:12:24.913167Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m0.8327145576477051[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:59982 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:12:25.915183Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:12:25.915646Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Create an order for user 1, product 2, quantity 3'[0m [36mrequest_id[0m=[35mreq_5_1759162345.91563[0m
+[2m2025-09-29T16:12:25.915752Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:12:27.261327Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:12:27.261425Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{}[0m [36mserver_name[0m=[35mtransactional_server[0m [36mtool_name[0m=[35mtransactional_server_post_v1_orders[0m
+[2m2025-09-29T16:12:27.261510Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'server_post_v1_orders' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_5_1759162345.91563[0m
+[2m2025-09-29T16:12:27.261698Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m1.3465261459350586[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:59982 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:12:28.264280Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:12:28.264809Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m"Add 50 units to product 1 inventory with reason 'restocking'"[0m [36mrequest_id[0m=[35mreq_6_1759162348.26479[0m
+[2m2025-09-29T16:12:28.264920Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:12:29.789630Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:12:29.789718Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{'product_id': 1, 'quantity': 50, 'reason': 'restocking'}[0m [36mserver_name[0m=[35mtransactional_server[0m [36mtool_name[0m=[35mtransactional_server_post_v1_inventory_update[0m
+[2m2025-09-29T16:12:29.789777Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'server_post_v1_inventory_update' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_6_1759162348.26479[0m
+[2m2025-09-29T16:12:29.790043Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m1.5257227420806885[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:59982 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:12:30.792755Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:12:30.793252Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m"Search the web for 'latest AI developments'"[0m [36mrequest_id[0m=[35mreq_7_1759162350.793233[0m
+[2m2025-09-29T16:12:30.793388Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:12:32.322566Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:12:32.322655Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mparameters[0m=[35m{}[0m [36mserver_name[0m=[35mexternal_api_server[0m [36mtool_name[0m=[35mexternal_api_server_post_v1_search_serp[0m
+[2m2025-09-29T16:12:32.322739Z[0m [[31m[1merror    [0m] [1mQuery processing failed       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36merror[0m=[35m"Tool 'api_server_post_v1_search_serp' not available"[0m [36merror_type[0m=[35mMCPToolNotFoundError[0m [36mrequest_id[0m=[35mreq_7_1759162350.793233[0m
+[2m2025-09-29T16:12:32.322951Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m1.5302073955535889[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:59982 - "POST /query HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+[2m2025-09-29T16:26:05.695022Z[0m [[32m[1minfo     [0m] [1mShutting down Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+Application shutdown complete.
+Finished server process [1052189]
+
+
+======================================================================
+Starting Agent Host at 2025-09-29 21:56:11
+======================================================================
+
+Started server process [1053726]
+Waiting for application startup.
+[2m2025-09-29T16:26:12.003498Z[0m [[32m[1minfo     [0m] [1mStarting Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+[2m2025-09-29T16:26:12.028148Z[0m [[32m[1minfo     [0m] [1mInitialized with model: gpt-4.1-mini[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:26:12.028275Z[0m [[32m[1minfo     [0m] [1mInitializing MCP servers      [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:26:12.028351Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8001[0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T16:26:12.028458Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8001 (attempt 1)[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+HTTP Request: GET http://localhost:8001/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:12.055457Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8001, tools: 7[0m [[0m[1m[34mFastMCPClient.query_server[0m][0m
+[2m2025-09-29T16:26:12.055630Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mquery_server[0m [36mtools_count[0m=[35m7[0m
+[2m2025-09-29T16:26:12.055698Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mquery_server[0m
+[2m2025-09-29T16:26:12.055763Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8002[0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T16:26:12.055856Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8002 (attempt 1)[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+HTTP Request: GET http://localhost:8002/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:12.079843Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8002, tools: 4[0m [[0m[1m[34mFastMCPClient.transactional_server[0m][0m
+[2m2025-09-29T16:26:12.080097Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mtransactional_server[0m [36mtools_count[0m=[35m4[0m
+[2m2025-09-29T16:26:12.080215Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mtransactional_server[0m
+[2m2025-09-29T16:26:12.080287Z[0m [[32m[1minfo     [0m] [1mAdding MCP server             [0m [[0m[1m[34mMCPClientManager[0m][0m [36mbase_url[0m=[35mhttp://localhost:8003[0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T16:26:12.080390Z[0m [[32m[1minfo     [0m] [1mConnecting to MCP server: http://localhost:8003 (attempt 1)[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+HTTP Request: GET http://localhost:8003/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:12.102959Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server: http://localhost:8003, tools: 6[0m [[0m[1m[34mFastMCPClient.external_api_server[0m][0m
+[2m2025-09-29T16:26:12.103127Z[0m [[32m[1minfo     [0m] [1mMCP server added successfully [0m [[0m[1m[34mMCPClientManager[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m [36mtools_count[0m=[35m6[0m
+[2m2025-09-29T16:26:12.103208Z[0m [[32m[1minfo     [0m] [1mConnected to MCP server       [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mserver_name[0m=[35mexternal_api_server[0m
+[2m2025-09-29T16:26:12.103277Z[0m [[32m[1minfo     [0m] [1mMCP server initialization completed[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mresults[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T16:26:12.103339Z[0m [[32m[1minfo     [0m] [1mAgent Host initialized successfully[0m [[0m[1m[34m__main__[0m][0m [36minitialization_results[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+[2m2025-09-29T16:26:12.522134Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+[2m2025-09-29T16:26:12.522389Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:12.584193Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T16:26:12.584528Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.06240367889404297[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+127.0.0.1:34068 - "GET /health HTTP/1.1" 200
+[2m2025-09-29T16:26:20.739396Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/status[0m
+[2m2025-09-29T16:26:20.739676Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:20.806405Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T16:26:20.806682Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.0673074722290039[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/status[0m
+127.0.0.1:47158 - "GET /status HTTP/1.1" 200
+[2m2025-09-29T16:26:20.808232Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/tools[0m
+[2m2025-09-29T16:26:20.808818Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.0005946159362792969[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/tools[0m
+127.0.0.1:47158 - "GET /tools HTTP/1.1" 200
+[2m2025-09-29T16:26:20.809878Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:26:20.810269Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Tell me about our company'[0m [36mrequest_id[0m=[35mreq_1_1759163180.810253[0m
+[2m2025-09-29T16:26:20.810384Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:24.099138Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:26:24.099247Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mactual_tool_name[0m=[35mget_v1_knowledge_topic[0m [36mparameters[0m=[35m{'topic': 'company'}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_get_v1_knowledge_topic[0m
+HTTP Request: POST http://localhost:8001/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:24.156743Z[0m [[32m[1minfo     [0m] [1mTool execution completed      [0m [[0m[1m[34mMCPClientManager[0m][0m [36mexecution_time_ms[0m=[35m38.85793685913086[0m [36msuccess[0m=[35mFalse[0m [36mtool_name[0m=[35mquery_server_get_v1_knowledge_topic[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:26.953990Z[0m [[32m[1minfo     [0m] [1mQuery completed               [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mexecution_time[0m=[35m6.143652[0m [36miterations[0m=[35m2[0m [36mrequest_id[0m=[35mreq_1_1759163180.810253[0m [36mtools_used[0m=[35m1[0m
+[2m2025-09-29T16:26:26.954291Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m6.144410610198975[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:47158 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:26:27.956432Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:26:27.956899Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Show me all users in the system'[0m [36mrequest_id[0m=[35mreq_2_1759163187.956878[0m
+[2m2025-09-29T16:26:27.957012Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:29.986881Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:26:29.987031Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mactual_tool_name[0m=[35mget_v1_users[0m [36mparameters[0m=[35m{'limit': 50, 'offset': 0}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_get_v1_users[0m
+HTTP Request: POST http://localhost:8001/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:30.055758Z[0m [[32m[1minfo     [0m] [1mTool execution completed      [0m [[0m[1m[34mMCPClientManager[0m][0m [36mexecution_time_ms[0m=[35m50.04405975341797[0m [36msuccess[0m=[35mTrue[0m [36mtool_name[0m=[35mquery_server_get_v1_users[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:33.136216Z[0m [[32m[1minfo     [0m] [1mQuery completed               [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mexecution_time[0m=[35m5.179239[0m [36miterations[0m=[35m2[0m [36mrequest_id[0m=[35mreq_2_1759163187.956878[0m [36mtools_used[0m=[35m1[0m
+[2m2025-09-29T16:26:33.136427Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m5.180008172988892[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:47158 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:26:34.139022Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:26:34.139430Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Find electronics products under $1000'[0m [36mrequest_id[0m=[35mreq_3_1759163194.139411[0m
+[2m2025-09-29T16:26:34.139569Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:35.972612Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:26:35.972706Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mactual_tool_name[0m=[35mpost_v1_products_search[0m [36mparameters[0m=[35m{'query': 'category:electronics price:<1000'}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_post_v1_products_search[0m
+HTTP Request: POST http://localhost:8001/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:36.008850Z[0m [[32m[1minfo     [0m] [1mTool execution completed      [0m [[0m[1m[34mMCPClientManager[0m][0m [36mexecution_time_ms[0m=[35m18.067359924316406[0m [36msuccess[0m=[35mTrue[0m [36mtool_name[0m=[35mquery_server_post_v1_products_search[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:38.194034Z[0m [[32m[1minfo     [0m] [1mQuery completed               [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mexecution_time[0m=[35m4.054501[0m [36miterations[0m=[35m2[0m [36mrequest_id[0m=[35mreq_3_1759163194.139411[0m [36mtools_used[0m=[35m1[0m
+[2m2025-09-29T16:26:38.194248Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m4.055235147476196[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:47158 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:26:39.197190Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:26:39.197737Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m"What's our system status?"[0m [36mrequest_id[0m=[35mreq_4_1759163199.19772[0m
+[2m2025-09-29T16:26:39.197848Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:41.519618Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:26:41.519691Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mactual_tool_name[0m=[35mget_v1_dummy_status[0m [36mparameters[0m=[35m{}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_get_v1_dummy_status[0m
+HTTP Request: POST http://localhost:8001/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:41.557291Z[0m [[32m[1minfo     [0m] [1mTool execution completed      [0m [[0m[1m[34mMCPClientManager[0m][0m [36mexecution_time_ms[0m=[35m18.097639083862305[0m [36msuccess[0m=[35mTrue[0m [36mtool_name[0m=[35mquery_server_get_v1_dummy_status[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:44.398829Z[0m [[32m[1minfo     [0m] [1mQuery completed               [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mexecution_time[0m=[35m5.201021[0m [36miterations[0m=[35m2[0m [36mrequest_id[0m=[35mreq_4_1759163199.19772[0m [36mtools_used[0m=[35m1[0m
+[2m2025-09-29T16:26:44.399014Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m5.201839923858643[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:47158 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:26:45.401350Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:26:45.401855Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Create an order for user 1, product 2, quantity 3'[0m [36mrequest_id[0m=[35mreq_5_1759163205.401836[0m
+[2m2025-09-29T16:26:45.401972Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:46.889456Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:26:46.889553Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mactual_tool_name[0m=[35mpost_v1_orders[0m [36mparameters[0m=[35m{}[0m [36mserver_name[0m=[35mtransactional_server[0m [36mtool_name[0m=[35mtransactional_server_post_v1_orders[0m
+HTTP Request: POST http://localhost:8002/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:46.977738Z[0m [[32m[1minfo     [0m] [1mTool execution completed      [0m [[0m[1m[34mMCPClientManager[0m][0m [36mexecution_time_ms[0m=[35m70.0993537902832[0m [36msuccess[0m=[35mFalse[0m [36mtool_name[0m=[35mtransactional_server_post_v1_orders[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:49.109198Z[0m [[32m[1minfo     [0m] [1mQuery completed               [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mexecution_time[0m=[35m3.707264[0m [36miterations[0m=[35m2[0m [36mrequest_id[0m=[35mreq_5_1759163205.401836[0m [36mtools_used[0m=[35m1[0m
+[2m2025-09-29T16:26:49.109418Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m3.7080774307250977[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:47158 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:26:50.112164Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:26:50.112775Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m"Add 50 units to product 1 inventory with reason 'restocking'"[0m [36mrequest_id[0m=[35mreq_6_1759163210.112754[0m
+[2m2025-09-29T16:26:50.112893Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:51.301475Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:26:51.301550Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mactual_tool_name[0m=[35mpost_v1_inventory_update[0m [36mparameters[0m=[35m{'product_id': 1, 'quantity': 50, 'reason': 'restocking'}[0m [36mserver_name[0m=[35mtransactional_server[0m [36mtool_name[0m=[35mtransactional_server_post_v1_inventory_update[0m
+HTTP Request: POST http://localhost:8002/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:51.337882Z[0m [[32m[1minfo     [0m] [1mTool execution completed      [0m [[0m[1m[34mMCPClientManager[0m][0m [36mexecution_time_ms[0m=[35m18.397808074951172[0m [36msuccess[0m=[35mFalse[0m [36mtool_name[0m=[35mtransactional_server_post_v1_inventory_update[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:53.142616Z[0m [[32m[1minfo     [0m] [1mQuery completed               [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mexecution_time[0m=[35m3.029762[0m [36miterations[0m=[35m2[0m [36mrequest_id[0m=[35mreq_6_1759163210.112754[0m [36mtools_used[0m=[35m1[0m
+[2m2025-09-29T16:26:53.142815Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m3.030665874481201[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:47158 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:26:54.145598Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:26:54.146084Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m"Search the web for 'latest AI developments'"[0m [36mrequest_id[0m=[35mreq_7_1759163214.146066[0m
+[2m2025-09-29T16:26:54.146190Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:55.426373Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:26:55.426488Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mactual_tool_name[0m=[35mpost_v1_search_serp[0m [36mparameters[0m=[35m{}[0m [36mserver_name[0m=[35mexternal_api_server[0m [36mtool_name[0m=[35mexternal_api_server_post_v1_search_serp[0m
+HTTP Request: POST http://localhost:8003/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:55.484623Z[0m [[32m[1minfo     [0m] [1mTool execution completed      [0m [[0m[1m[34mMCPClientManager[0m][0m [36mexecution_time_ms[0m=[35m39.86835479736328[0m [36msuccess[0m=[35mFalse[0m [36mtool_name[0m=[35mexternal_api_server_post_v1_search_serp[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:56.889714Z[0m [[32m[1minfo     [0m] [1mQuery completed               [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mexecution_time[0m=[35m2.743559[0m [36miterations[0m=[35m2[0m [36mrequest_id[0m=[35mreq_7_1759163214.146066[0m [36mtools_used[0m=[35m1[0m
+[2m2025-09-29T16:26:56.889902Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m2.7443196773529053[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:47158 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:26:57.892363Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:26:57.892946Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m"What's the weather like in San Francisco?"[0m [36mrequest_id[0m=[35mreq_8_1759163217.892916[0m
+[2m2025-09-29T16:26:57.893116Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:59.313370Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:26:59.313484Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mactual_tool_name[0m=[35mpost_v1_weather[0m [36mparameters[0m=[35m{}[0m [36mserver_name[0m=[35mexternal_api_server[0m [36mtool_name[0m=[35mexternal_api_server_post_v1_weather[0m
+HTTP Request: POST http://localhost:8003/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:26:59.355820Z[0m [[32m[1minfo     [0m] [1mTool execution completed      [0m [[0m[1m[34mMCPClientManager[0m][0m [36mexecution_time_ms[0m=[35m20.19047737121582[0m [36msuccess[0m=[35mFalse[0m [36mtool_name[0m=[35mexternal_api_server_post_v1_weather[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:27:00.808359Z[0m [[32m[1minfo     [0m] [1mQuery completed               [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mexecution_time[0m=[35m2.915303[0m [36miterations[0m=[35m2[0m [36mrequest_id[0m=[35mreq_8_1759163217.892916[0m [36mtools_used[0m=[35m1[0m
+[2m2025-09-29T16:27:00.808571Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m2.9162235260009766[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:47158 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:27:01.811199Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:27:01.811674Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Get our company information and list all users'[0m [36mrequest_id[0m=[35mreq_9_1759163221.811655[0m
+[2m2025-09-29T16:27:01.811794Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:27:03.341908Z[0m [[32m[1minfo     [0m] [1mLLM requesting 2 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:27:03.342017Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mactual_tool_name[0m=[35mget_v1_knowledge_topic[0m [36mparameters[0m=[35m{'topic': 'company_info'}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_get_v1_knowledge_topic[0m
+HTTP Request: POST http://localhost:8001/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:27:03.381891Z[0m [[32m[1minfo     [0m] [1mTool execution completed      [0m [[0m[1m[34mMCPClientManager[0m][0m [36mexecution_time_ms[0m=[35m21.61431312561035[0m [36msuccess[0m=[35mFalse[0m [36mtool_name[0m=[35mquery_server_get_v1_knowledge_topic[0m
+[2m2025-09-29T16:27:03.382028Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mactual_tool_name[0m=[35mget_v1_users[0m [36mparameters[0m=[35m{'limit': 100, 'offset': 0}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_get_v1_users[0m
+HTTP Request: POST http://localhost:8001/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:27:03.419325Z[0m [[32m[1minfo     [0m] [1mTool execution completed      [0m [[0m[1m[34mMCPClientManager[0m][0m [36mexecution_time_ms[0m=[35m18.584489822387695[0m [36msuccess[0m=[35mTrue[0m [36mtool_name[0m=[35mquery_server_get_v1_users[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:27:05.883959Z[0m [[32m[1minfo     [0m] [1mQuery completed               [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mexecution_time[0m=[35m4.072214[0m [36miterations[0m=[35m2[0m [36mrequest_id[0m=[35mreq_9_1759163221.811655[0m [36mtools_used[0m=[35m2[0m
+[2m2025-09-29T16:27:05.884168Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m4.0729820728302[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:47158 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:27:06.886312Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mPOST[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+[2m2025-09-29T16:27:06.886754Z[0m [[32m[1minfo     [0m] [1mProcessing query              [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mmodel[0m=[35mgpt-4.1-mini[0m [36mquery[0m=[35m'Give me a summary of our analytics data'[0m [36mrequest_id[0m=[35mreq_10_1759163226.886734[0m
+[2m2025-09-29T16:27:06.886863Z[0m [[32m[1minfo     [0m] [1mLoaded 17 tools from MCP servers[0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:27:07.705379Z[0m [[32m[1minfo     [0m] [1mLLM requesting 1 tool calls   [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m
+[2m2025-09-29T16:27:07.705495Z[0m [[32m[1minfo     [0m] [1mExecuting tool                [0m [[0m[1m[34mMCPClientManager[0m][0m [36mactual_tool_name[0m=[35mget_v1_analytics_summary[0m [36mparameters[0m=[35m{}[0m [36mserver_name[0m=[35mquery_server[0m [36mtool_name[0m=[35mquery_server_get_v1_analytics_summary[0m
+HTTP Request: POST http://localhost:8001/mcp "HTTP/1.1 200 OK"
+[2m2025-09-29T16:27:07.743066Z[0m [[32m[1minfo     [0m] [1mTool execution completed      [0m [[0m[1m[34mMCPClientManager[0m][0m [36mexecution_time_ms[0m=[35m18.07546615600586[0m [36msuccess[0m=[35mTrue[0m [36mtool_name[0m=[35mquery_server_get_v1_analytics_summary[0m
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2m2025-09-29T16:27:09.774677Z[0m [[32m[1minfo     [0m] [1mQuery completed               [0m [[0m[1m[34mAIAgentOrchestrator[0m][0m [36mexecution_time[0m=[35m2.887847[0m [36miterations[0m=[35m2[0m [36mrequest_id[0m=[35mreq_10_1759163226.886734[0m [36mtools_used[0m=[35m1[0m
+[2m2025-09-29T16:27:09.774957Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mPOST[0m [36mprocess_time_seconds[0m=[35m2.8886537551879883[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/query[0m
+127.0.0.1:47158 - "POST /query HTTP/1.1" 200
+[2m2025-09-29T16:27:10.777332Z[0m [[32m[1minfo     [0m] [1mIncoming request              [0m [[0m[1m[34m__main__[0m][0m [36mclient[0m=[35m127.0.0.1[0m [36mmethod[0m=[35mGET[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+[2m2025-09-29T16:27:10.777659Z[0m [[32m[1minfo     [0m] [1mRunning health check on all servers[0m [[0m[1m[34mMCPClientManager[0m][0m
+HTTP Request: GET http://localhost:8001/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8002/health "HTTP/1.1 200 OK"
+HTTP Request: GET http://localhost:8003/health "HTTP/1.1 200 OK"
+[2m2025-09-29T16:27:10.832595Z[0m [[32m[1minfo     [0m] [1mHealth check completed        [0m [[0m[1m[34mMCPClientManager[0m][0m [36mstatus[0m=[35m{'query_server': True, 'transactional_server': True, 'external_api_server': True}[0m
+[2m2025-09-29T16:27:10.832756Z[0m [[32m[1minfo     [0m] [1mRequest completed             [0m [[0m[1m[34m__main__[0m][0m [36mmethod[0m=[35mGET[0m [36mprocess_time_seconds[0m=[35m0.05544018745422363[0m [36mstatus_code[0m=[35m200[0m [36murl[0m=[35mhttp://localhost:8000/health[0m
+127.0.0.1:47158 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+[2m2025-09-29T18:15:44.297808Z[0m [[32m[1minfo     [0m] [1mShutting down Agent Host application[0m [[0m[1m[34m__main__[0m][0m
+Application shutdown complete.
+Finished server process [1053726]

@@ -1,0 +1,161 @@
+
+
+======================================================================
+Starting External API Server at 2025-09-29 16:46:05
+======================================================================
+
+[2m2025-09-29T11:16:05.471612Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: External API Server, tools: 6[0m [[0m[1m[34mFastMCPServer.External API Server[0m][0m
+Started server process [1022983]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8003 (Press CTRL+C to quit)
+127.0.0.1:34280 - "GET /health HTTP/1.1" 200
+127.0.0.1:34290 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:34296 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1022983]
+
+
+======================================================================
+Starting External API Server at 2025-09-29 16:49:37
+======================================================================
+
+[2m2025-09-29T11:19:37.319790Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: External API Server, tools: 6[0m [[0m[1m[34mFastMCPServer.External API Server[0m][0m
+Started server process [1023424]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8003 (Press CTRL+C to quit)
+127.0.0.1:43016 - "GET /health HTTP/1.1" 200
+127.0.0.1:43024 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:43028 - "GET /health HTTP/1.1" 200
+127.0.0.1:34938 - "GET /health HTTP/1.1" 200
+127.0.0.1:39448 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1023424]
+
+
+======================================================================
+Starting External API Server at 2025-09-29 17:16:48
+======================================================================
+
+[2m2025-09-29T11:46:48.843227Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: External API Server, tools: 6[0m [[0m[1m[34mFastMCPServer.External API Server[0m][0m
+Started server process [1026779]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8003 (Press CTRL+C to quit)
+127.0.0.1:58226 - "GET /health HTTP/1.1" 200
+127.0.0.1:58238 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:58252 - "GET /health HTTP/1.1" 200
+127.0.0.1:44728 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1026779]
+
+
+======================================================================
+Starting External API Server at 2025-09-29 17:36:32
+======================================================================
+
+[2m2025-09-29T12:06:32.616851Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: External API Server, tools: 6[0m [[0m[1m[34mFastMCPServer.External API Server[0m][0m
+Started server process [1029329]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8003 (Press CTRL+C to quit)
+127.0.0.1:47444 - "GET /health HTTP/1.1" 200
+127.0.0.1:47448 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:47456 - "GET /health HTTP/1.1" 200
+127.0.0.1:60846 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1029329]
+
+
+======================================================================
+Starting External API Server at 2025-09-29 21:39:01
+======================================================================
+
+[2m2025-09-29T16:09:02.134803Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: External API Server, tools: 6[0m [[0m[1m[34mFastMCPServer.External API Server[0m][0m
+Started server process [1051481]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8003 (Press CTRL+C to quit)
+127.0.0.1:35656 - "GET /health HTTP/1.1" 200
+127.0.0.1:35660 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:35662 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1051481]
+
+
+======================================================================
+Starting External API Server at 2025-09-29 21:39:24
+======================================================================
+
+[2m2025-09-29T16:09:24.829372Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: External API Server, tools: 6[0m [[0m[1m[34mFastMCPServer.External API Server[0m][0m
+Started server process [1051655]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8003 (Press CTRL+C to quit)
+127.0.0.1:56666 - "GET /health HTTP/1.1" 200
+127.0.0.1:56680 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:56696 - "GET /health HTTP/1.1" 200
+127.0.0.1:60784 - "GET /health HTTP/1.1" 200
+127.0.0.1:38764 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1051655]
+
+
+======================================================================
+Starting External API Server at 2025-09-29 21:42:00
+======================================================================
+
+[2m2025-09-29T16:12:00.696776Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: External API Server, tools: 6[0m [[0m[1m[34mFastMCPServer.External API Server[0m][0m
+Started server process [1052174]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8003 (Press CTRL+C to quit)
+127.0.0.1:41150 - "GET /health HTTP/1.1" 200
+127.0.0.1:41156 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:41170 - "GET /health HTTP/1.1" 200
+127.0.0.1:52206 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1052174]
+
+
+======================================================================
+Starting External API Server at 2025-09-29 21:56:10
+======================================================================
+
+[2m2025-09-29T16:26:10.799467Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: External API Server, tools: 6[0m [[0m[1m[34mFastMCPServer.External API Server[0m][0m
+Started server process [1053725]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8003 (Press CTRL+C to quit)
+127.0.0.1:33692 - "GET /health HTTP/1.1" 200
+127.0.0.1:33702 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:33704 - "GET /health HTTP/1.1" 200
+127.0.0.1:42548 - "GET /health HTTP/1.1" 200
+127.0.0.1:38768 - "POST /v1/search/serp HTTP/1.1" 422
+HTTP Request: POST http://localhost:8003/v1/search/serp "HTTP/1.1 422 Unprocessable Entity"
+[2m2025-09-29T16:26:55.483716Z[0m [[31m[1merror    [0m] [1mTool execution failed: Tool execution failed with status 422[0m [[0m[1m[34mFastMCPServer.External API Server[0m][0m
+127.0.0.1:38764 - "POST /mcp HTTP/1.1" 200
+127.0.0.1:38790 - "POST /v1/weather HTTP/1.1" 422
+HTTP Request: POST http://localhost:8003/v1/weather "HTTP/1.1 422 Unprocessable Entity"
+[2m2025-09-29T16:26:59.354890Z[0m [[31m[1merror    [0m] [1mTool execution failed: Tool execution failed with status 422[0m [[0m[1m[34mFastMCPServer.External API Server[0m][0m
+127.0.0.1:38782 - "POST /mcp HTTP/1.1" 200
+127.0.0.1:55916 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1053725]

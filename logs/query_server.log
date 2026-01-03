@@ -1,0 +1,185 @@
+
+
+======================================================================
+Starting Query Server at 2025-09-29 16:46:03
+======================================================================
+
+[2m2025-09-29T11:16:03.391461Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: Query Server, tools: 7[0m [[0m[1m[34mFastMCPServer.Query Server[0m][0m
+Started server process [1022961]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+127.0.0.1:52914 - "GET /health HTTP/1.1" 200
+127.0.0.1:57896 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:57910 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1022961]
+
+
+======================================================================
+Starting Query Server at 2025-09-29 16:49:34
+======================================================================
+
+[2m2025-09-29T11:19:35.250831Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: Query Server, tools: 7[0m [[0m[1m[34mFastMCPServer.Query Server[0m][0m
+Started server process [1023417]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+127.0.0.1:39820 - "GET /health HTTP/1.1" 200
+127.0.0.1:39828 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:39830 - "GET /health HTTP/1.1" 200
+127.0.0.1:53822 - "GET /health HTTP/1.1" 200
+127.0.0.1:44000 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1023417]
+
+
+======================================================================
+Starting Query Server at 2025-09-29 17:16:46
+======================================================================
+
+[2m2025-09-29T11:46:46.721225Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: Query Server, tools: 7[0m [[0m[1m[34mFastMCPServer.Query Server[0m][0m
+Started server process [1026756]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+127.0.0.1:58114 - "GET /health HTTP/1.1" 200
+127.0.0.1:58120 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:58122 - "GET /health HTTP/1.1" 200
+127.0.0.1:35828 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1026756]
+
+
+======================================================================
+Starting Query Server at 2025-09-29 17:36:30
+======================================================================
+
+[2m2025-09-29T12:06:30.520459Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: Query Server, tools: 7[0m [[0m[1m[34mFastMCPServer.Query Server[0m][0m
+Started server process [1029308]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+127.0.0.1:55924 - "GET /health HTTP/1.1" 200
+127.0.0.1:55928 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:55932 - "GET /health HTTP/1.1" 200
+127.0.0.1:60624 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1029308]
+
+
+======================================================================
+Starting Query Server at 2025-09-29 21:38:59
+======================================================================
+
+[2m2025-09-29T16:09:00.019748Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: Query Server, tools: 7[0m [[0m[1m[34mFastMCPServer.Query Server[0m][0m
+Started server process [1051477]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+127.0.0.1:57924 - "GET /health HTTP/1.1" 200
+127.0.0.1:57930 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:57942 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1051477]
+
+
+======================================================================
+Starting Query Server at 2025-09-29 21:39:22
+======================================================================
+
+[2m2025-09-29T16:09:22.781382Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: Query Server, tools: 7[0m [[0m[1m[34mFastMCPServer.Query Server[0m][0m
+Started server process [1051621]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+127.0.0.1:33460 - "GET /health HTTP/1.1" 200
+127.0.0.1:47112 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:47120 - "GET /health HTTP/1.1" 200
+127.0.0.1:60904 - "GET /health HTTP/1.1" 200
+127.0.0.1:45454 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1051621]
+
+
+======================================================================
+Starting Query Server at 2025-09-29 21:41:58
+======================================================================
+
+[2m2025-09-29T16:11:58.603490Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: Query Server, tools: 7[0m [[0m[1m[34mFastMCPServer.Query Server[0m][0m
+Started server process [1052172]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+127.0.0.1:48468 - "GET /health HTTP/1.1" 200
+127.0.0.1:48476 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:48478 - "GET /health HTTP/1.1" 200
+127.0.0.1:39850 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1052172]
+
+
+======================================================================
+Starting Query Server at 2025-09-29 21:56:08
+======================================================================
+
+[2m2025-09-29T16:26:08.635678Z[0m [[32m[1minfo     [0m] [1mFastMCP Server initialized: Query Server, tools: 7[0m [[0m[1m[34mFastMCPServer.Query Server[0m][0m
+Started server process [1053708]
+Waiting for application startup.
+Application startup complete.
+Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+127.0.0.1:33382 - "GET /health HTTP/1.1" 200
+127.0.0.1:33388 - "GET /mcp HTTP/1.1" 200
+127.0.0.1:33400 - "GET /health HTTP/1.1" 200
+127.0.0.1:45568 - "GET /health HTTP/1.1" 200
+[2m2025-09-29T16:26:24.154895Z[0m [[32m[1minfo     [0m] [1mFetching knowledge            [0m [[0m[1m[34mservers.query_server.routes[0m][0m [36mtopic[0m=[35m{topic}[0m
+[2m2025-09-29T16:26:24.154997Z[0m [[33m[1mwarning  [0m] [1mTopic not found               [0m [[0m[1m[34mservers.query_server.routes[0m][0m [36mavailable[0m=[35m['company_info', 'product_catalog', 'support_info'][0m [36mtopic[0m=[35m{topic}[0m
+127.0.0.1:45590 - "GET /v1/knowledge/%7Btopic%7D?topic=company HTTP/1.1" 404
+HTTP Request: GET http://localhost:8001/v1/knowledge/%7Btopic%7D?topic=company "HTTP/1.1 404 Not Found"
+[2m2025-09-29T16:26:24.155930Z[0m [[31m[1merror    [0m] [1mTool execution failed: Tool execution failed with status 404[0m [[0m[1m[34mFastMCPServer.Query Server[0m][0m
+127.0.0.1:45582 - "POST /mcp HTTP/1.1" 200
+[2m2025-09-29T16:26:30.023183Z[0m [[32m[1minfo     [0m] [1mFetching users                [0m [[0m[1m[34mservers.query_server.routes[0m][0m [36mlimit[0m=[35m50[0m [36moffset[0m=[35m0[0m
+127.0.0.1:53736 - "GET /v1/users?limit=50&offset=0 HTTP/1.1" 200
+HTTP Request: GET http://localhost:8001/v1/users?limit=50&offset=0 "HTTP/1.1 200 OK"
+127.0.0.1:53728 - "POST /mcp HTTP/1.1" 200
+[2m2025-09-29T16:26:36.007273Z[0m [[32m[1minfo     [0m] [1mSearching products            [0m [[0m[1m[34mservers.query_server.routes[0m][0m [36mfilters[0m=[35m{'category': None, 'min_price': None, 'max_price': None}[0m
+[2m2025-09-29T16:26:36.007369Z[0m [[32m[1minfo     [0m] [1mProduct search completed      [0m [[0m[1m[34mservers.query_server.routes[0m][0m [36mresults_count[0m=[35m6[0m
+127.0.0.1:60592 - "POST /v1/products/search HTTP/1.1" 200
+HTTP Request: POST http://localhost:8001/v1/products/search "HTTP/1.1 200 OK"
+127.0.0.1:60582 - "POST /mcp HTTP/1.1" 200
+127.0.0.1:60608 - "GET /v1/dummy/status HTTP/1.1" 200
+HTTP Request: GET http://localhost:8001/v1/dummy/status "HTTP/1.1 200 OK"
+127.0.0.1:60602 - "POST /mcp HTTP/1.1" 200
+[2m2025-09-29T16:27:03.379288Z[0m [[32m[1minfo     [0m] [1mFetching knowledge            [0m [[0m[1m[34mservers.query_server.routes[0m][0m [36mtopic[0m=[35m{topic}[0m
+[2m2025-09-29T16:27:03.379430Z[0m [[33m[1mwarning  [0m] [1mTopic not found               [0m [[0m[1m[34mservers.query_server.routes[0m][0m [36mavailable[0m=[35m['company_info', 'product_catalog', 'support_info'][0m [36mtopic[0m=[35m{topic}[0m
+127.0.0.1:54238 - "GET /v1/knowledge/%7Btopic%7D?topic=company_info HTTP/1.1" 404
+HTTP Request: GET http://localhost:8001/v1/knowledge/%7Btopic%7D?topic=company_info "HTTP/1.1 404 Not Found"
+[2m2025-09-29T16:27:03.381117Z[0m [[31m[1merror    [0m] [1mTool execution failed: Tool execution failed with status 404[0m [[0m[1m[34mFastMCPServer.Query Server[0m][0m
+127.0.0.1:54232 - "POST /mcp HTTP/1.1" 200
+[2m2025-09-29T16:27:03.417569Z[0m [[32m[1minfo     [0m] [1mFetching users                [0m [[0m[1m[34mservers.query_server.routes[0m][0m [36mlimit[0m=[35m100[0m [36moffset[0m=[35m0[0m
+127.0.0.1:54252 - "GET /v1/users?limit=100&offset=0 HTTP/1.1" 200
+HTTP Request: GET http://localhost:8001/v1/users?limit=100&offset=0 "HTTP/1.1 200 OK"
+127.0.0.1:54240 - "POST /mcp HTTP/1.1" 200
+[2m2025-09-29T16:27:07.741522Z[0m [[32m[1minfo     [0m] [1mFetching analytics summary    [0m [[0m[1m[34mservers.query_server.routes[0m][0m
+127.0.0.1:56498 - "GET /v1/analytics/summary HTTP/1.1" 200
+HTTP Request: GET http://localhost:8001/v1/analytics/summary "HTTP/1.1 200 OK"
+127.0.0.1:56492 - "POST /mcp HTTP/1.1" 200
+127.0.0.1:56508 - "GET /health HTTP/1.1" 200
+Shutting down
+Waiting for application shutdown.
+Application shutdown complete.
+Finished server process [1053708]

@@ -1,0 +1,1 @@
+"""Query Server - Read-only data access"""
