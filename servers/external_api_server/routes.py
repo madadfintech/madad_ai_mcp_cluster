@@ -1,11 +1,39 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 import random
 from .models import *
+from .madad_auth_models import (
+    AccessTokenRequest,
+    CheckContactRequest,
+    CompleteGoogleOnboardingRequest,
+    CompleteOnboardingRequest,
+    OnboardingSendEmailRequest,
+    OnboardingSendPhoneRequest,
+    OnboardingVerifyPhoneRequest,
+    RefreshTokenRequest,
+    SendOtpRequest,
+    VerifyOnboardingEmailRequest,
+    VerifyOtpRequest,
+)
 from datetime import datetime
 from shared.logging_config import get_logger
+from tools.api_wrappers.auth import MadadAuthAPI
+from tools.api_wrappers.madad_client import MadadAPIError
 
 router = APIRouter()
 logger = get_logger(__name__)
+madad_auth_api = MadadAuthAPI()
+
+
+def madad_api_error_to_http(exc: MadadAPIError) -> HTTPException:
+    status_code = exc.status_code if exc.status_code and exc.status_code >= 400 else 502
+    return HTTPException(
+        status_code=status_code,
+        detail={
+            "message": str(exc),
+            "madad_status_code": exc.status_code,
+            "madad_response": exc.details,
+        },
+    )
 
 # Static responses for dummy APIs
 DUMMY_NEWS = """
@@ -129,3 +157,163 @@ async def get_weather_advice():
         "generated": datetime.now().isoformat(),
         "valid_until": "End of day"
     }
+
+
+@router.post("/madad/auth/send-otp")
+async def madad_auth_send_otp(request: SendOtpRequest):
+    """Send OTP to a mobile number or email address."""
+    try:
+        return await madad_auth_api.send_otp(
+            mobile=request.mobile,
+            email=request.email,
+            role=request.role,
+        )
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/auth/verify-otp")
+async def madad_auth_verify_otp(request: VerifyOtpRequest):
+    """Verify OTP and authenticate a user."""
+    try:
+        return await madad_auth_api.verify_otp(
+            mobile=request.mobile,
+            email=request.email,
+            otp=request.otp,
+            role=request.role,
+        )
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/auth/check-contact")
+async def madad_auth_check_contact(request: CheckContactRequest):
+    """Check whether a mobile number or email is registered."""
+    try:
+        return await madad_auth_api.check_contact(mobile=request.mobile, email=request.email)
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/auth/onboarding-send-email")
+async def madad_auth_onboarding_send_email(request: OnboardingSendEmailRequest):
+    """Send onboarding email OTP using an onboarding token."""
+    try:
+        return await madad_auth_api.onboarding_send_email(
+            email=request.email,
+            onboarding_token=request.onboarding_token,
+        )
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/auth/verify-onboarding-email")
+async def madad_auth_verify_onboarding_email(request: VerifyOnboardingEmailRequest):
+    """Verify onboarding email OTP using an onboarding token."""
+    try:
+        return await madad_auth_api.verify_onboarding_email(
+            email=request.email,
+            otp=request.otp,
+            onboarding_token=request.onboarding_token,
+        )
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/auth/onboarding-send-phone")
+async def madad_auth_onboarding_send_phone(request: OnboardingSendPhoneRequest):
+    """Send onboarding phone OTP using an access token."""
+    try:
+        return await madad_auth_api.onboarding_send_phone(
+            phone_number=request.phone_number,
+            access_token=request.access_token,
+        )
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/auth/onboarding-verify-phone")
+async def madad_auth_onboarding_verify_phone(request: OnboardingVerifyPhoneRequest):
+    """Verify onboarding phone OTP using an access token."""
+    try:
+        return await madad_auth_api.onboarding_verify_phone(
+            phone_number=request.phone_number,
+            otp=request.otp,
+            access_token=request.access_token,
+        )
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/auth/complete-onboarding")
+async def madad_auth_complete_onboarding(request: CompleteOnboardingRequest):
+    """Complete onboarding and create the user account."""
+    try:
+        return await madad_auth_api.complete_onboarding(
+            first_name=request.first_name,
+            last_name=request.last_name,
+            onboarding_token=request.onboarding_token,
+            email=request.email,
+            phone_number=request.phone_number,
+        )
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/auth/complete-google-onboarding")
+async def madad_auth_complete_google_onboarding(request: CompleteGoogleOnboardingRequest):
+    """Complete onboarding after Google OAuth login."""
+    try:
+        return await madad_auth_api.complete_google_onboarding(
+            first_name=request.first_name,
+            last_name=request.last_name,
+            phone_number=request.phone_number,
+            access_token=request.access_token,
+        )
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.get("/madad/auth/google")
+async def madad_auth_google():
+    """Initiate Google OAuth and return redirect metadata."""
+    try:
+        return await madad_auth_api.google_oauth_url()
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.get("/madad/auth/google/callback")
+async def madad_auth_google_callback():
+    """Call the Google OAuth callback endpoint."""
+    try:
+        return await madad_auth_api.google_callback()
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/auth/refresh")
+async def madad_auth_refresh(request: RefreshTokenRequest):
+    """Refresh access token with refresh token or API cookies."""
+    try:
+        return await madad_auth_api.refresh(refresh_token=request.refresh_token)
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.get("/madad/auth/me")
+async def madad_auth_me(access_token: str):
+    """Get the profile for the current access token."""
+    try:
+        return await madad_auth_api.me(access_token=access_token)
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/auth/logout")
+async def madad_auth_logout(request: AccessTokenRequest):
+    """Log out the current access token."""
+    try:
+        return await madad_auth_api.logout(access_token=request.access_token)
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)

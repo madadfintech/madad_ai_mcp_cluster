@@ -40,6 +40,10 @@ class Settings(PydanticBaseSettings):
     # Logging
     LOG_LEVEL: str = "INFO"
     LOG_FORMAT: str = "console"  # json or console
+
+    # Madad Platform API
+    MADAD_API_BASE_URL: Optional[str] = None
+    MADAD_API_TIMEOUT: int = 30
     
     # Health check
     HEALTH_CHECK_INTERVAL: int = 60

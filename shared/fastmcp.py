@@ -4,12 +4,13 @@
 """
 Enhanced FastMCP Library with production-ready features
 """
-from typing import Dict, List, Any, Optional, Callable
+from typing import Dict, List, Any, Optional, Callable, Type
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.routing import APIRoute
 from pydantic import BaseModel, Field
 import inspect
 import json
+import re
 from enum import Enum
 import httpx
 import time
@@ -141,11 +142,66 @@ class FastMCPServer:
                     self._register_route_as_tool(route)
                 except Exception as e:
                     self.logger.warning(f"Failed to register route {route.path}: {e}")
+
+    def _tool_name_for_route(self, method: str, path: str) -> str:
+        """Create an OpenAI/MCP-safe tool name from a FastAPI route."""
+        raw_name = f"{method.lower()}_{path.replace('/', '_').replace('{', '').replace('}', '').strip('_')}"
+        safe_name = re.sub(r"[^a-zA-Z0-9_]", "_", raw_name)
+        safe_name = re.sub(r"_+", "_", safe_name).strip("_")
+        return safe_name or f"{method.lower()}_root"
+
+    def _register_pydantic_model_parameters(
+        self,
+        model_class: Type[BaseModel],
+        parameters: Dict[str, MCPParameter],
+        required_params: List[str],
+    ):
+        """Flatten a Pydantic request body model into MCP tool parameters."""
+        if hasattr(model_class, "model_fields"):
+            fields = model_class.model_fields
+            for field_name, field_info in fields.items():
+                annotation = field_info.annotation
+                required = field_info.is_required()
+                description = getattr(field_info, "description", None)
+                parameters[field_name] = MCPParameter(
+                    type=self._mcp_type_from_annotation(annotation),
+                    description=description or f"Parameter {field_name}",
+                    required=required,
+                )
+                if required:
+                    required_params.append(field_name)
+            return
+
+        fields = getattr(model_class, "__fields__", {})
+        for field_name, field_info in fields.items():
+            annotation = getattr(field_info, "outer_type_", str)
+            required = getattr(field_info, "required", False)
+            description = getattr(field_info.field_info, "description", None)
+            parameters[field_name] = MCPParameter(
+                type=self._mcp_type_from_annotation(annotation),
+                description=description or f"Parameter {field_name}",
+                required=required,
+            )
+            if required:
+                required_params.append(field_name)
+
+    def _mcp_type_from_annotation(self, annotation: Any) -> MCPParameterType:
+        """Map Python/Pydantic annotations to MCP parameter types."""
+        origin = getattr(annotation, "__origin__", None)
+        if annotation == int:
+            return MCPParameterType.INTEGER
+        if annotation == bool:
+            return MCPParameterType.BOOLEAN
+        if annotation == dict or origin == dict:
+            return MCPParameterType.OBJECT
+        if annotation == list or origin == list:
+            return MCPParameterType.ARRAY
+        return MCPParameterType.STRING
     
     def _register_route_as_tool(self, route: APIRoute):
         """Convert a FastAPI route to an MCP tool"""
         method = list(route.methods)[0] if route.methods else "GET"
-        tool_name = f"{method.lower()}_{route.path.replace('/', '_').replace('{', '').replace('}', '').strip('_')}"
+        tool_name = self._tool_name_for_route(method, route.path)
         handler = route.endpoint
         
         # Extract parameters
@@ -156,17 +212,16 @@ class FastMCPServer:
         for param_name, param in sig.parameters.items():
             if param_name in ['request', 'self']:
                 continue
-                
-            param_type = MCPParameterType.STRING
-            if param.annotation == int:
-                param_type = MCPParameterType.INTEGER
-            elif param.annotation == bool:
-                param_type = MCPParameterType.BOOLEAN
-            elif hasattr(param.annotation, '__origin__'):
-                if param.annotation.__origin__ == list:
-                    param_type = MCPParameterType.ARRAY
-                elif param.annotation.__origin__ == dict:
-                    param_type = MCPParameterType.OBJECT
+
+            if inspect.isclass(param.annotation) and issubclass(param.annotation, BaseModel):
+                self._register_pydantic_model_parameters(
+                    param.annotation,
+                    parameters,
+                    required_params,
+                )
+                continue
+
+            param_type = self._mcp_type_from_annotation(param.annotation)
             
             parameters[param_name] = MCPParameter(
                 type=param_type,
