@@ -14,14 +14,22 @@ from .madad_auth_models import (
     VerifyOnboardingEmailRequest,
     VerifyOtpRequest,
 )
+from .madad_kyc_models import (
+    UpdateEligibilityRequest,
+    UploadAuditedFinancialReportRequest,
+    UploadCommercialRegistrationRequest,
+    UploadKYCDocumentRequest,
+)
 from datetime import datetime
 from shared.logging_config import get_logger
 from tools.api_wrappers.auth import MadadAuthAPI
 from tools.api_wrappers.madad_client import MadadAPIError
+from tools.api_wrappers.write.transactional import MadadKYCTransactionalWriteAPI
 
 router = APIRouter()
 logger = get_logger(__name__)
 madad_auth_api = MadadAuthAPI()
+madad_kyc_api = MadadKYCTransactionalWriteAPI()
 
 
 def madad_api_error_to_http(exc: MadadAPIError) -> HTTPException:
@@ -315,5 +323,73 @@ async def madad_auth_logout(request: AccessTokenRequest):
     """Log out the current access token."""
     try:
         return await madad_auth_api.logout(access_token=request.access_token)
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.patch("/madad/kyc/eligibility")
+async def madad_kyc_update_eligibility(request: UpdateEligibilityRequest):
+    """Update business eligibility details."""
+    try:
+        return await madad_kyc_api.update_eligibility(
+            access_token=request.access_token,
+            is_qatar_based=request.is_qatar_based,
+            business_age=request.business_age,
+            cr_validity=request.cr_validity,
+            company_type=request.company_type,
+            sector=request.sector,
+            turnover=request.turnover,
+            employees=request.employees,
+        )
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/kyc/upload-document")
+async def madad_kyc_upload_document(request: UploadKYCDocumentRequest):
+    """Upload a KYC document."""
+    try:
+        return await madad_kyc_api.upload_document(
+            file_path=request.file_path,
+            document_entity_type=request.document_entity_type,
+            document_type=request.document_type,
+            access_token=request.access_token,
+            kyc_stage=request.kyc_stage,
+            document_param=request.document_param,
+            from_admin=request.from_admin,
+            target_user_id=request.target_user_id,
+        )
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/kyc/upload-commercial-registration")
+async def madad_kyc_upload_commercial_registration(request: UploadCommercialRegistrationRequest):
+    """Upload a commercial registration document."""
+    try:
+        return await madad_kyc_api.upload_commercial_registration(
+            file_path=request.file_path,
+            access_token=request.access_token,
+            document_entity_type=request.document_entity_type,
+            document_type=request.document_type,
+            kyc_stage=request.kyc_stage,
+            document_param=request.document_param,
+        )
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/kyc/upload-audited-financial-report")
+async def madad_kyc_upload_audited_financial_report(request: UploadAuditedFinancialReportRequest):
+    """Upload an audited financial report."""
+    try:
+        return await madad_kyc_api.upload_audited_financial_report(
+            file_path=request.file_path,
+            access_token=request.access_token,
+            document_entity_type=request.document_entity_type,
+            document_type=request.document_type,
+            kyc_stage=request.kyc_stage,
+            document_param=request.document_param,
+        )
     except MadadAPIError as exc:
         raise madad_api_error_to_http(exc)

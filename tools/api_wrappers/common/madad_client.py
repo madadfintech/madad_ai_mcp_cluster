@@ -2,6 +2,8 @@
 Reusable HTTP client for the Madad Platform API.
 """
 from typing import Any, Dict, Optional
+from pathlib import Path
+import mimetypes
 
 import httpx
 
@@ -28,33 +30,7 @@ class MadadAPIClient:
         self.base_url = resolved_base_url.rstrip("/")
         self.timeout = timeout or settings.MADAD_API_TIMEOUT
 
-    async def request(
-        self,
-        method: str,
-        path: str,
-        *,
-        json_body: Optional[Dict[str, Any]] = None,
-        params: Optional[Dict[str, Any]] = None,
-        bearer_token: Optional[str] = None,
-    ) -> Dict[str, Any]:
-        headers: Dict[str, str] = {}
-        if bearer_token:
-            headers["Authorization"] = f"Bearer {bearer_token}"
-
-        url = f"{self.base_url}{path}"
-
-        try:
-            async with httpx.AsyncClient(timeout=self.timeout, follow_redirects=False) as client:
-                response = await client.request(
-                    method,
-                    url,
-                    json=json_body,
-                    params=params,
-                    headers=headers,
-                )
-        except httpx.HTTPError as exc:
-            raise MadadAPIError(f"Madad API request failed: {exc}") from exc
-
+    def _parse_response(self, response: httpx.Response) -> Dict[str, Any]:
         parsed_body: Any
         if response.content:
             try:
@@ -85,3 +61,68 @@ class MadadAPIClient:
             result["set_cookie_present"] = True
 
         return result
+
+    async def request(
+        self,
+        method: str,
+        path: str,
+        *,
+        json_body: Optional[Dict[str, Any]] = None,
+        params: Optional[Dict[str, Any]] = None,
+        bearer_token: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        headers: Dict[str, str] = {}
+        if bearer_token:
+            headers["Authorization"] = f"Bearer {bearer_token}"
+
+        url = f"{self.base_url}{path}"
+
+        try:
+            async with httpx.AsyncClient(timeout=self.timeout, follow_redirects=False) as client:
+                response = await client.request(
+                    method,
+                    url,
+                    json=json_body,
+                    params=params,
+                    headers=headers,
+                )
+        except httpx.HTTPError as exc:
+            raise MadadAPIError(f"Madad API request failed: {exc}") from exc
+
+        return self._parse_response(response)
+
+    async def upload_file(
+        self,
+        path: str,
+        *,
+        file_path: str,
+        form_data: Dict[str, Any],
+        params: Optional[Dict[str, Any]] = None,
+        bearer_token: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        headers: Dict[str, str] = {}
+        if bearer_token:
+            headers["Authorization"] = f"Bearer {bearer_token}"
+
+        local_path = Path(file_path).expanduser()
+        if not local_path.is_file():
+            raise MadadAPIError(f"File not found: {file_path}")
+
+        data = {key: str(value) for key, value in form_data.items() if value is not None}
+        content_type = mimetypes.guess_type(local_path.name)[0] or "application/octet-stream"
+        url = f"{self.base_url}{path}"
+
+        try:
+            async with httpx.AsyncClient(timeout=self.timeout, follow_redirects=False) as client:
+                with local_path.open("rb") as file_handle:
+                    response = await client.post(
+                        url,
+                        params=params,
+                        data=data,
+                        files={"file": (local_path.name, file_handle, content_type)},
+                        headers=headers,
+                    )
+        except httpx.HTTPError as exc:
+            raise MadadAPIError(f"Madad API upload failed: {exc}") from exc
+
+        return self._parse_response(response)
