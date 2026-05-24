@@ -20,16 +20,27 @@ from .madad_kyc_models import (
     UploadCommercialRegistrationRequest,
     UploadKYCDocumentRequest,
 )
+from .whatsapp_models import (
+    WhatsAppDocumentLinkRequest,
+    WhatsAppMarkReadRequest,
+    WhatsAppTemplateRequest,
+    WhatsAppTextRequest,
+)
 from datetime import datetime
 from shared.logging_config import get_logger
 from tools.api_wrappers.auth import MadadAuthAPI
 from tools.api_wrappers.madad_client import MadadAPIError
+from tools.api_wrappers.external.external_vendor import WhatsAppAPIError, WhatsAppCloudAPI
 from tools.api_wrappers.write.transactional import MadadKYCTransactionalWriteAPI
 
 router = APIRouter()
 logger = get_logger(__name__)
 madad_auth_api = MadadAuthAPI()
 madad_kyc_api = MadadKYCTransactionalWriteAPI()
+
+
+def get_whatsapp_api() -> WhatsAppCloudAPI:
+    return WhatsAppCloudAPI()
 
 
 def madad_api_error_to_http(exc: MadadAPIError) -> HTTPException:
@@ -42,6 +53,22 @@ def madad_api_error_to_http(exc: MadadAPIError) -> HTTPException:
             "madad_response": exc.details,
         },
     )
+
+
+def whatsapp_api_error_to_http(exc: WhatsAppAPIError) -> HTTPException:
+    status_code = exc.status_code if exc.status_code and exc.status_code >= 400 else 502
+    return HTTPException(
+        status_code=status_code,
+        detail={
+            "message": str(exc),
+            "whatsapp_status_code": exc.status_code,
+            "whatsapp_response": exc.details,
+        },
+    )
+
+
+def whatsapp_config_error_to_http(exc: ValueError) -> HTTPException:
+    return HTTPException(status_code=400, detail={"message": str(exc)})
 
 # Static responses for dummy APIs
 DUMMY_NEWS = """
@@ -393,3 +420,61 @@ async def madad_kyc_upload_audited_financial_report(request: UploadAuditedFinanc
         )
     except MadadAPIError as exc:
         raise madad_api_error_to_http(exc)
+
+
+@router.post("/whatsapp/send-text")
+async def whatsapp_send_text(request: WhatsAppTextRequest):
+    """Send a WhatsApp text message."""
+    try:
+        return await get_whatsapp_api().send_text(
+            to=request.to,
+            body=request.body,
+            preview_url=request.preview_url,
+        )
+    except WhatsAppAPIError as exc:
+        raise whatsapp_api_error_to_http(exc)
+    except ValueError as exc:
+        raise whatsapp_config_error_to_http(exc)
+
+
+@router.post("/whatsapp/send-template")
+async def whatsapp_send_template(request: WhatsAppTemplateRequest):
+    """Send a WhatsApp template message."""
+    try:
+        return await get_whatsapp_api().send_template(
+            to=request.to,
+            template_name=request.template_name,
+            language_code=request.language_code,
+            components=request.components,
+        )
+    except WhatsAppAPIError as exc:
+        raise whatsapp_api_error_to_http(exc)
+    except ValueError as exc:
+        raise whatsapp_config_error_to_http(exc)
+
+
+@router.post("/whatsapp/send-document-link")
+async def whatsapp_send_document_link(request: WhatsAppDocumentLinkRequest):
+    """Send a WhatsApp document message by URL."""
+    try:
+        return await get_whatsapp_api().send_document_link(
+            to=request.to,
+            document_url=request.document_url,
+            filename=request.filename,
+            caption=request.caption,
+        )
+    except WhatsAppAPIError as exc:
+        raise whatsapp_api_error_to_http(exc)
+    except ValueError as exc:
+        raise whatsapp_config_error_to_http(exc)
+
+
+@router.post("/whatsapp/mark-read")
+async def whatsapp_mark_read(request: WhatsAppMarkReadRequest):
+    """Mark a WhatsApp message as read."""
+    try:
+        return await get_whatsapp_api().mark_read(message_id=request.message_id)
+    except WhatsAppAPIError as exc:
+        raise whatsapp_api_error_to_http(exc)
+    except ValueError as exc:
+        raise whatsapp_config_error_to_http(exc)

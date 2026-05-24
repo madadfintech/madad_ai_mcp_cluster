@@ -44,6 +44,13 @@ class Settings(PydanticBaseSettings):
     # Madad Platform API
     MADAD_API_BASE_URL: Optional[str] = None
     MADAD_API_TIMEOUT: int = 30
+
+    # WhatsApp Cloud API
+    WHATSAPP_GRAPH_API_BASE_URL: str = "https://graph.facebook.com"
+    WHATSAPP_GRAPH_API_VERSION: Optional[str] = None
+    WHATSAPP_PHONE_NUMBER_ID: Optional[str] = None
+    WHATSAPP_ACCESS_TOKEN: Optional[str] = None
+    WHATSAPP_API_TIMEOUT: int = 30
     
     # Health check
     HEALTH_CHECK_INTERVAL: int = 60
