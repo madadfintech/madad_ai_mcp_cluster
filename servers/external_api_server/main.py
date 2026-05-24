@@ -16,5 +16,6 @@ app.include_router(router, prefix="/v1")
 mcp_server = FastMCPServer(app, name="External API Server", version="1.0.0")
 
 if __name__ == "__main__":
+    import os
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8003, log_config=None)
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", "8003")), log_config=None)
