@@ -294,8 +294,16 @@ class FastMCPServer:
         route, method = self.route_handlers[tool_call.tool_name]
         settings = get_settings()
         
-        async with httpx.AsyncClient(timeout=settings.MCP_CLIENT_TIMEOUT) as client:
-            base_url = str(original_request.base_url).rstrip("/")
+        async with httpx.AsyncClient(
+            timeout=settings.MCP_CLIENT_TIMEOUT,
+            follow_redirects=True,
+        ) as client:
+            forwarded_proto = original_request.headers.get("x-forwarded-proto")
+            host = original_request.headers.get("host")
+            if forwarded_proto and host:
+                base_url = f"{forwarded_proto}://{host}"
+            else:
+                base_url = str(original_request.base_url).rstrip("/")
             url = f"{base_url}{route.path}"
             
             if method.upper() in ["GET", "DELETE"]:
@@ -309,7 +317,13 @@ class FastMCPServer:
                     {"status_code": response.status_code, "response": response.text}
                 )
             
-            return response.json()
+            try:
+                return response.json()
+            except ValueError as exc:
+                raise MCPToolExecutionError(
+                    "Tool execution returned a non-JSON response",
+                    {"status_code": response.status_code, "response": response.text},
+                ) from exc
     
     async def health_check(self):
         """Health check endpoint"""
