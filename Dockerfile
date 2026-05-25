@@ -9,4 +9,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["python", "-m", "servers.external_api_server.main"]
+CMD ["python", "-m", "servers.external_api_server.fastmcp_main"]
