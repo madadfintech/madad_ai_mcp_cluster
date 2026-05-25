@@ -20,6 +20,13 @@ from .madad_kyc_models import (
     UploadCommercialRegistrationRequest,
     UploadKYCDocumentRequest,
 )
+from .madad_communications_models import (
+    SendBackendWhatsAppTemplateRequest,
+    SendBackendWhatsAppTextRequest,
+    SendEmailOtpRequest,
+    SendSmsOtpRequest,
+    VerifyCommunicationOtpRequest,
+)
 from .whatsapp_models import (
     WhatsAppDocumentLinkRequest,
     WhatsAppMarkReadRequest,
@@ -30,13 +37,18 @@ from datetime import datetime
 from shared.logging_config import get_logger
 from tools.api_wrappers.auth import MadadAuthAPI
 from tools.api_wrappers.madad_client import MadadAPIError
-from tools.api_wrappers.external.external_vendor import WhatsAppAPIError, WhatsAppCloudAPI
+from tools.api_wrappers.external.external_vendor import (
+    MadadCommunicationsAPI,
+    WhatsAppAPIError,
+    WhatsAppCloudAPI,
+)
 from tools.api_wrappers.write.transactional import MadadKYCTransactionalWriteAPI
 
 router = APIRouter()
 logger = get_logger(__name__)
 madad_auth_api = MadadAuthAPI()
 madad_kyc_api = MadadKYCTransactionalWriteAPI()
+madad_communications_api = MadadCommunicationsAPI()
 
 
 def get_whatsapp_api() -> WhatsAppCloudAPI:
@@ -350,6 +362,71 @@ async def madad_auth_logout(request: AccessTokenRequest):
     """Log out the current access token."""
     try:
         return await madad_auth_api.logout(access_token=request.access_token)
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/external/sms/send-otp")
+async def madad_external_sms_send_otp(request: SendSmsOtpRequest):
+    """Send an OTP via the backend SMS provider."""
+    try:
+        return await madad_communications_api.send_sms_otp(
+            mobile=request.mobile,
+            role=request.role,
+        )
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/external/email/send-otp")
+async def madad_external_email_send_otp(request: SendEmailOtpRequest):
+    """Send an OTP via the backend email provider."""
+    try:
+        return await madad_communications_api.send_email_otp(
+            email=request.email,
+            role=request.role,
+        )
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/external/otp/verify")
+async def madad_external_otp_verify(request: VerifyCommunicationOtpRequest):
+    """Verify an OTP sent by SMS or email."""
+    try:
+        return await madad_communications_api.verify_otp(
+            otp=request.otp,
+            mobile=request.mobile,
+            email=request.email,
+            role=request.role,
+        )
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/external/whatsapp/send-text")
+async def madad_external_whatsapp_send_text(request: SendBackendWhatsAppTextRequest):
+    """Send a WhatsApp text message through the Madad backend."""
+    try:
+        return await madad_communications_api.send_whatsapp_text(
+            to=request.to,
+            body=request.body,
+            preview_url=request.preview_url,
+        )
+    except MadadAPIError as exc:
+        raise madad_api_error_to_http(exc)
+
+
+@router.post("/madad/external/whatsapp/send-template")
+async def madad_external_whatsapp_send_template(request: SendBackendWhatsAppTemplateRequest):
+    """Send a WhatsApp template message through the Madad backend."""
+    try:
+        return await madad_communications_api.send_whatsapp_template(
+            to=request.to,
+            template_name=request.template_name,
+            language_code=request.language_code,
+            components=request.components,
+        )
     except MadadAPIError as exc:
         raise madad_api_error_to_http(exc)
 

@@ -4,7 +4,7 @@
 """
 Enhanced FastMCP Library with production-ready features
 """
-from typing import Dict, List, Any, Optional, Callable, Type
+from typing import Dict, List, Any, Optional, Callable, Type, Union, get_args, get_origin
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.routing import APIRoute
 from pydantic import BaseModel, Field
@@ -15,6 +15,7 @@ from enum import Enum
 import httpx
 import time
 import os
+import types
 
 # Import with fallback
 try:
@@ -187,14 +188,20 @@ class FastMCPServer:
 
     def _mcp_type_from_annotation(self, annotation: Any) -> MCPParameterType:
         """Map Python/Pydantic annotations to MCP parameter types."""
-        origin = getattr(annotation, "__origin__", None)
+        origin = get_origin(annotation)
+        args = get_args(annotation)
+        if origin in (Union, types.UnionType):
+            non_none_args = [arg for arg in args if arg is not type(None)]
+            if non_none_args:
+                return self._mcp_type_from_annotation(non_none_args[0])
+
         if annotation == int:
             return MCPParameterType.INTEGER
         if annotation == bool:
             return MCPParameterType.BOOLEAN
-        if annotation == dict or origin == dict:
+        if annotation == dict or origin in (dict, Dict):
             return MCPParameterType.OBJECT
-        if annotation == list or origin == list:
+        if annotation == list or origin in (list, List):
             return MCPParameterType.ARRAY
         return MCPParameterType.STRING
     
@@ -210,15 +217,15 @@ class FastMCPServer:
         required_params = []
         
         for param_name, param in sig.parameters.items():
-            if param_name in ['request', 'self']:
-                continue
-
             if inspect.isclass(param.annotation) and issubclass(param.annotation, BaseModel):
                 self._register_pydantic_model_parameters(
                     param.annotation,
                     parameters,
                     required_params,
                 )
+                continue
+
+            if param_name in ['request', 'self']:
                 continue
 
             param_type = self._mcp_type_from_annotation(param.annotation)
@@ -288,7 +295,7 @@ class FastMCPServer:
         settings = get_settings()
         
         async with httpx.AsyncClient(timeout=settings.MCP_CLIENT_TIMEOUT) as client:
-            base_url = f"http://localhost:{original_request.url.port}"
+            base_url = str(original_request.base_url).rstrip("/")
             url = f"{base_url}{route.path}"
             
             if method.upper() in ["GET", "DELETE"]:
