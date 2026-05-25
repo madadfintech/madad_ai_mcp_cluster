@@ -1,0 +1,1061 @@
+{
+  "info": {
+    "name": "Madad MCP Cluster API Catalogue",
+    "description": "Postman collection for the Madad MCP external API server. Set base_url to local http://localhost:8003 or deployed Cloud Run URL. Direct endpoints live under /v1. MCP tool calls use POST /mcp with tool_name and parameters.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8003"
+    },
+    {
+      "key": "deployed_url",
+      "value": "https://madad-mcp-cluster-626656664233.me-central1.run.app"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "onboarding_token",
+      "value": ""
+    },
+    {
+      "key": "mobile",
+      "value": "33445566"
+    },
+    {
+      "key": "email",
+      "value": "user@example.com"
+    },
+    {
+      "key": "whatsapp_to",
+      "value": "918287611995"
+    },
+    {
+      "key": "file_path",
+      "value": "/absolute/path/to/document.pdf"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health and MCP",
+      "item": [
+        {
+          "name": "Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health"
+              ]
+            },
+            "description": "Check MCP server health."
+          }
+        },
+        {
+          "name": "Tools Catalogue",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "description": "List all registered MCP tools."
+          }
+        },
+        {
+          "name": "MCP Call - Send SMS OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tool_name\": \"post_v1_madad_external_sms_send_otp\",\n  \"parameters\": {\n    \"mobile\": \"{{mobile}}\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Execute a tool through the MCP endpoint."
+          }
+        },
+        {
+          "name": "MCP Call - Backend WhatsApp Text",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tool_name\": \"post_v1_madad_external_whatsapp_send_text\",\n  \"parameters\": {\n    \"to\": \"{{whatsapp_to}}\",\n    \"body\": \"Hello from Madad MCP via backend WhatsApp service.\",\n    \"preview_url\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Send WhatsApp text through MCP tool call."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Madad Auth",
+      "item": [
+        {
+          "name": "Send OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/auth/send-otp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "auth",
+                "send-otp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"{{mobile}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Send OTP using backend auth API."
+          }
+        },
+        {
+          "name": "Send Email OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/auth/send-otp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "auth",
+                "send-otp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Send email OTP using backend auth API."
+          }
+        },
+        {
+          "name": "Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/auth/verify-otp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "auth",
+                "verify-otp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"{{mobile}}\",\n  \"otp\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Verify OTP and authenticate user."
+          }
+        },
+        {
+          "name": "Check Contact",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/auth/check-contact",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "auth",
+                "check-contact"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"{{mobile}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Check whether mobile/email exists."
+          }
+        },
+        {
+          "name": "Onboarding Send Email",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/auth/onboarding-send-email",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "auth",
+                "onboarding-send-email"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"onboarding_token\": \"{{onboarding_token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Send onboarding email OTP."
+          }
+        },
+        {
+          "name": "Verify Onboarding Email",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/auth/verify-onboarding-email",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "auth",
+                "verify-onboarding-email"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"otp\": \"123456\",\n  \"onboarding_token\": \"{{onboarding_token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Verify onboarding email OTP."
+          }
+        },
+        {
+          "name": "Onboarding Send Phone",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/auth/onboarding-send-phone",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "auth",
+                "onboarding-send-phone"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone_number\": \"{{mobile}}\",\n  \"access_token\": \"{{access_token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Send onboarding phone OTP."
+          }
+        },
+        {
+          "name": "Onboarding Verify Phone",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/auth/onboarding-verify-phone",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "auth",
+                "onboarding-verify-phone"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone_number\": \"{{mobile}}\",\n  \"otp\": \"123456\",\n  \"access_token\": \"{{access_token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Verify onboarding phone OTP."
+          }
+        },
+        {
+          "name": "Complete Onboarding",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/auth/complete-onboarding",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "auth",
+                "complete-onboarding"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"email\": \"{{email}}\",\n  \"phone_number\": \"{{mobile}}\",\n  \"onboarding_token\": \"{{onboarding_token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Complete onboarding."
+          }
+        },
+        {
+          "name": "Complete Google Onboarding",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/auth/complete-google-onboarding",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "auth",
+                "complete-google-onboarding"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"phone_number\": \"{{mobile}}\",\n  \"access_token\": \"{{access_token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Complete Google onboarding."
+          }
+        },
+        {
+          "name": "Google OAuth Redirect Metadata",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/auth/google",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "auth",
+                "google"
+              ]
+            },
+            "description": "Initiate Google OAuth."
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/auth/refresh",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "auth",
+                "refresh"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh_token\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Refresh access token."
+          }
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/auth/me?access_token={{access_token}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "auth",
+                "me"
+              ],
+              "query": [
+                {
+                  "key": "access_token",
+                  "value": "{{access_token}}"
+                }
+              ]
+            },
+            "description": "Get current user profile."
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/auth/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "auth",
+                "logout"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"access_token\": \"{{access_token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Logout current user."
+          }
+        }
+      ]
+    },
+    {
+      "name": "External Communications via Backend",
+      "item": [
+        {
+          "name": "SMS - Send OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/external/sms/send-otp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "external",
+                "sms",
+                "send-otp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"{{mobile}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Send OTP through backend SMS provider."
+          }
+        },
+        {
+          "name": "Email - Send OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/external/email/send-otp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "external",
+                "email",
+                "send-otp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Send OTP through backend email provider."
+          }
+        },
+        {
+          "name": "OTP - Verify",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/external/otp/verify",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "external",
+                "otp",
+                "verify"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"{{mobile}}\",\n  \"otp\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Verify OTP sent by SMS or email."
+          }
+        },
+        {
+          "name": "WhatsApp - Send Text",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/external/whatsapp/send-text",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "external",
+                "whatsapp",
+                "send-text"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"{{whatsapp_to}}\",\n  \"body\": \"Hello from Madad MCP through backend WhatsApp service.\",\n  \"preview_url\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Send WhatsApp text through backend WhatsApp service. Works after user opens 24h WhatsApp window."
+          }
+        },
+        {
+          "name": "WhatsApp - Send Template",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/external/whatsapp/send-template",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "external",
+                "whatsapp",
+                "send-template"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"{{whatsapp_to}}\",\n  \"template_name\": \"hello_world\",\n  \"language_code\": \"en_US\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Send WhatsApp template through backend WhatsApp service."
+          }
+        }
+      ]
+    },
+    {
+      "name": "KYC Step 2",
+      "item": [
+        {
+          "name": "Eligibility Check",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/kyc/eligibility",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "kyc",
+                "eligibility"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"access_token\": \"{{access_token}}\",\n  \"is_qatar_based\": true,\n  \"business_age\": \"OVER_2_YEARS\",\n  \"cr_validity\": \"OVER_1_MONTH\",\n  \"company_type\": \"LLC\",\n  \"sector\": \"Finance\",\n  \"turnover\": \"500000-1000000\",\n  \"employees\": \"10-50\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Update KYC eligibility details."
+          }
+        },
+        {
+          "name": "Upload Document",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/kyc/upload-document",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "kyc",
+                "upload-document"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"access_token\": \"{{access_token}}\",\n  \"file_path\": \"{{file_path}}\",\n  \"document_entity_type\": \"BUSINESS_DETAILS\",\n  \"document_type\": \"COMMERCIAL_REGISTRATION\",\n  \"kyc_stage\": \"Business Documents\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Upload any KYC document by local file path from the MCP server runtime."
+          }
+        },
+        {
+          "name": "Upload Commercial Registration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/kyc/upload-commercial-registration",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "kyc",
+                "upload-commercial-registration"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"access_token\": \"{{access_token}}\",\n  \"file_path\": \"{{file_path}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Upload CR document."
+          }
+        },
+        {
+          "name": "Upload Audited Financial Report",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/madad/kyc/upload-audited-financial-report",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "madad",
+                "kyc",
+                "upload-audited-financial-report"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"access_token\": \"{{access_token}}\",\n  \"file_path\": \"{{file_path}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Upload audited financial report."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Direct WhatsApp Cloud API Wrapper",
+      "item": [
+        {
+          "name": "Direct WhatsApp - Send Text",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/whatsapp/send-text",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "whatsapp",
+                "send-text"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"{{whatsapp_to}}\",\n  \"body\": \"Hello from direct MCP WhatsApp Cloud wrapper.\",\n  \"preview_url\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Direct Meta Cloud API wrapper. Prefer backend communication wrapper for platform flows."
+          }
+        },
+        {
+          "name": "Direct WhatsApp - Send Template",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/whatsapp/send-template",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "whatsapp",
+                "send-template"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"{{whatsapp_to}}\",\n  \"template_name\": \"hello_world\",\n  \"language_code\": \"en_US\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Direct Meta Cloud API template send."
+          }
+        },
+        {
+          "name": "Direct WhatsApp - Send Document Link",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/whatsapp/send-document-link",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "whatsapp",
+                "send-document-link"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"{{whatsapp_to}}\",\n  \"document_url\": \"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf\",\n  \"filename\": \"dummy.pdf\",\n  \"caption\": \"Document from Madad MCP\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Direct Meta Cloud API document link send."
+          }
+        },
+        {
+          "name": "Direct WhatsApp - Mark Read",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/whatsapp/mark-read",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "whatsapp",
+                "mark-read"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message_id\": \"wamid.example\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Mark a WhatsApp message as read."
+          }
+        }
+      ]
+    }
+  ]
+}
