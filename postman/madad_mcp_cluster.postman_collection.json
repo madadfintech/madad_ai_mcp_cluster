@@ -1,20 +1,24 @@
 {
   "info": {
-    "name": "Madad MCP Cluster API Catalogue",
-    "description": "Postman collection for the Madad MCP external API server. Set base_url to local http://localhost:8003 or deployed Cloud Run URL. Direct endpoints live under /v1. MCP tool calls use POST /mcp with tool_name and parameters.",
+    "name": "Madad FastMCP Tools Catalogue",
+    "description": "Official FastMCP Postman collection for the Madad MCP cluster. All tools are called through POST /mcp using JSON-RPC. Include Accept: application/json, text/event-stream. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
     {
       "key": "base_url",
-      "value": "http://localhost:8003"
-    },
-    {
-      "key": "deployed_url",
       "value": "https://madad-mcp-cluster-626656664233.me-central1.run.app"
     },
     {
+      "key": "local_url",
+      "value": "http://localhost:8003"
+    },
+    {
       "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "refresh_token",
       "value": ""
     },
     {
@@ -27,20 +31,52 @@
     },
     {
       "key": "email",
-      "value": "user@example.com"
+      "value": "ishaan.jain@madadfintech.com"
+    },
+    {
+      "key": "otp",
+      "value": "123456"
+    },
+    {
+      "key": "role",
+      "value": ""
     },
     {
       "key": "whatsapp_to",
       "value": "918287611995"
     },
     {
+      "key": "template_name",
+      "value": "hello_world"
+    },
+    {
       "key": "file_path",
       "value": "/absolute/path/to/document.pdf"
+    },
+    {
+      "key": "zip_path",
+      "value": "/absolute/path/to/documents.zip"
+    },
+    {
+      "key": "document_id",
+      "value": ""
+    },
+    {
+      "key": "shareholder_id",
+      "value": ""
+    },
+    {
+      "key": "buyer_id",
+      "value": ""
+    },
+    {
+      "key": "offer_id",
+      "value": ""
     }
   ],
   "item": [
     {
-      "name": "Health and MCP",
+      "name": "MCP Protocol",
       "item": [
         {
           "name": "Health",
@@ -56,34 +92,22 @@
                 "health"
               ]
             },
-            "description": "Check MCP server health."
-          }
+            "description": "Check Cloud Run/FastMCP server health. This is the only normal REST endpoint in this collection."
+          },
+          "response": []
         },
         {
-          "name": "Tools Catalogue",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/mcp",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "mcp"
-              ]
-            },
-            "description": "List all registered MCP tools."
-          }
-        },
-        {
-          "name": "MCP Call - Send SMS OTP",
+          "name": "Initialize",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
@@ -97,24 +121,29 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"tool_name\": \"post_v1_madad_external_sms_send_otp\",\n  \"parameters\": {\n    \"mobile\": \"{{mobile}}\"\n  }\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"initialize\",\n  \"params\": {\n    \"protocolVersion\": \"2025-06-18\",\n    \"capabilities\": {},\n    \"clientInfo\": {\n      \"name\": \"postman\",\n      \"version\": \"1.0.0\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Execute a tool through the MCP endpoint."
-          }
+            "description": "Initialize an MCP session. Stateless FastMCP also allows tools/list and tools/call directly."
+          },
+          "response": []
         },
         {
-          "name": "MCP Call - Backend WhatsApp Text",
+          "name": "Tools List",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
@@ -128,932 +157,1954 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"tool_name\": \"post_v1_madad_external_whatsapp_send_text\",\n  \"parameters\": {\n    \"to\": \"{{whatsapp_to}}\",\n    \"body\": \"Hello from Madad MCP via backend WhatsApp service.\",\n    \"preview_url\": false\n  }\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/list\",\n  \"params\": {}\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Send WhatsApp text through MCP tool call."
-          }
+            "description": "List all tools exposed by the Madad FastMCP server."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_auth_check_contact",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_check_contact\",\n    \"arguments\": {\n      \"email\": \"{{email}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Small smoke test tool call. Confirms MCP execution and Madad UAT connectivity."
+          },
+          "response": []
         }
       ]
     },
     {
-      "name": "Madad Auth",
+      "name": "Auth Tools",
       "item": [
         {
-          "name": "Send OTP",
+          "name": "madad_auth_send_otp",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/auth/send-otp",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "auth",
-                "send-otp"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"mobile\": \"{{mobile}}\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_send_otp\",\n    \"arguments\": {\n      \"mobile\": \"{{mobile}}\",\n      \"email\": \"{{email}}\",\n      \"role\": \"{{role}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Send OTP using backend auth API."
-          }
+            "description": "Call FastMCP tool madad_auth_send_otp. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Send Email OTP",
+          "name": "madad_auth_verify_otp",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/auth/send-otp",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "auth",
-                "send-otp"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"{{email}}\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_verify_otp\",\n    \"arguments\": {\n      \"otp\": \"{{otp}}\",\n      \"mobile\": \"{{mobile}}\",\n      \"email\": \"{{email}}\",\n      \"role\": \"{{role}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Send email OTP using backend auth API."
-          }
+            "description": "Call FastMCP tool madad_auth_verify_otp. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Verify OTP",
+          "name": "madad_auth_check_contact",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/auth/verify-otp",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "auth",
-                "verify-otp"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"mobile\": \"{{mobile}}\",\n  \"otp\": \"123456\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_check_contact\",\n    \"arguments\": {\n      \"mobile\": \"{{mobile}}\",\n      \"email\": \"{{email}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Verify OTP and authenticate user."
-          }
+            "description": "Call FastMCP tool madad_auth_check_contact. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Check Contact",
+          "name": "madad_auth_me",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/auth/check-contact",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "auth",
-                "check-contact"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"mobile\": \"{{mobile}}\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_me\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Check whether mobile/email exists."
-          }
+            "description": "Call FastMCP tool madad_auth_me. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Onboarding Send Email",
+          "name": "madad_auth_onboarding_send_email",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/auth/onboarding-send-email",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "auth",
-                "onboarding-send-email"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"{{email}}\",\n  \"onboarding_token\": \"{{onboarding_token}}\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_onboarding_send_email\",\n    \"arguments\": {\n      \"email\": \"{{email}}\",\n      \"onboarding_token\": \"{{onboarding_token}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Send onboarding email OTP."
-          }
+            "description": "Call FastMCP tool madad_auth_onboarding_send_email. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Verify Onboarding Email",
+          "name": "madad_auth_verify_onboarding_email",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/auth/verify-onboarding-email",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "auth",
-                "verify-onboarding-email"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"{{email}}\",\n  \"otp\": \"123456\",\n  \"onboarding_token\": \"{{onboarding_token}}\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_verify_onboarding_email\",\n    \"arguments\": {\n      \"email\": \"{{email}}\",\n      \"otp\": \"{{otp}}\",\n      \"onboarding_token\": \"{{onboarding_token}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Verify onboarding email OTP."
-          }
+            "description": "Call FastMCP tool madad_auth_verify_onboarding_email. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Onboarding Send Phone",
+          "name": "madad_auth_onboarding_send_phone",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/auth/onboarding-send-phone",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "auth",
-                "onboarding-send-phone"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"phone_number\": \"{{mobile}}\",\n  \"access_token\": \"{{access_token}}\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_onboarding_send_phone\",\n    \"arguments\": {\n      \"phone_number\": \"{{mobile}}\",\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Send onboarding phone OTP."
-          }
+            "description": "Call FastMCP tool madad_auth_onboarding_send_phone. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Onboarding Verify Phone",
+          "name": "madad_auth_onboarding_verify_phone",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/auth/onboarding-verify-phone",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "auth",
-                "onboarding-verify-phone"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"phone_number\": \"{{mobile}}\",\n  \"otp\": \"123456\",\n  \"access_token\": \"{{access_token}}\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_onboarding_verify_phone\",\n    \"arguments\": {\n      \"phone_number\": \"{{mobile}}\",\n      \"otp\": \"{{otp}}\",\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Verify onboarding phone OTP."
-          }
+            "description": "Call FastMCP tool madad_auth_onboarding_verify_phone. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Complete Onboarding",
+          "name": "madad_auth_complete_onboarding",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/auth/complete-onboarding",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "auth",
-                "complete-onboarding"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"email\": \"{{email}}\",\n  \"phone_number\": \"{{mobile}}\",\n  \"onboarding_token\": \"{{onboarding_token}}\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_complete_onboarding\",\n    \"arguments\": {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"onboarding_token\": \"{{onboarding_token}}\",\n      \"email\": \"{{email}}\",\n      \"phone_number\": \"{{mobile}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Complete onboarding."
-          }
+            "description": "Call FastMCP tool madad_auth_complete_onboarding. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Complete Google Onboarding",
+          "name": "madad_auth_complete_google_onboarding",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/auth/complete-google-onboarding",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "auth",
-                "complete-google-onboarding"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"phone_number\": \"{{mobile}}\",\n  \"access_token\": \"{{access_token}}\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_complete_google_onboarding\",\n    \"arguments\": {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"phone_number\": \"{{mobile}}\",\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Complete Google onboarding."
-          }
+            "description": "Call FastMCP tool madad_auth_complete_google_onboarding. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Google OAuth Redirect Metadata",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/v1/madad/auth/google",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "v1",
-                "madad",
-                "auth",
-                "google"
-              ]
-            },
-            "description": "Initiate Google OAuth."
-          }
-        },
-        {
-          "name": "Refresh Token",
+          "name": "madad_auth_refresh",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/auth/refresh",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "auth",
-                "refresh"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"refresh_token\": \"\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_refresh\",\n    \"arguments\": {\n      \"refresh_token\": \"{{refresh_token}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Refresh access token."
-          }
+            "description": "Call FastMCP tool madad_auth_refresh. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Me",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/v1/madad/auth/me?access_token={{access_token}}",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "v1",
-                "madad",
-                "auth",
-                "me"
-              ],
-              "query": [
-                {
-                  "key": "access_token",
-                  "value": "{{access_token}}"
-                }
-              ]
-            },
-            "description": "Get current user profile."
-          }
-        },
-        {
-          "name": "Logout",
+          "name": "madad_auth_logout",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/auth/logout",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "auth",
-                "logout"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"access_token\": \"{{access_token}}\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_logout\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Logout current user."
-          }
+            "description": "Call FastMCP tool madad_auth_logout. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_auth_google_oauth_url",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_google_oauth_url\",\n    \"arguments\": {}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_auth_google_oauth_url. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         }
       ]
     },
     {
-      "name": "External Communications via Backend",
+      "name": "External Communication Tools",
       "item": [
         {
-          "name": "SMS - Send OTP",
+          "name": "madad_external_send_sms_otp",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/external/sms/send-otp",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "external",
-                "sms",
-                "send-otp"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"mobile\": \"{{mobile}}\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_external_send_sms_otp\",\n    \"arguments\": {\n      \"mobile\": \"{{mobile}}\",\n      \"role\": \"{{role}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Send OTP through backend SMS provider."
-          }
+            "description": "Call FastMCP tool madad_external_send_sms_otp. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Email - Send OTP",
+          "name": "madad_external_send_email_otp",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/external/email/send-otp",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "external",
-                "email",
-                "send-otp"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"{{email}}\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_external_send_email_otp\",\n    \"arguments\": {\n      \"email\": \"{{email}}\",\n      \"role\": \"{{role}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Send OTP through backend email provider."
-          }
+            "description": "Call FastMCP tool madad_external_send_email_otp. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "OTP - Verify",
+          "name": "madad_external_verify_otp",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/external/otp/verify",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "external",
-                "otp",
-                "verify"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"mobile\": \"{{mobile}}\",\n  \"otp\": \"123456\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_external_verify_otp\",\n    \"arguments\": {\n      \"otp\": \"{{otp}}\",\n      \"mobile\": \"{{mobile}}\",\n      \"email\": \"{{email}}\",\n      \"role\": \"{{role}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Verify OTP sent by SMS or email."
-          }
+            "description": "Call FastMCP tool madad_external_verify_otp. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "WhatsApp - Send Text",
+          "name": "madad_external_send_whatsapp_text",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/external/whatsapp/send-text",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "external",
-                "whatsapp",
-                "send-text"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"to\": \"{{whatsapp_to}}\",\n  \"body\": \"Hello from Madad MCP through backend WhatsApp service.\",\n  \"preview_url\": false\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_external_send_whatsapp_text\",\n    \"arguments\": {\n      \"to\": \"{{whatsapp_to}}\",\n      \"body\": \"Madad FastMCP Postman test.\",\n      \"preview_url\": false\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Send WhatsApp text through backend WhatsApp service. Works after user opens 24h WhatsApp window."
-          }
+            "description": "Call FastMCP tool madad_external_send_whatsapp_text. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "WhatsApp - Send Template",
+          "name": "madad_external_send_whatsapp_template",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/external/whatsapp/send-template",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "external",
-                "whatsapp",
-                "send-template"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"to\": \"{{whatsapp_to}}\",\n  \"template_name\": \"hello_world\",\n  \"language_code\": \"en_US\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_external_send_whatsapp_template\",\n    \"arguments\": {\n      \"to\": \"{{whatsapp_to}}\",\n      \"template_name\": \"{{template_name}}\",\n      \"language_code\": \"en_US\",\n      \"components\": null\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Send WhatsApp template through backend WhatsApp service."
-          }
+            "description": "Call FastMCP tool madad_external_send_whatsapp_template. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "whatsapp_cloud_send_text",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"whatsapp_cloud_send_text\",\n    \"arguments\": {\n      \"to\": \"{{whatsapp_to}}\",\n      \"body\": \"Madad direct Meta FastMCP test.\",\n      \"preview_url\": false\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Direct Meta Cloud API tool. Requires WHATSAPP_* env vars on the MCP Cloud Run service."
+          },
+          "response": []
+        },
+        {
+          "name": "whatsapp_cloud_send_template",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"whatsapp_cloud_send_template\",\n    \"arguments\": {\n      \"to\": \"{{whatsapp_to}}\",\n      \"template_name\": \"{{template_name}}\",\n      \"language_code\": \"en_US\",\n      \"components\": null\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Direct Meta Cloud API tool. Requires WHATSAPP_* env vars on the MCP Cloud Run service."
+          },
+          "response": []
         }
       ]
     },
     {
-      "name": "KYC Step 2",
+      "name": "KYC Document and Eligibility Tools",
       "item": [
         {
-          "name": "Eligibility Check",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/v1/madad/kyc/eligibility",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "v1",
-                "madad",
-                "kyc",
-                "eligibility"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"access_token\": \"{{access_token}}\",\n  \"is_qatar_based\": true,\n  \"business_age\": \"OVER_2_YEARS\",\n  \"cr_validity\": \"OVER_1_MONTH\",\n  \"company_type\": \"LLC\",\n  \"sector\": \"Finance\",\n  \"turnover\": \"500000-1000000\",\n  \"employees\": \"10-50\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "description": "Update KYC eligibility details."
-          }
-        },
-        {
-          "name": "Upload Document",
+          "name": "madad_kyc_update_eligibility",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/kyc/upload-document",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "kyc",
-                "upload-document"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"access_token\": \"{{access_token}}\",\n  \"file_path\": \"{{file_path}}\",\n  \"document_entity_type\": \"BUSINESS_DETAILS\",\n  \"document_type\": \"COMMERCIAL_REGISTRATION\",\n  \"kyc_stage\": \"Business Documents\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_update_eligibility\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"is_qatar_based\": true,\n      \"business_age\": \"OVER_2_YEARS\",\n      \"cr_validity\": \"OVER_1_MONTH\",\n      \"company_type\": \"LLC\",\n      \"sector\": \"Finance\",\n      \"turnover\": \"500000-1000000\",\n      \"employees\": \"10-50\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Upload any KYC document by local file path from the MCP server runtime."
-          }
+            "description": "Call FastMCP tool madad_kyc_update_eligibility. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Upload Commercial Registration",
+          "name": "madad_kyc_upload_document",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/kyc/upload-commercial-registration",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "kyc",
-                "upload-commercial-registration"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"access_token\": \"{{access_token}}\",\n  \"file_path\": \"{{file_path}}\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_upload_document\",\n    \"arguments\": {\n      \"file_path\": \"{{file_path}}\",\n      \"document_entity_type\": \"BUSINESS_DETAILS\",\n      \"document_type\": \"COMMERCIAL_REGISTRATION\",\n      \"access_token\": \"{{access_token}}\",\n      \"kyc_stage\": \"Business Documents\",\n      \"document_param\": null,\n      \"document_label\": null,\n      \"from_admin\": false,\n      \"target_user_id\": null\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Upload CR document."
-          }
+            "description": "Call FastMCP tool madad_kyc_upload_document. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Upload Audited Financial Report",
+          "name": "madad_kyc_upload_commercial_registration",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/madad/kyc/upload-audited-financial-report",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "madad",
-                "kyc",
-                "upload-audited-financial-report"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"access_token\": \"{{access_token}}\",\n  \"file_path\": \"{{file_path}}\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_upload_commercial_registration\",\n    \"arguments\": {\n      \"file_path\": \"{{file_path}}\",\n      \"access_token\": \"{{access_token}}\",\n      \"document_label\": null\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Upload audited financial report."
-          }
+            "description": "Call FastMCP tool madad_kyc_upload_commercial_registration. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_upload_audited_financial_report",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_upload_audited_financial_report\",\n    \"arguments\": {\n      \"file_path\": \"{{file_path}}\",\n      \"access_token\": \"{{access_token}}\",\n      \"document_param\": \"2025\",\n      \"document_label\": \"Audited Report 2025\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_upload_audited_financial_report. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_inspect_zip",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_inspect_zip\",\n    \"arguments\": {\n      \"zip_path\": \"{{zip_path}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_inspect_zip. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_upload_zip_documents",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_upload_zip_documents\",\n    \"arguments\": {\n      \"zip_path\": \"{{zip_path}}\",\n      \"access_token\": \"{{access_token}}\",\n      \"documents\": [\n        {\n          \"archive_path\": \"CR_Company.pdf\",\n          \"document_entity_type\": \"BUSINESS_DETAILS\",\n          \"document_type\": \"COMMERCIAL_REGISTRATION\",\n          \"kyc_stage\": \"Business Documents\",\n          \"document_param\": null,\n          \"document_label\": \"Commercial Registration\"\n        }\n      ],\n      \"continue_on_error\": true\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_upload_zip_documents. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_get_documents",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_get_documents\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_get_documents. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_get_business_documents",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_get_business_documents\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_get_business_documents. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_get_financial_documents",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_get_financial_documents\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_get_financial_documents. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_get_admin_requested_documents",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_get_admin_requested_documents\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_get_admin_requested_documents. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_get_business_details",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_get_business_details\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_get_business_details. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_delete_document",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_delete_document\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"document_id\": \"{{document_id}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_delete_document. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_update_business_details",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_update_business_details\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"legal_entity_name\": \"Acme Trading LLC\",\n      \"cr_number\": \"123456\",\n      \"legal_form\": \"LLC\",\n      \"cr_issue_date\": null,\n      \"cr_expiry_date\": null,\n      \"tax_reg_no\": null,\n      \"tin_number\": null,\n      \"business_city\": \"Doha\",\n      \"business_country\": \"QA\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_update_business_details. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_update_primary_details",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_update_primary_details\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"first_name\": \"John\",\n      \"middle_name\": null,\n      \"last_name\": \"Doe\",\n      \"qid_number\": \"28012345678\",\n      \"qid_expiry_date\": null\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_update_primary_details. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_update_sector_detail",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_update_sector_detail\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"sector\": \"Finance\",\n      \"sub_sector\": \"Lending\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_update_sector_detail. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_complete_stage",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_complete_stage\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"stage\": \"business\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_complete_stage. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         }
       ]
     },
     {
-      "name": "Direct WhatsApp Cloud API Wrapper",
+      "name": "KYC Shareholder Tools",
       "item": [
         {
-          "name": "Direct WhatsApp - Send Text",
+          "name": "madad_kyc_add_shareholders",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/whatsapp/send-text",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "whatsapp",
-                "send-text"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"to\": \"{{whatsapp_to}}\",\n  \"body\": \"Hello from direct MCP WhatsApp Cloud wrapper.\",\n  \"preview_url\": false\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_add_shareholders\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"shareholders\": [\n        {\n          \"name\": \"John Doe\",\n          \"phoneNumber\": \"{{mobile}}\",\n          \"email\": \"john@example.com\",\n          \"firstName\": \"John\",\n          \"lastName\": \"Doe\"\n        }\n      ]\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Direct Meta Cloud API wrapper. Prefer backend communication wrapper for platform flows."
-          }
+            "description": "Call FastMCP tool madad_kyc_add_shareholders. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Direct WhatsApp - Send Template",
+          "name": "madad_kyc_get_shareholders",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/whatsapp/send-template",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "whatsapp",
-                "send-template"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"to\": \"{{whatsapp_to}}\",\n  \"template_name\": \"hello_world\",\n  \"language_code\": \"en_US\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_get_shareholders\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Direct Meta Cloud API template send."
-          }
+            "description": "Call FastMCP tool madad_kyc_get_shareholders. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Direct WhatsApp - Send Document Link",
+          "name": "madad_kyc_get_shareholders_kyc_status",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/whatsapp/send-document-link",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "whatsapp",
-                "send-document-link"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"to\": \"{{whatsapp_to}}\",\n  \"document_url\": \"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf\",\n  \"filename\": \"dummy.pdf\",\n  \"caption\": \"Document from Madad MCP\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_get_shareholders_kyc_status\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Direct Meta Cloud API document link send."
-          }
+            "description": "Call FastMCP tool madad_kyc_get_shareholders_kyc_status. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         },
         {
-          "name": "Direct WhatsApp - Mark Read",
+          "name": "madad_kyc_get_shareholders_consents",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
               }
             ],
             "url": {
-              "raw": "{{base_url}}/v1/whatsapp/mark-read",
+              "raw": "{{base_url}}/mcp",
               "host": [
                 "{{base_url}}"
               ],
               "path": [
-                "v1",
-                "whatsapp",
-                "mark-read"
+                "mcp"
               ]
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"message_id\": \"wamid.example\"\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_get_shareholders_consents\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Mark a WhatsApp message as read."
-          }
+            "description": "Call FastMCP tool madad_kyc_get_shareholders_consents. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_update_shareholder",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_update_shareholder\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"shareholder_id\": \"{{shareholder_id}}\",\n      \"first_name\": \"Jane\",\n      \"middle_name\": null,\n      \"last_name\": \"Doe\",\n      \"email\": \"jane@example.com\",\n      \"phone_number\": \"{{mobile}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_update_shareholder. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_delete_shareholder",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_delete_shareholder\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"shareholder_id\": \"{{shareholder_id}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_delete_shareholder. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_upload_shareholder_documents",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_upload_shareholder_documents\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"shareholder_id\": \"{{shareholder_id}}\",\n      \"files\": {\n        \"SHAREHOLDER_QID\": \"/absolute/path/to/shareholder-qid.pdf\",\n        \"SHAREHOLDER_PASSPORT\": \"/absolute/path/to/shareholder-passport.pdf\"\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_upload_shareholder_documents. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "KYC Buyer Paymaster Tools",
+      "item": [
+        {
+          "name": "madad_kyc_add_buyer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_add_buyer\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"name\": \"Acme Corp\",\n      \"cr_number\": \"789012\",\n      \"contact_person\": \"Jane Buyer\",\n      \"contact_number\": \"{{mobile}}\",\n      \"contact_email\": \"buyer@example.com\",\n      \"buyer_type\": \"Private\",\n      \"buyer_sector\": \"Retail\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_add_buyer. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_get_buyers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_get_buyers\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_get_buyers. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_get_primary_bank_detail",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_get_primary_bank_detail\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_get_primary_bank_detail. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_edit_buyer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_edit_buyer\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"buyer_id\": \"{{buyer_id}}\",\n      \"name\": \"Updated Corp Name\",\n      \"cr_number\": null,\n      \"contact_person\": null,\n      \"contact_number\": null,\n      \"contact_email\": null,\n      \"buyer_type\": null,\n      \"buyer_sector\": null\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_edit_buyer. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_delete_buyer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_delete_buyer\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"buyer_id\": \"{{buyer_id}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_delete_buyer. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Offer Read Tools",
+      "item": [
+        {
+          "name": "madad_offers_get_my_offers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_offers_get_my_offers\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_offers_get_my_offers. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_offers_get_offer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_offers_get_offer\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"offer_id\": \"{{offer_id}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_offers_get_offer. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_offers_get_offers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_offers_get_offers\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_offers_get_offers. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_offers_get_extension_request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_offers_get_extension_request\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"offer_id\": \"{{offer_id}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_offers_get_extension_request. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
         }
       ]
     }
