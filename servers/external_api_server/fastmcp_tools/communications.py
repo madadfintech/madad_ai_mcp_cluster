@@ -1,6 +1,6 @@
 from typing import Any, Dict, List, Optional
 
-from tools.api_wrappers.external.external_vendor import MadadCommunicationsAPI, WhatsAppCloudAPI
+from tools.api_wrappers.external.external_vendor import MadadCommunicationsAPI
 
 from . import mcp
 
@@ -50,28 +50,6 @@ async def madad_external_send_whatsapp_template(
 ) -> Dict[str, Any]:
     """Send a WhatsApp template message through the Madad backend."""
     return await communications_api.send_whatsapp_template(
-        to=to,
-        template_name=template_name,
-        language_code=language_code,
-        components=components,
-    )
-
-
-@mcp.tool
-async def whatsapp_cloud_send_text(to: str, body: str, preview_url: bool = False) -> Dict[str, Any]:
-    """Send a WhatsApp text message directly through Meta Cloud API."""
-    return await WhatsAppCloudAPI().send_text(to=to, body=body, preview_url=preview_url)
-
-
-@mcp.tool
-async def whatsapp_cloud_send_template(
-    to: str,
-    template_name: str,
-    language_code: str = "en_US",
-    components: Optional[List[Dict[str, Any]]] = None,
-) -> Dict[str, Any]:
-    """Send a WhatsApp template message directly through Meta Cloud API."""
-    return await WhatsAppCloudAPI().send_template(
         to=to,
         template_name=template_name,
         language_code=language_code,

@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Madad FastMCP Tools Catalogue",
-    "description": "Official FastMCP Postman collection for the Madad MCP cluster. All tools are called through POST /mcp using JSON-RPC. Include Accept: application/json, text/event-stream. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result.",
+    "description": "Official FastMCP Postman collection for the Madad MCP cluster. All tools call Madad backend services through POST /mcp using JSON-RPC. Include Accept: application/json, text/event-stream. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -859,78 +859,6 @@
               }
             },
             "description": "Call FastMCP tool madad_external_send_whatsapp_template. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
-          },
-          "response": []
-        },
-        {
-          "name": "whatsapp_cloud_send_text",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json, text/event-stream"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/mcp",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "mcp"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"whatsapp_cloud_send_text\",\n    \"arguments\": {\n      \"to\": \"{{whatsapp_to}}\",\n      \"body\": \"Madad direct Meta FastMCP test.\",\n      \"preview_url\": false\n    }\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "description": "Direct Meta Cloud API tool. Requires WHATSAPP_* env vars on the MCP Cloud Run service."
-          },
-          "response": []
-        },
-        {
-          "name": "whatsapp_cloud_send_template",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json, text/event-stream"
-              }
-            ],
-            "url": {
-              "raw": "{{base_url}}/mcp",
-              "host": [
-                "{{base_url}}"
-              ],
-              "path": [
-                "mcp"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"whatsapp_cloud_send_template\",\n    \"arguments\": {\n      \"to\": \"{{whatsapp_to}}\",\n      \"template_name\": \"{{template_name}}\",\n      \"language_code\": \"en_US\",\n      \"components\": null\n    }\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "description": "Direct Meta Cloud API tool. Requires WHATSAPP_* env vars on the MCP Cloud Run service."
           },
           "response": []
         }
