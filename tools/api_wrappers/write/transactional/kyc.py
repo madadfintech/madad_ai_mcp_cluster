@@ -1,3 +1,5 @@
+import base64
+import binascii
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any, Dict, List, Optional
@@ -70,6 +72,49 @@ class MadadKYCTransactionalWriteAPI:
         return await self.client.upload_file(
             "/kyc/upload-document",
             file_path=file_path,
+            form_data=compact_payload(
+                documentEntityType=document_entity_type,
+                documentType=document_type,
+                kycStage=kyc_stage,
+                documentParam=document_param,
+                documentLabel=document_label,
+            ),
+            params=params or None,
+            bearer_token=access_token,
+        )
+
+    async def upload_document_base64(
+        self,
+        *,
+        file_name: str,
+        file_base64: str,
+        document_entity_type: str,
+        document_type: str,
+        access_token: str,
+        mime_type: Optional[str] = None,
+        kyc_stage: Optional[str] = None,
+        document_param: Optional[str] = None,
+        document_label: Optional[str] = None,
+        from_admin: Optional[bool] = None,
+        target_user_id: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        params: Dict[str, Any] = {}
+        if from_admin is not None:
+            params["fromAdmin"] = str(from_admin).lower()
+        if target_user_id:
+            params["targetUserId"] = target_user_id
+
+        try:
+            encoded = file_base64.split(",", 1)[1] if "," in file_base64[:128] else file_base64
+            file_bytes = base64.b64decode(encoded, validate=True)
+        except (binascii.Error, ValueError) as exc:
+            raise MadadAPIError("Invalid base64 file payload") from exc
+
+        return await self.client.upload_file_bytes(
+            "/kyc/upload-document",
+            file_name=file_name,
+            file_bytes=file_bytes,
+            content_type=mime_type,
             form_data=compact_payload(
                 documentEntityType=document_entity_type,
                 documentType=document_type,

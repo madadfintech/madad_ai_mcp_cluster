@@ -62,25 +62,25 @@ class MadadAuthTransactionalWriteAPI:
             bearer_token=onboarding_token,
         )
 
-    async def onboarding_send_phone(self, *, phone_number: str, access_token: str) -> Dict[str, Any]:
+    async def onboarding_send_phone(self, *, phone: str, access_token: str) -> Dict[str, Any]:
         return await self.client.request(
             "POST",
             "/auth/onboarding-send-phone",
-            json_body={"phoneNumber": phone_number},
+            json_body={"phone": phone},
             bearer_token=access_token,
         )
 
     async def onboarding_verify_phone(
         self,
         *,
-        phone_number: str,
+        phone: str,
         otp: str,
         access_token: str,
     ) -> Dict[str, Any]:
         return await self.client.request(
             "POST",
             "/auth/onboarding-verify-phone",
-            json_body={"phoneNumber": phone_number, "otp": otp},
+            json_body={"phone": phone, "otp": otp},
             bearer_token=access_token,
         )
 
@@ -89,9 +89,13 @@ class MadadAuthTransactionalWriteAPI:
         *,
         first_name: str,
         last_name: str,
+        legal_entity_name: str,
+        cr_number: str,
+        is_qatar_based: bool,
+        email: str,
+        phone: str,
+        role: str,
         onboarding_token: str,
-        email: Optional[str] = None,
-        phone_number: Optional[str] = None,
     ) -> Dict[str, Any]:
         return await self.client.request(
             "POST",
@@ -99,8 +103,12 @@ class MadadAuthTransactionalWriteAPI:
             json_body=compact_payload(
                 firstName=first_name,
                 lastName=last_name,
+                legalEntityName=legal_entity_name,
+                crNumber=cr_number,
+                isQatarBased=is_qatar_based,
                 email=email,
-                phoneNumber=phone_number,
+                phone=phone,
+                role=role,
             ),
             bearer_token=onboarding_token,
         )
@@ -110,7 +118,12 @@ class MadadAuthTransactionalWriteAPI:
         *,
         first_name: str,
         last_name: str,
-        phone_number: str,
+        legal_entity_name: str,
+        cr_number: str,
+        is_qatar_based: bool,
+        email: str,
+        phone: str,
+        role: str,
         access_token: str,
     ) -> Dict[str, Any]:
         return await self.client.request(
@@ -119,7 +132,12 @@ class MadadAuthTransactionalWriteAPI:
             json_body={
                 "firstName": first_name,
                 "lastName": last_name,
-                "phoneNumber": phone_number,
+                "legalEntityName": legal_entity_name,
+                "crNumber": cr_number,
+                "isQatarBased": is_qatar_based,
+                "email": email,
+                "phone": phone,
+                "role": role,
             },
             bearer_token=access_token,
         )

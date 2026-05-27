@@ -72,6 +72,18 @@
     {
       "key": "offer_id",
       "value": ""
+    },
+    {
+      "key": "file_name",
+      "value": "CR_Company.pdf"
+    },
+    {
+      "key": "mime_type",
+      "value": "application/pdf"
+    },
+    {
+      "key": "file_base64",
+      "value": "BASE64_FILE_BYTES_HERE"
     }
   ],
   "item": [
@@ -193,7 +205,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_check_contact\",\n    \"arguments\": {\n      \"email\": \"{{email}}\"\n    }\n  }\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_check_contact\",\n    \"arguments\": {\n      \"phone\": \"{{mobile}}\",\n      \"email\": \"{{email}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -306,7 +318,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_check_contact\",\n    \"arguments\": {\n      \"mobile\": \"{{mobile}}\",\n      \"email\": \"{{email}}\"\n    }\n  }\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_check_contact\",\n    \"arguments\": {\n      \"phone\": \"{{mobile}}\",\n      \"email\": \"{{email}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -450,7 +462,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_onboarding_send_phone\",\n    \"arguments\": {\n      \"phone_number\": \"{{mobile}}\",\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_onboarding_send_phone\",\n    \"arguments\": {\n      \"phone\": \"{{mobile}}\",\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -486,7 +498,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_onboarding_verify_phone\",\n    \"arguments\": {\n      \"phone_number\": \"{{mobile}}\",\n      \"otp\": \"{{otp}}\",\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_onboarding_verify_phone\",\n    \"arguments\": {\n      \"phone\": \"{{mobile}}\",\n      \"otp\": \"{{otp}}\",\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -522,7 +534,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_complete_onboarding\",\n    \"arguments\": {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"onboarding_token\": \"{{onboarding_token}}\",\n      \"email\": \"{{email}}\",\n      \"phone_number\": \"{{mobile}}\"\n    }\n  }\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_complete_onboarding\",\n    \"arguments\": {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"legal_entity_name\": \"Acme Trading LLC\",\n      \"cr_number\": \"123456\",\n      \"is_qatar_based\": true,\n      \"email\": \"{{email}}\",\n      \"phone\": \"{{mobile}}\",\n      \"role\": \"MSME\",\n      \"onboarding_token\": \"{{onboarding_token}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -558,7 +570,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_complete_google_onboarding\",\n    \"arguments\": {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"phone_number\": \"{{mobile}}\",\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_auth_complete_google_onboarding\",\n    \"arguments\": {\n      \"first_name\": \"John\",\n      \"last_name\": \"Doe\",\n      \"legal_entity_name\": \"Acme Trading LLC\",\n      \"cr_number\": \"123456\",\n      \"is_qatar_based\": true,\n      \"email\": \"{{email}}\",\n      \"phone\": \"{{mobile}}\",\n      \"role\": \"MSME\",\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -936,6 +948,42 @@
               }
             },
             "description": "Call FastMCP tool madad_kyc_upload_document. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+          },
+          "response": []
+        },
+        {
+          "name": "madad_kyc_upload_document_base64",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/mcp",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_upload_document_base64\",\n    \"arguments\": {\n      \"file_name\": \"{{file_name}}\",\n      \"mime_type\": \"{{mime_type}}\",\n      \"base64\": \"{{file_base64}}\",\n      \"metadata\": {\n        \"access_token\": \"{{access_token}}\",\n        \"document_entity_type\": \"BUSINESS_DETAILS\",\n        \"document_type\": \"COMMERCIAL_REGISTRATION\",\n        \"kyc_stage\": \"Business Documents\",\n        \"document_param\": null,\n        \"document_label\": null,\n        \"from_admin\": false,\n        \"target_user_id\": null\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Call FastMCP tool madad_kyc_upload_document_base64. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
           },
           "response": []
         },

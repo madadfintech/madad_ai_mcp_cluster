@@ -16,13 +16,13 @@ class MadadAuthReadAPI:
     async def check_contact(
         self,
         *,
-        mobile: Optional[str] = None,
+        phone: Optional[str] = None,
         email: Optional[str] = None,
     ) -> Dict[str, Any]:
         return await self.client.request(
             "POST",
             "/auth/check-contact",
-            json_body=compact_payload(mobile=mobile, email=email),
+            json_body=compact_payload(phone=phone, email=email),
         )
 
     async def me(self, *, access_token: str) -> Dict[str, Any]:

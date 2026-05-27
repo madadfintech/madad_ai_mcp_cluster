@@ -156,6 +156,50 @@ class MadadAPIClient:
 
         return self._parse_response(response)
 
+    async def upload_file_bytes(
+        self,
+        path: str,
+        *,
+        file_name: str,
+        file_bytes: bytes,
+        form_data: Dict[str, Any],
+        content_type: Optional[str] = None,
+        params: Optional[Dict[str, Any]] = None,
+        bearer_token: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        headers: Dict[str, str] = {}
+        if bearer_token:
+            headers["Authorization"] = f"Bearer {bearer_token}"
+
+        safe_file_name = Path(file_name).name
+        if not safe_file_name:
+            raise MadadAPIError("file_name is required")
+        if not file_bytes:
+            raise MadadAPIError("file_bytes is required")
+
+        data = {key: str(value) for key, value in form_data.items() if value is not None}
+        resolved_content_type = (
+            content_type
+            or UPLOAD_MIME_TYPES_BY_EXTENSION.get(Path(safe_file_name).suffix.lower())
+            or mimetypes.guess_type(safe_file_name)[0]
+            or "application/octet-stream"
+        )
+        url = f"{self.base_url}{path}"
+
+        try:
+            async with httpx.AsyncClient(timeout=self.timeout, follow_redirects=False) as client:
+                response = await client.post(
+                    url,
+                    params=params,
+                    data=data,
+                    files={"file": (safe_file_name, file_bytes, resolved_content_type)},
+                    headers=headers,
+                )
+        except httpx.HTTPError as exc:
+            raise MadadAPIError(f"Madad API upload failed: {exc}") from exc
+
+        return self._parse_response(response)
+
     async def upload_files(
         self,
         path: str,

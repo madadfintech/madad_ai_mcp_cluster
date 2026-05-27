@@ -46,7 +46,7 @@ async def madad_kyc_upload_document(
     from_admin: bool = False,
     target_user_id: Optional[str] = None,
 ) -> Dict[str, Any]:
-    """Upload a KYC document from a local file path to Madad."""
+    """Upload a KYC document from a trusted local worker file path to Madad."""
     return await kyc_write_api.upload_document(
         file_path=file_path,
         document_entity_type=document_entity_type,
@@ -57,6 +57,44 @@ async def madad_kyc_upload_document(
         document_label=document_label,
         from_admin=from_admin,
         target_user_id=target_user_id,
+    )
+
+
+@mcp.tool
+async def madad_kyc_upload_document_base64(
+    file_name: str,
+    mime_type: str,
+    base64: str,
+    metadata: Dict[str, Any],
+) -> Dict[str, Any]:
+    """Upload a KYC document from base64 bytes received from WhatsApp or email.
+
+    Metadata keys: access_token, document_entity_type, document_type, kyc_stage,
+    document_param, document_label, from_admin, target_user_id.
+    """
+    access_token = metadata.get("access_token")
+    document_entity_type = metadata.get("document_entity_type") or metadata.get("documentEntityType")
+    document_type = metadata.get("document_type") or metadata.get("documentType")
+
+    if not access_token:
+        raise ValueError("metadata.access_token is required")
+    if not document_entity_type:
+        raise ValueError("metadata.document_entity_type is required")
+    if not document_type:
+        raise ValueError("metadata.document_type is required")
+
+    return await kyc_write_api.upload_document_base64(
+        file_name=file_name,
+        file_base64=base64,
+        document_entity_type=document_entity_type,
+        document_type=document_type,
+        access_token=access_token,
+        mime_type=mime_type,
+        kyc_stage=metadata.get("kyc_stage") or metadata.get("kycStage"),
+        document_param=metadata.get("document_param") or metadata.get("documentParam"),
+        document_label=metadata.get("document_label") or metadata.get("documentLabel"),
+        from_admin=metadata.get("from_admin", metadata.get("fromAdmin", False)),
+        target_user_id=metadata.get("target_user_id") or metadata.get("targetUserId"),
     )
 
 

@@ -42,8 +42,25 @@ class VerifyOtpRequest(ContactIdentifierMixin):
     role: Optional[str] = Field(default=None, description="Optional role hint such as ADMIN.")
 
 
-class CheckContactRequest(ContactIdentifierMixin):
-    pass
+class CheckContactRequest(BaseModel):
+    phone: Optional[str] = Field(default=None, description="Qatar mobile number.")
+    email: Optional[str] = Field(default=None, description="Email address.")
+
+    if HAS_MODEL_VALIDATOR:
+
+        @model_validator(mode="after")
+        def require_phone_or_email(self):
+            if not self.phone and not self.email:
+                raise ValueError("Either phone or email is required.")
+            return self
+
+    else:
+
+        @root_validator
+        def require_phone_or_email(cls, values):
+            if not values.get("phone") and not values.get("email"):
+                raise ValueError("Either phone or email is required.")
+            return values
 
 
 class OnboardingSendEmailRequest(BaseModel):
@@ -58,12 +75,12 @@ class VerifyOnboardingEmailRequest(BaseModel):
 
 
 class OnboardingSendPhoneRequest(BaseModel):
-    phone_number: str = Field(description="Mobile number to send OTP to.")
+    phone: str = Field(description="Mobile number to send OTP to.")
     access_token: str = Field(description="Bearer access token.")
 
 
 class OnboardingVerifyPhoneRequest(BaseModel):
-    phone_number: str = Field(description="Mobile number that received the OTP.")
+    phone: str = Field(description="Mobile number that received the OTP.")
     otp: str
     access_token: str = Field(description="Bearer access token.")
 
@@ -71,15 +88,24 @@ class OnboardingVerifyPhoneRequest(BaseModel):
 class CompleteOnboardingRequest(BaseModel):
     first_name: str
     last_name: str
+    legal_entity_name: str
+    cr_number: str
+    is_qatar_based: bool
+    email: str
+    phone: str
+    role: str
     onboarding_token: str = Field(description="Bearer onboarding token.")
-    email: Optional[str] = None
-    phone_number: Optional[str] = None
 
 
 class CompleteGoogleOnboardingRequest(BaseModel):
     first_name: str
     last_name: str
-    phone_number: str
+    legal_entity_name: str
+    cr_number: str
+    is_qatar_based: bool
+    email: str
+    phone: str
+    role: str
     access_token: str = Field(description="Bearer access token.")
 
 

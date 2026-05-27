@@ -31,11 +31,11 @@ async def madad_auth_verify_otp(
 
 @mcp.tool
 async def madad_auth_check_contact(
-    mobile: Optional[str] = None,
+    phone: Optional[str] = None,
     email: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Check whether a mobile number or email is already registered in Madad."""
-    return await auth_api.check_contact(mobile=mobile, email=email)
+    return await auth_api.check_contact(phone=phone, email=email)
 
 
 @mcp.tool
@@ -65,20 +65,20 @@ async def madad_auth_verify_onboarding_email(
 
 
 @mcp.tool
-async def madad_auth_onboarding_send_phone(phone_number: str, access_token: str) -> Dict[str, Any]:
+async def madad_auth_onboarding_send_phone(phone: str, access_token: str) -> Dict[str, Any]:
     """Send a phone OTP during onboarding using an access token."""
-    return await auth_api.onboarding_send_phone(phone_number=phone_number, access_token=access_token)
+    return await auth_api.onboarding_send_phone(phone=phone, access_token=access_token)
 
 
 @mcp.tool
 async def madad_auth_onboarding_verify_phone(
-    phone_number: str,
+    phone: str,
     otp: str,
     access_token: str,
 ) -> Dict[str, Any]:
     """Verify an onboarding phone OTP using an access token."""
     return await auth_api.onboarding_verify_phone(
-        phone_number=phone_number,
+        phone=phone,
         otp=otp,
         access_token=access_token,
     )
@@ -88,17 +88,25 @@ async def madad_auth_onboarding_verify_phone(
 async def madad_auth_complete_onboarding(
     first_name: str,
     last_name: str,
+    legal_entity_name: str,
+    cr_number: str,
+    is_qatar_based: bool,
+    email: str,
+    phone: str,
+    role: str,
     onboarding_token: str,
-    email: Optional[str] = None,
-    phone_number: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Complete standard onboarding and create the Madad user account."""
     return await auth_api.complete_onboarding(
         first_name=first_name,
         last_name=last_name,
-        onboarding_token=onboarding_token,
+        legal_entity_name=legal_entity_name,
+        cr_number=cr_number,
+        is_qatar_based=is_qatar_based,
         email=email,
-        phone_number=phone_number,
+        phone=phone,
+        role=role,
+        onboarding_token=onboarding_token,
     )
 
 
@@ -106,14 +114,24 @@ async def madad_auth_complete_onboarding(
 async def madad_auth_complete_google_onboarding(
     first_name: str,
     last_name: str,
-    phone_number: str,
+    legal_entity_name: str,
+    cr_number: str,
+    is_qatar_based: bool,
+    email: str,
+    phone: str,
+    role: str,
     access_token: str,
 ) -> Dict[str, Any]:
     """Complete onboarding after a Google OAuth login."""
     return await auth_api.complete_google_onboarding(
         first_name=first_name,
         last_name=last_name,
-        phone_number=phone_number,
+        legal_entity_name=legal_entity_name,
+        cr_number=cr_number,
+        is_qatar_based=is_qatar_based,
+        email=email,
+        phone=phone,
+        role=role,
         access_token=access_token,
     )
 
