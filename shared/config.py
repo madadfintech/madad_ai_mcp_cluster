@@ -44,6 +44,7 @@ class Settings(PydanticBaseSettings):
     # Madad Platform API
     MADAD_API_BASE_URL: Optional[str] = None
     MADAD_API_TIMEOUT: int = 30
+    MADAD_MCP_AGENT_SECRET: Optional[str] = None
 
     # WhatsApp Cloud API
     WHATSAPP_GRAPH_API_BASE_URL: str = "https://graph.facebook.com"

@@ -95,8 +95,9 @@ class MadadAPIClient:
         json_body: Optional[Dict[str, Any]] = None,
         params: Optional[Dict[str, Any]] = None,
         bearer_token: Optional[str] = None,
+        extra_headers: Optional[Dict[str, str]] = None,
     ) -> Dict[str, Any]:
-        headers: Dict[str, str] = {}
+        headers: Dict[str, str] = dict(extra_headers or {})
         if bearer_token:
             headers["Authorization"] = f"Bearer {bearer_token}"
 

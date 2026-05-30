@@ -84,9 +84,155 @@
     {
       "key": "file_base64",
       "value": "BASE64_FILE_BYTES_HERE"
+    },
+    {
+      "key": "mcp_url",
+      "value": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp"
+    },
+    {
+      "key": "mcp_agent_channel",
+      "value": "WHATSAPP"
+    },
+    {
+      "key": "mcp_agent_identifier",
+      "value": "33445566"
+    },
+    {
+      "key": "mcp_agent_display_name",
+      "value": "Test User"
+    },
+    {
+      "key": "mcp_agent_event",
+      "value": "eligibility.updated"
+    },
+    {
+      "key": "mcp_agent_correlation_id",
+      "value": "postman-test-001"
     }
   ],
   "item": [
+    {
+      "name": "MCP Agent Session and Webhooks",
+      "item": [
+        {
+          "name": "madad_mcp_create_channel_session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_mcp_create_channel_session\",\n    \"arguments\": {\n      \"channel\": \"{{mcp_agent_channel}}\",\n      \"identifier\": \"{{mcp_agent_identifier}}\",\n      \"email\": \"{{email}}\",\n      \"phone\": \"{{mobile}}\",\n      \"display_name\": \"{{mcp_agent_display_name}}\",\n      \"create_onboarding_token\": true\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Creates a scoped backend channel session for a verified WhatsApp/email identity. Use returned accessToken for existing users and onboardingToken for new leads."
+          }
+        },
+        {
+          "name": "madad_mcp_get_webhook_events",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_mcp_get_webhook_events\",\n    \"arguments\": {}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Lists backend event names supported for agent webhook handoff."
+          }
+        },
+        {
+          "name": "madad_mcp_emit_webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_mcp_emit_webhook\",\n    \"arguments\": {\n      \"event\": \"{{mcp_agent_event}}\",\n      \"user_id\": \"\",\n      \"correlation_id\": \"{{mcp_agent_correlation_id}}\",\n      \"payload\": {\n        \"source\": \"postman\",\n        \"message\": \"MCP webhook emit test\"\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Test-emits a configured backend-to-agent webhook. If backend MCP_AGENT_WEBHOOK_URL is not configured, response is skipped=true."
+          }
+        }
+      ]
+    },
     {
       "name": "MCP Protocol",
       "item": [
@@ -94,14 +240,23 @@
           "name": "Health",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
             "url": {
-              "raw": "{{base_url}}/health",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
-                "health"
+                "mcp"
               ]
             },
             "description": "Check Cloud Run/FastMCP server health. This is the only normal REST endpoint in this collection."
@@ -123,9 +278,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -159,9 +318,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -195,9 +358,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -236,9 +403,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -272,9 +443,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -308,9 +483,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -344,9 +523,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -380,9 +563,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -416,9 +603,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -452,9 +643,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -488,9 +683,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -524,9 +723,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -560,9 +763,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -596,9 +803,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -632,9 +843,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -668,9 +883,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -709,9 +928,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -745,9 +968,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -781,9 +1008,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -817,9 +1048,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -853,9 +1088,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -894,9 +1133,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -930,9 +1173,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -966,9 +1213,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1002,9 +1253,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1038,9 +1293,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1074,9 +1333,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1110,9 +1373,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1146,9 +1413,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1182,9 +1453,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1218,9 +1493,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1254,9 +1533,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1290,9 +1573,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1326,9 +1613,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1362,9 +1653,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1398,9 +1693,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1434,9 +1733,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1470,9 +1773,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1511,9 +1818,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1547,9 +1858,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1583,9 +1898,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1619,9 +1938,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1655,9 +1978,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1691,9 +2018,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1727,9 +2058,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1768,9 +2103,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1804,9 +2143,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1840,9 +2183,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1876,9 +2223,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1912,9 +2263,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1953,9 +2308,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -1989,9 +2348,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -2025,9 +2388,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
@@ -2061,9 +2428,13 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/mcp",
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
               "host": [
-                "{{base_url}}"
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
               ],
               "path": [
                 "mcp"
