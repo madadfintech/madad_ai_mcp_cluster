@@ -1,5 +1,6 @@
 from typing import Any, Dict, List, Optional
 
+from shared.config import settings
 from tools.api_wrappers.common import MadadAPIClient
 
 
@@ -12,6 +13,11 @@ class MadadPaymentsTransactionalWriteAPI:
 
     def __init__(self, client: Optional[MadadAPIClient] = None):
         self.client = client or MadadAPIClient()
+
+    def _mcp_headers(self) -> Dict[str, str]:
+        if not settings.MADAD_MCP_AGENT_SECRET:
+            return {}
+        return {"x-mcp-agent-secret": settings.MADAD_MCP_AGENT_SECRET}
 
     async def create_monetization_payment(
         self,
@@ -44,6 +50,7 @@ class MadadPaymentsTransactionalWriteAPI:
                 customData=custom_data,
             ),
             bearer_token=access_token,
+            extra_headers=self._mcp_headers(),
         )
 
     async def send_monetization_payment_link(
@@ -66,6 +73,7 @@ class MadadPaymentsTransactionalWriteAPI:
                 messageBody=message_body,
             ),
             bearer_token=access_token,
+            extra_headers=self._mcp_headers(),
         )
 
     async def sync_monetization_payment_status(
@@ -78,4 +86,5 @@ class MadadPaymentsTransactionalWriteAPI:
             "POST",
             f"/payments/monetization-payments/{payment_id}/sync-status",
             bearer_token=access_token,
+            extra_headers=self._mcp_headers(),
         )

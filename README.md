@@ -68,7 +68,7 @@ To list the available tools:
 
 - `onboardingToken` is only for onboarding endpoints such as `madad_auth_complete_onboarding`.
 - `accessToken` is for protected KYC, offer, status, and user-facing tools.
-- Payment tools call admin/ops backend endpoints and require an `ADMIN`, `OPS`, or `SUPER_ADMIN` access token.
+- Payment tools can be called with the user's access token through MCP. MCP adds the backend-only shared secret header, and the backend allows only the marked payment-gate routes.
 - MCP should never receive or store Meta, TESS, SMS, email-provider, or database credentials.
 
 ## Core Tools
@@ -155,19 +155,16 @@ The backend owns WhatsApp credentials and Meta API calls.
 
 Payment integration is implemented in the backend `payments` module. MCP exposes the payment gate through backend-only tools:
 
-- `madad_payments_search_businesses`
 - `madad_payments_list_monetization_products`
 - `madad_payments_create_monetization_payment`
 - `madad_payments_send_monetization_payment_link`
 - `madad_payments_get_monetization_payment`
-- `madad_payments_list_monetization_payments`
 - `madad_payments_sync_monetization_payment_status`
-- `madad_payments_get_collection_reports`
 
 Preferred Step 5 payment flow:
 
 ```text
-madad_payments_search_businesses -> businessDetailsId
+madad_kyc_get_business_details -> businessDetailsId
 madad_payments_list_monetization_products -> productId
 madad_payments_create_monetization_payment -> paymentLink + paymentId
 madad_payments_send_monetization_payment_link -> sends link by backend email/SMS

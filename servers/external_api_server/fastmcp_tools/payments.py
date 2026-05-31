@@ -11,20 +11,6 @@ payments_write_api = MadadPaymentsTransactionalWriteAPI()
 
 
 @mcp.tool
-async def madad_payments_search_businesses(
-    access_token: str,
-    search: Optional[str] = None,
-    limit: Optional[int] = 20,
-) -> Dict[str, Any]:
-    """Search businesses that can be charged through the Madad payment gate."""
-    return await payments_read_api.search_businesses(
-        access_token=access_token,
-        search=search,
-        limit=limit,
-    )
-
-
-@mcp.tool
 async def madad_payments_list_monetization_products(
     access_token: str,
     search: Optional[str] = None,
@@ -101,30 +87,6 @@ async def madad_payments_get_monetization_payment(
 
 
 @mcp.tool
-async def madad_payments_list_monetization_payments(
-    access_token: str,
-    business_details_id: Optional[str] = None,
-    product_id: Optional[str] = None,
-    internal_status: Optional[str] = None,
-    provider_status: Optional[str] = None,
-    search: Optional[str] = None,
-    page: Optional[int] = 1,
-    page_size: Optional[int] = 20,
-) -> Dict[str, Any]:
-    """List TESS monetization payment records."""
-    return await payments_read_api.list_monetization_payments(
-        access_token=access_token,
-        business_details_id=business_details_id,
-        product_id=product_id,
-        internal_status=internal_status,
-        provider_status=provider_status,
-        search=search,
-        page=page,
-        page_size=page_size,
-    )
-
-
-@mcp.tool
 async def madad_payments_sync_monetization_payment_status(
     access_token: str,
     payment_id: str,
@@ -135,27 +97,4 @@ async def madad_payments_sync_monetization_payment_status(
         payment_id=payment_id,
     )
 
-
-@mcp.tool
-async def madad_payments_get_collection_reports(
-    access_token: str,
-    business_details_id: Optional[str] = None,
-    product_id: Optional[str] = None,
-    internal_status: Optional[str] = None,
-    provider_status: Optional[str] = None,
-    search: Optional[str] = None,
-    page: Optional[int] = 1,
-    page_size: Optional[int] = 20,
-) -> Dict[str, Any]:
-    """Get monetization collection report totals and recent payments."""
-    return await payments_read_api.get_collection_reports(
-        access_token=access_token,
-        business_details_id=business_details_id,
-        product_id=product_id,
-        internal_status=internal_status,
-        provider_status=provider_status,
-        search=search,
-        page=page,
-        page_size=page_size,
-    )
 

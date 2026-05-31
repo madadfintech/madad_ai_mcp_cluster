@@ -2314,45 +2314,6 @@
       "name": "TESS Payment Tools",
       "item": [
         {
-          "name": "madad_payments_search_businesses",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json, text/event-stream"
-              }
-            ],
-            "url": {
-              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
-              "protocol": "https",
-              "host": [
-                "madad-mcp-cluster-626656664233",
-                "me-central1",
-                "run",
-                "app"
-              ],
-              "path": [
-                "mcp"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_search_businesses\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"search\": \"{{payment_business_search}}\",\n      \"limit\": 20\n    }\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "description": "Search businessDetails records to find the businessDetailsId required for monetization payments. Requires ADMIN/OPS/SUPER_ADMIN access token."
-          }
-        },
-        {
           "name": "madad_payments_list_monetization_products",
           "request": {
             "method": "POST",
@@ -2509,45 +2470,6 @@
           }
         },
         {
-          "name": "madad_payments_list_monetization_payments",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json, text/event-stream"
-              }
-            ],
-            "url": {
-              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
-              "protocol": "https",
-              "host": [
-                "madad-mcp-cluster-626656664233",
-                "me-central1",
-                "run",
-                "app"
-              ],
-              "path": [
-                "mcp"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_list_monetization_payments\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"business_details_id\": \"{{business_details_id}}\",\n      \"product_id\": \"{{payment_product_id}}\",\n      \"page\": 1,\n      \"page_size\": 20\n    }\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "description": "List monetization payment records with filters. Requires ADMIN/OPS/SUPER_ADMIN access token."
-          }
-        },
-        {
           "name": "madad_payments_sync_monetization_payment_status",
           "request": {
             "method": "POST",
@@ -2584,45 +2506,6 @@
               }
             },
             "description": "Ask backend to refresh payment status from TESS. Requires ADMIN/OPS/SUPER_ADMIN access token."
-          }
-        },
-        {
-          "name": "madad_payments_get_collection_reports",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json, text/event-stream"
-              }
-            ],
-            "url": {
-              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
-              "protocol": "https",
-              "host": [
-                "madad-mcp-cluster-626656664233",
-                "me-central1",
-                "run",
-                "app"
-              ],
-              "path": [
-                "mcp"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_get_collection_reports\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"business_details_id\": \"{{business_details_id}}\",\n      \"product_id\": \"{{payment_product_id}}\",\n      \"page\": 1,\n      \"page_size\": 20\n    }\n  }\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "description": "Get monetization collection report totals and recent payments. Requires ADMIN/OPS/SUPER_ADMIN access token."
           }
         }
       ]

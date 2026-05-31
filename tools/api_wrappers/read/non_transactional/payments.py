@@ -1,5 +1,6 @@
 from typing import Any, Dict, Optional
 
+from shared.config import settings
 from tools.api_wrappers.common import MadadAPIClient
 
 
@@ -13,6 +14,11 @@ class MadadPaymentsNonTransactionalReadAPI:
     def __init__(self, client: Optional[MadadAPIClient] = None):
         self.client = client or MadadAPIClient()
 
+    def _mcp_headers(self) -> Dict[str, str]:
+        if not settings.MADAD_MCP_AGENT_SECRET:
+            return {}
+        return {"x-mcp-agent-secret": settings.MADAD_MCP_AGENT_SECRET}
+
     async def search_businesses(
         self,
         *,
@@ -25,6 +31,7 @@ class MadadPaymentsNonTransactionalReadAPI:
             "/payments/businesses",
             params=compact_params(search=search, limit=limit),
             bearer_token=access_token,
+            extra_headers=self._mcp_headers(),
         )
 
     async def list_monetization_products(
@@ -39,6 +46,7 @@ class MadadPaymentsNonTransactionalReadAPI:
             "/payments/monetization-products",
             params=compact_params(search=search, status=status),
             bearer_token=access_token,
+            extra_headers=self._mcp_headers(),
         )
 
     async def list_monetization_payments(
@@ -66,6 +74,7 @@ class MadadPaymentsNonTransactionalReadAPI:
                 pageSize=page_size,
             ),
             bearer_token=access_token,
+            extra_headers=self._mcp_headers(),
         )
 
     async def get_monetization_payment(self, *, access_token: str, payment_id: str) -> Dict[str, Any]:
@@ -73,6 +82,7 @@ class MadadPaymentsNonTransactionalReadAPI:
             "GET",
             f"/payments/monetization-payments/{payment_id}",
             bearer_token=access_token,
+            extra_headers=self._mcp_headers(),
         )
 
     async def get_collection_reports(
@@ -100,4 +110,5 @@ class MadadPaymentsNonTransactionalReadAPI:
                 pageSize=page_size,
             ),
             bearer_token=access_token,
+            extra_headers=self._mcp_headers(),
         )
