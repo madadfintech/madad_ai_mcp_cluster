@@ -108,6 +108,26 @@
     {
       "key": "mcp_agent_correlation_id",
       "value": "postman-test-001"
+    },
+    {
+      "key": "business_details_id",
+      "value": ""
+    },
+    {
+      "key": "payment_product_id",
+      "value": ""
+    },
+    {
+      "key": "payment_product_search",
+      "value": "onboarding"
+    },
+    {
+      "key": "payment_business_search",
+      "value": ""
+    },
+    {
+      "key": "payment_id",
+      "value": ""
     }
   ],
   "item": [
@@ -2287,6 +2307,323 @@
             "description": "Call FastMCP tool madad_kyc_delete_buyer. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
           },
           "response": []
+        }
+      ]
+    },
+    {
+      "name": "TESS Payment Tools",
+      "item": [
+        {
+          "name": "madad_payments_search_businesses",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_search_businesses\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"search\": \"{{payment_business_search}}\",\n      \"limit\": 20\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Search businessDetails records to find the businessDetailsId required for monetization payments. Requires ADMIN/OPS/SUPER_ADMIN access token."
+          }
+        },
+        {
+          "name": "madad_payments_list_monetization_products",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_list_monetization_products\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"search\": \"{{payment_product_search}}\",\n      \"status\": \"ACTIVE\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "List active payable products, such as the onboarding and assessment fee product. Requires ADMIN/OPS/SUPER_ADMIN access token."
+          }
+        },
+        {
+          "name": "madad_payments_create_monetization_payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_create_monetization_payment\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"business_details_id\": \"{{business_details_id}}\",\n      \"product_id\": \"{{payment_product_id}}\",\n      \"payable_amount\": 6000,\n      \"mode_of_payment\": \"CHECKOUT\",\n      \"operation\": \"purchase\",\n      \"methods\": [\n        \"card\"\n      ],\n      \"session_expiry_minutes\": 60,\n      \"recipient_email\": \"{{email}}\",\n      \"recipient_phone\": \"{{mobile}}\",\n      \"custom_data\": {\n        \"source\": \"mcp-agent\",\n        \"journey_step\": \"payment_gate\"\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Create a recorded monetization payment and TESS checkout link. Use this for the QAR 6000 payment gate. Requires ADMIN/OPS/SUPER_ADMIN access token."
+          }
+        },
+        {
+          "name": "madad_payments_send_monetization_payment_link",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_send_monetization_payment_link\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"payment_id\": \"{{payment_id}}\",\n      \"recipient_email\": \"{{email}}\",\n      \"recipient_phone\": \"{{mobile}}\",\n      \"message_title\": \"Madad onboarding payment\",\n      \"message_body\": \"Please complete your Madad onboarding and assessment fee payment using this secure link.\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Send an existing monetization payment link through backend email/SMS delivery. Requires ADMIN/OPS/SUPER_ADMIN access token."
+          }
+        },
+        {
+          "name": "madad_payments_get_monetization_payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_get_monetization_payment\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"payment_id\": \"{{payment_id}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Read a monetization payment record by id. Requires ADMIN/OPS/SUPER_ADMIN access token."
+          }
+        },
+        {
+          "name": "madad_payments_list_monetization_payments",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_list_monetization_payments\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"business_details_id\": \"{{business_details_id}}\",\n      \"product_id\": \"{{payment_product_id}}\",\n      \"page\": 1,\n      \"page_size\": 20\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "List monetization payment records with filters. Requires ADMIN/OPS/SUPER_ADMIN access token."
+          }
+        },
+        {
+          "name": "madad_payments_sync_monetization_payment_status",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_sync_monetization_payment_status\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"payment_id\": \"{{payment_id}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Ask backend to refresh payment status from TESS. Requires ADMIN/OPS/SUPER_ADMIN access token."
+          }
+        },
+        {
+          "name": "madad_payments_get_collection_reports",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_get_collection_reports\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"business_details_id\": \"{{business_details_id}}\",\n      \"product_id\": \"{{payment_product_id}}\",\n      \"page\": 1,\n      \"page_size\": 20\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Get monetization collection report totals and recent payments. Requires ADMIN/OPS/SUPER_ADMIN access token."
+          }
         }
       ]
     },
