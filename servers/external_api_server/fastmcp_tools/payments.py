@@ -27,6 +27,7 @@ async def madad_payments_list_monetization_products(
 @mcp.tool
 async def madad_payments_create_monetization_payment(
     access_token: str,
+    idempotency_key: str,
     business_details_id: str,
     product_id: str,
     payable_amount: Optional[float] = None,
@@ -41,6 +42,7 @@ async def madad_payments_create_monetization_payment(
     """Create a recorded TESS monetization payment and checkout link."""
     return await payments_write_api.create_monetization_payment(
         access_token=access_token,
+        idempotency_key=idempotency_key,
         business_details_id=business_details_id,
         product_id=product_id,
         payable_amount=payable_amount,
@@ -57,6 +59,7 @@ async def madad_payments_create_monetization_payment(
 @mcp.tool
 async def madad_payments_send_monetization_payment_link(
     access_token: str,
+    idempotency_key: str,
     payment_id: str,
     recipient_email: Optional[str] = None,
     recipient_phone: Optional[str] = None,
@@ -66,6 +69,7 @@ async def madad_payments_send_monetization_payment_link(
     """Send an existing monetization payment link by backend email or SMS."""
     return await payments_write_api.send_monetization_payment_link(
         access_token=access_token,
+        idempotency_key=idempotency_key,
         payment_id=payment_id,
         recipient_email=recipient_email,
         recipient_phone=recipient_phone,
@@ -96,5 +100,4 @@ async def madad_payments_sync_monetization_payment_status(
         access_token=access_token,
         payment_id=payment_id,
     )
-
 

@@ -69,6 +69,7 @@ To list the available tools:
 - `onboardingToken` is only for onboarding endpoints such as `madad_auth_complete_onboarding`.
 - `accessToken` is for protected KYC, offer, status, and user-facing tools.
 - Payment tools can be called with the user's access token through MCP. MCP adds the backend-only shared secret header, and the backend allows only the marked payment-gate routes.
+- MCP payment write tools require an `idempotency_key`. Reuse the same key when retrying the same create/send action.
 - MCP should never receive or store Meta, TESS, SMS, email-provider, or database credentials.
 
 ## Core Tools
@@ -142,6 +143,22 @@ Buyer/paymaster tools:
 - `madad_kyc_get_buyers`
 - `madad_kyc_delete_buyer`
 
+### Invoice Financing
+
+Invoice tools mirror the MSME portal's `/invoices/upload` workflow:
+
+- `madad_invoices_extract_invoice`
+- `madad_invoices_extract_invoice_base64`
+- `madad_invoices_submit_invoice`
+- `madad_invoices_submit_invoice_base64`
+- `madad_invoices_extract_and_submit_invoice`
+- `madad_invoices_extract_and_submit_invoice_base64`
+- `madad_invoices_inspect_zip`
+- `madad_invoices_upload_zip`
+- `madad_invoices_get_my_invoices`
+
+For WhatsApp/email attachments, use `madad_invoices_extract_and_submit_invoice_base64` when the agent should assume extracted data is correct and submit immediately. For ZIPs, `madad_invoices_upload_zip` extracts each file and recursively runs the same invoice upload flow.
+
 ### WhatsApp
 
 Use only:
@@ -166,8 +183,8 @@ Preferred Step 5 payment flow:
 ```text
 madad_kyc_get_business_details -> businessDetailsId
 madad_payments_list_monetization_products -> productId
-madad_payments_create_monetization_payment -> paymentLink + paymentId
-madad_payments_send_monetization_payment_link -> sends link by backend email/SMS
+madad_payments_create_monetization_payment(idempotency_key) -> paymentLink + paymentId
+madad_payments_send_monetization_payment_link(idempotency_key) -> sends link by backend email/SMS
 TESS callback hits backend -> backend updates payment status
 madad_payments_get_monetization_payment or webhook -> read status
 ```
@@ -188,6 +205,12 @@ Initial event names:
 - `offers.available`
 - `offer.accepted`
 - `credit_line.activated`
+- `transaction.disbursed`
+- `repayment.received`
+- `repayment.partially_paid`
+- `repayment.closed`
+- `repayment.due_soon`
+- `repayment.overdue`
 
 `madad_mcp_emit_webhook` is available as a test/smoke tool. Production service methods can call the backend `McpAgentService.emitWebhook` internally when each business event is finalized.
 
@@ -229,6 +252,17 @@ Use offer read tools only:
 - `madad_offers_get_offer`
 
 Final offer selection, acceptance, and signing stay on the Madad platform.
+
+### Step 10: Invoice Submission
+
+Use the invoice tools above. The default agent path is:
+
+```text
+madad_invoices_extract_and_submit_invoice_base64 -> submitted invoice
+madad_invoices_get_my_invoices -> user invoice list/status
+```
+
+For bulk invoice ZIPs, use `madad_invoices_upload_zip`. It extracts the ZIP locally in MCP and uploads each invoice through the backend `/invoices/upload` API. If a future human review CSV is required, that should be added as a separate backend/agent workflow.
 
 ## Local Run
 

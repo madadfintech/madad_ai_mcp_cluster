@@ -14,15 +14,19 @@ class MadadPaymentsTransactionalWriteAPI:
     def __init__(self, client: Optional[MadadAPIClient] = None):
         self.client = client or MadadAPIClient()
 
-    def _mcp_headers(self) -> Dict[str, str]:
-        if not settings.MADAD_MCP_AGENT_SECRET:
-            return {}
-        return {"x-mcp-agent-secret": settings.MADAD_MCP_AGENT_SECRET}
+    def _mcp_headers(self, idempotency_key: Optional[str] = None) -> Dict[str, str]:
+        headers: Dict[str, str] = {}
+        if settings.MADAD_MCP_AGENT_SECRET:
+            headers["x-mcp-agent-secret"] = settings.MADAD_MCP_AGENT_SECRET
+        if idempotency_key:
+            headers["Idempotency-Key"] = idempotency_key
+        return headers
 
     async def create_monetization_payment(
         self,
         *,
         access_token: str,
+        idempotency_key: str,
         business_details_id: str,
         product_id: str,
         payable_amount: Optional[float] = None,
@@ -50,13 +54,14 @@ class MadadPaymentsTransactionalWriteAPI:
                 customData=custom_data,
             ),
             bearer_token=access_token,
-            extra_headers=self._mcp_headers(),
+            extra_headers=self._mcp_headers(idempotency_key),
         )
 
     async def send_monetization_payment_link(
         self,
         *,
         access_token: str,
+        idempotency_key: str,
         payment_id: str,
         recipient_email: Optional[str] = None,
         recipient_phone: Optional[str] = None,
@@ -73,7 +78,7 @@ class MadadPaymentsTransactionalWriteAPI:
                 messageBody=message_body,
             ),
             bearer_token=access_token,
-            extra_headers=self._mcp_headers(),
+            extra_headers=self._mcp_headers(idempotency_key),
         )
 
     async def sync_monetization_payment_status(

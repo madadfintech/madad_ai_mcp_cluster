@@ -103,7 +103,7 @@
     },
     {
       "key": "mcp_agent_event",
-      "value": "eligibility.updated"
+      "value": "repayment.received"
     },
     {
       "key": "mcp_agent_correlation_id",
@@ -128,6 +128,54 @@
     {
       "key": "payment_id",
       "value": ""
+    },
+    {
+      "key": "idempotency_key",
+      "value": "{{$guid}}"
+    },
+    {
+      "key": "invoice_file_path",
+      "value": "/absolute/path/to/invoice.pdf"
+    },
+    {
+      "key": "invoice_zip_path",
+      "value": "/absolute/path/to/invoices.zip"
+    },
+    {
+      "key": "invoice_file_name",
+      "value": "Invoice_May2026.pdf"
+    },
+    {
+      "key": "invoice_mime_type",
+      "value": "application/pdf"
+    },
+    {
+      "key": "invoice_file_base64",
+      "value": "BASE64_INVOICE_BYTES_HERE"
+    },
+    {
+      "key": "invoice_number",
+      "value": "INV-001"
+    },
+    {
+      "key": "invoice_date",
+      "value": "2026-05-31"
+    },
+    {
+      "key": "invoice_due_date",
+      "value": "2026-06-30"
+    },
+    {
+      "key": "invoice_total_amount",
+      "value": "32000"
+    },
+    {
+      "key": "invoice_supplier_name",
+      "value": "Supplier LLC"
+    },
+    {
+      "key": "invoice_customer_name",
+      "value": "Buyer LLC"
     }
   ],
   "item": [
@@ -2381,14 +2429,14 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_create_monetization_payment\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"business_details_id\": \"{{business_details_id}}\",\n      \"product_id\": \"{{payment_product_id}}\",\n      \"payable_amount\": 6000,\n      \"mode_of_payment\": \"CHECKOUT\",\n      \"operation\": \"purchase\",\n      \"methods\": [\n        \"card\"\n      ],\n      \"session_expiry_minutes\": 60,\n      \"recipient_email\": \"{{email}}\",\n      \"recipient_phone\": \"{{mobile}}\",\n      \"custom_data\": {\n        \"source\": \"mcp-agent\",\n        \"journey_step\": \"payment_gate\"\n      }\n    }\n  }\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_create_monetization_payment\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"business_details_id\": \"{{business_details_id}}\",\n      \"product_id\": \"{{payment_product_id}}\",\n      \"payable_amount\": 6000,\n      \"mode_of_payment\": \"CHECKOUT\",\n      \"operation\": \"purchase\",\n      \"methods\": [\n        \"card\"\n      ],\n      \"session_expiry_minutes\": 60,\n      \"recipient_email\": \"{{email}}\",\n      \"recipient_phone\": \"{{mobile}}\",\n      \"custom_data\": {\n        \"source\": \"mcp-agent\",\n        \"journey_step\": \"payment_gate\"\n      },\n      \"idempotency_key\": \"{{idempotency_key}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Create a recorded monetization payment and TESS checkout link. Use this for the QAR 6000 payment gate. Requires ADMIN/OPS/SUPER_ADMIN access token."
+            "description": "Create a recorded monetization payment and TESS checkout link. Use this for the QAR 6000 payment gate. Requires user access token via MCP and an idempotency_key."
           }
         },
         {
@@ -2420,14 +2468,14 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_send_monetization_payment_link\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"payment_id\": \"{{payment_id}}\",\n      \"recipient_email\": \"{{email}}\",\n      \"recipient_phone\": \"{{mobile}}\",\n      \"message_title\": \"Madad onboarding payment\",\n      \"message_body\": \"Please complete your Madad onboarding and assessment fee payment using this secure link.\"\n    }\n  }\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_send_monetization_payment_link\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"payment_id\": \"{{payment_id}}\",\n      \"recipient_email\": \"{{email}}\",\n      \"recipient_phone\": \"{{mobile}}\",\n      \"message_title\": \"Madad onboarding payment\",\n      \"message_body\": \"Please complete your Madad onboarding and assessment fee payment using this secure link.\",\n      \"idempotency_key\": \"{{idempotency_key}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Send an existing monetization payment link through backend email/SMS delivery. Requires ADMIN/OPS/SUPER_ADMIN access token."
+            "description": "Send an existing monetization payment link through backend email/SMS delivery. Requires user access token via MCP and an idempotency_key."
           }
         },
         {
@@ -2466,7 +2514,7 @@
                 }
               }
             },
-            "description": "Read a monetization payment record by id. Requires ADMIN/OPS/SUPER_ADMIN access token."
+            "description": "Read a monetization payment record by id. Requires user access token via MCP."
           }
         },
         {
@@ -2505,7 +2553,324 @@
                 }
               }
             },
-            "description": "Ask backend to refresh payment status from TESS. Requires ADMIN/OPS/SUPER_ADMIN access token."
+            "description": "Ask backend to refresh payment status from TESS. Requires user access token via MCP."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invoice Financing Tools",
+      "item": [
+        {
+          "name": "madad_invoices_extract_invoice_base64",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_invoices_extract_invoice_base64\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"file_name\": \"{{invoice_file_name}}\",\n      \"file_base64\": \"{{invoice_file_base64}}\",\n      \"mime_type\": \"{{invoice_mime_type}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Extraction-only invoice upload from WhatsApp/email bytes. Mirrors MSME portal first upload step."
+          }
+        },
+        {
+          "name": "madad_invoices_extract_and_submit_invoice_base64",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_invoices_extract_and_submit_invoice_base64\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"file_name\": \"{{invoice_file_name}}\",\n      \"file_base64\": \"{{invoice_file_base64}}\",\n      \"mime_type\": \"{{invoice_mime_type}}\",\n      \"status\": \"UNVERIFIED\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Extract invoice data and immediately submit using extracted fields. This is the default WhatsApp/email agent flow when extracted data is assumed correct."
+          }
+        },
+        {
+          "name": "madad_invoices_submit_invoice_base64",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_invoices_submit_invoice_base64\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"file_name\": \"{{invoice_file_name}}\",\n      \"file_base64\": \"{{invoice_file_base64}}\",\n      \"mime_type\": \"{{invoice_mime_type}}\",\n      \"status\": \"UNVERIFIED\",\n      \"invoice_number\": \"{{invoice_number}}\",\n      \"invoice_date\": \"{{invoice_date}}\",\n      \"due_date\": \"{{invoice_due_date}}\",\n      \"total_amount\": \"{{invoice_total_amount}}\",\n      \"supplier_name\": \"{{invoice_supplier_name}}\",\n      \"customer_name\": \"{{invoice_customer_name}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Submit final invoice upload from bytes when extracted/confirmed fields are already available."
+          }
+        },
+        {
+          "name": "madad_invoices_extract_invoice",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_invoices_extract_invoice\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"file_path\": \"{{invoice_file_path}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Local file extraction-only invoice upload for development/testing."
+          }
+        },
+        {
+          "name": "madad_invoices_extract_and_submit_invoice",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_invoices_extract_and_submit_invoice\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"file_path\": \"{{invoice_file_path}}\",\n      \"status\": \"UNVERIFIED\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Local file extract-and-submit invoice flow for development/testing."
+          }
+        },
+        {
+          "name": "madad_invoices_inspect_zip",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_invoices_inspect_zip\",\n    \"arguments\": {\n      \"zip_path\": \"{{invoice_zip_path}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "List uploadable invoice files in a ZIP before recursive upload."
+          }
+        },
+        {
+          "name": "madad_invoices_upload_zip",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_invoices_upload_zip\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"zip_path\": \"{{invoice_zip_path}}\",\n      \"status\": \"UNVERIFIED\",\n      \"assume_extracted_data_correct\": true,\n      \"continue_on_error\": true\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Extract a ZIP and recursively upload each invoice through the same backend invoice upload flow."
+          }
+        },
+        {
+          "name": "madad_invoices_get_my_invoices",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json, text/event-stream"
+              }
+            ],
+            "url": {
+              "raw": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp",
+              "protocol": "https",
+              "host": [
+                "madad-mcp-cluster-626656664233",
+                "me-central1",
+                "run",
+                "app"
+              ],
+              "path": [
+                "mcp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_invoices_get_my_invoices\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Get invoices uploaded by the current MSME user."
           }
         }
       ]
