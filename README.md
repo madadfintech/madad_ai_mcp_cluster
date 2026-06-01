@@ -117,6 +117,38 @@ Use this for CR, audited financial reports, and documents received over WhatsApp
 
 The agent should use the explicit step APIs for progression. `madad_auth_me` is the fallback status read and returns the current user state, including `journeyStatus`.
 
+#### Journey Status Reference
+
+`madad_auth_me` returns `user.journeyStatus`. Use this value to answer user status questions and decide the next conversational step when a webhook is not available.
+
+Queue terminology:
+
+- Verification: Ops Queue
+- Qualification: Credit Queue
+- Validation: Buyer Queue
+- Acceptance: Lender Queue
+
+Canonical backend statuses:
+
+| Status | Meaning for the agent |
+| --- | --- |
+| `SIGN_UP` | User has signed up but has not checked eligibility yet. |
+| `ONBOARDED` | User account/onboarding record exists, but the KYC/application journey has not meaningfully progressed yet. Treat as early onboarding and continue with eligibility/document collection as needed. |
+| `IN_ELIGIBLE` | User checked eligibility and was marked ineligible. |
+| `ELIGIBLE` | User checked eligibility and was marked eligible. |
+| `INCOMPLETE` | Eligible user has reached the document submission stage and may have uploaded zero or more documents, but the required document set is not complete yet. |
+| `UNVERIFIED` | User uploaded all required documents, but Madad Ops has not verified at least one document yet. Also used when Credit sends the application back for document correction or re-verification. |
+| `VERIFIED` | Madad Ops has verified the documents and the application is open for credit assessment. |
+| `PRE_QUALIFIED` | User has passed the initial pre-qualification step and should continue toward full document submission/payment flow as applicable. |
+| `QUALIFIED` | Madad Credit has qualified the user and the application is being sent to financial institutions. |
+| `UNQUALIFIED` | Madad Credit reviewed the user and rejected the application, so it is not sent to financial institutions. |
+| `ACCEPTED` | Financial institution accepted the application and the user is ready for contract signatures and disbursal steps. |
+| `NOT_ACCEPTED` | Financial institutions rejected the application. |
+| `OFFER_ACCEPTED` | User accepted an offer from one financial institution on the Madad platform. |
+| `OFFER_EXPIRED` | User has at least one expired offer. |
+| `OPEN` | More information is needed by Madad or the lender. The agent should ask for or route the missing information based on the latest document/status context. |
+| `ACTIVATED` | User's accepted offer/credit line is activated. The user can proceed with invoice financing workflows. |
+
 ### Document Checklist
 
 - `madad_kyc_get_documents`
