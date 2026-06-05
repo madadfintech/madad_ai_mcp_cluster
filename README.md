@@ -13,6 +13,7 @@ FastMCP uses JSON-RPC over HTTP/SSE. Postman requests must include:
 ```http
 Content-Type: application/json
 Accept: application/json, text/event-stream
+Authorization: Bearer <MCP__AUTH_TOKEN>
 ```
 
 ## Required Runtime Environment
@@ -71,6 +72,161 @@ To list the available tools:
 - Payment tools can be called with the user's access token through MCP. MCP adds the backend-only shared secret header, and the backend allows only the marked payment-gate routes.
 - MCP payment write tools require an `idempotency_key`. Reuse the same key when retrying the same create/send action.
 - MCP should never receive or store Meta, TESS, SMS, email-provider, or database credentials.
+
+## Exact MCP Argument Types
+
+All MCP tools are called through JSON-RPC `tools/call` at `/mcp`. Use JSON-native types exactly as listed below. Do not pass empty strings for optional IDs, phone numbers, or email fields; use `null` when a value is intentionally absent.
+
+### `madad_mcp_emit_webhook`
+
+Used for smoke-testing the backend-to-agent webhook path.
+
+```json
+{
+  "event": "eligibility.updated",
+  "channel": "email",
+  "identity": "tech.external1@madadfintech.com",
+  "user_id": null,
+  "correlation_id": "postman-test-001",
+  "payload": {
+    "source": "postman"
+  }
+}
+```
+
+Arguments:
+
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `event` | `string` | Yes | One supported event name from `madad_mcp_get_webhook_events`. |
+| `channel` | `string \| null` | No | `email`, `whatsapp`, `EMAIL`, or `WHATSAPP`. |
+| `identity` | `string \| null` | No | Email address or E.164/WhatsApp phone for the agent session. |
+| `user_id` | `string \| null` | No | Backend user ID if already known. |
+| `correlation_id` | `string \| null` | No | Trace/request ID for debugging. |
+| `payload` | `object \| null` | No | Event-specific JSON object. |
+
+### `madad_kyc_upload_document_base64`
+
+Used for WhatsApp/email document bytes. The `base64` value must be raw base64 only, without a `data:` URL prefix.
+
+```json
+{
+  "file_name": "CR_Company.pdf",
+  "mime_type": "application/pdf",
+  "base64": "BASE64_FILE_BYTES_HERE",
+  "metadata": {
+    "access_token": "<access token>",
+    "document_entity_type": "BUSINESS_DETAILS",
+    "document_type": "COMMERCIAL_REGISTRATION",
+    "kyc_stage": "Business Documents",
+    "document_param": null,
+    "document_label": null,
+    "from_admin": false,
+    "target_user_id": null
+  }
+}
+```
+
+Arguments:
+
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `file_name` | `string` | Yes | Original file name, including extension. |
+| `mime_type` | `string \| null` | No | Example: `application/pdf`, `image/jpeg`, `image/png`, `application/zip`. |
+| `base64` | `string` | Yes | Raw file bytes encoded as base64. |
+| `metadata` | `object` | Yes | Backend upload metadata. |
+| `metadata.access_token` | `string` | Yes | Scoped backend access token. |
+| `metadata.document_entity_type` | `string` | Yes | For CR/financials use `BUSINESS_DETAILS`. Other valid values include `KYC`, `SHAREHOLDER`, `DIRECTOR`, `BUYER`, `INVOICE`, `OFFER`, `TICKET`, `COMMUNICATION`, `BANK_DETAILS`, `AUTH_SIGNATORY`, `BENEFICIAL_OWNER`, and `USER`. |
+| `metadata.document_type` | `string` | Yes | For CR use `COMMERCIAL_REGISTRATION`; for audited financials use `AUDITED_FINANCIAL_REPORT`. |
+| `metadata.kyc_stage` | `string \| null` | No | Example: `Business Documents` or `Financial Documents`. |
+| `metadata.document_param` | `string \| null` | No | Optional label/year/parameter when required by backend document rules. |
+| `metadata.document_label` | `string \| null` | No | Optional display label. |
+| `metadata.from_admin` | `boolean` | No | Default `false`. |
+| `metadata.target_user_id` | `string \| null` | No | Only for admin-style targeted upload flows. |
+
+Common document types used in the agent flow:
+
+- `COMMERCIAL_REGISTRATION`
+- `AUDITED_FINANCIAL_REPORT`
+- `TRADE_LICENSE`
+- `TAX_CARD`
+- `ESTABLISHMENT_CARD`
+- `ARTICLE_OF_ASSOCIATION`
+- `MEMORANDUM_OF_ASSOCIATION`
+- `COMMERCIAL_CREDIT_REPORT`
+- `PAYABLE_AGING_REPORT`
+- `RECEIVABLES_AGING_REPORT`
+- `INTERIM_FINANCIAL_REPORT`
+- `BANK_STATEMENT`
+- `SHAREHOLDER_QID`
+- `SHAREHOLDER_PASSPORT`
+- `SHAREHOLDER_PROOF_OF_ADDRESS`
+- `INVOICE_FILE`
+- `INVOICE_SUPPORTING_DOCUMENT`
+
+### WhatsApp Tools
+
+`madad_external_send_whatsapp_text`
+
+```json
+{
+  "to": "919497191690",
+  "body": "Madad WhatsApp test message.",
+  "preview_url": false
+}
+```
+
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `to` | `string` | Yes | Recipient phone in E.164/digits format, without spaces. |
+| `body` | `string` | Yes | Text message body. |
+| `preview_url` | `boolean` | No | Default `false`. |
+
+`madad_external_send_whatsapp_template`
+
+```json
+{
+  "to": "919497191690",
+  "template_name": "hello_world",
+  "language_code": "en_US",
+  "components": null
+}
+```
+
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `to` | `string` | Yes | Recipient phone in E.164/digits format, without spaces. |
+| `template_name` | `string` | Yes | Approved Meta template name. |
+| `language_code` | `string` | No | Example: `en_US`; defaults depend on backend/template. |
+| `components` | `array<object> \| null` | No | Meta template components. Use `null` for templates without variables. |
+
+MCP does not call Meta directly. The backend owns the WhatsApp phone number ID, WABA ID, and access token.
+
+### `madad_payments_send_monetization_payment_link`
+
+```json
+{
+  "access_token": "<access token>",
+  "payment_id": "<payment id>",
+  "recipient_email": "tech.external1@madadfintech.com",
+  "recipient_phone": null,
+  "message_title": "Madad onboarding payment",
+  "message_body": "Please complete your Madad onboarding and assessment fee payment using this secure link.",
+  "idempotency_key": "run-123:madad_payments_send_monetization_payment_link:1"
+}
+```
+
+Arguments:
+
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `access_token` | `string` | Yes | Scoped backend access token. |
+| `payment_id` | `string` | Yes | ID returned by `madad_payments_create_monetization_payment`. |
+| `recipient_email` | `string \| null` | No | Use `null` if sending only to phone. |
+| `recipient_phone` | `string \| null` | No | Use `null` if sending only to email. |
+| `message_title` | `string \| null` | No | Optional notification title. |
+| `message_body` | `string \| null` | No | Optional notification body. |
+| `idempotency_key` | `string` | Yes | Reuse the same key for retrying the same send action. |
 
 ## Core Tools
 

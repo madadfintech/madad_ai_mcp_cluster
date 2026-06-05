@@ -4,6 +4,16 @@
     "description": "Official FastMCP Postman collection for the Madad MCP cluster. All tools call Madad backend services through POST /mcp using JSON-RPC. Include Accept: application/json, text/event-stream. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{mcp_auth_token}}",
+        "type": "string"
+      }
+    ]
+  },
   "variable": [
     {
       "key": "base_url",
@@ -90,8 +100,16 @@
       "value": "https://madad-mcp-cluster-626656664233.me-central1.run.app/mcp"
     },
     {
+      "key": "mcp_auth_token",
+      "value": ""
+    },
+    {
       "key": "mcp_agent_channel",
       "value": "WHATSAPP"
+    },
+    {
+      "key": "mcp_agent_identity",
+      "value": "tech.external1@madadfintech.com"
     },
     {
       "key": "mcp_agent_identifier",
@@ -289,14 +307,14 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_mcp_emit_webhook\",\n    \"arguments\": {\n      \"event\": \"{{mcp_agent_event}}\",\n      \"user_id\": \"\",\n      \"correlation_id\": \"{{mcp_agent_correlation_id}}\",\n      \"payload\": {\n        \"source\": \"postman\",\n        \"message\": \"MCP webhook emit test\"\n      }\n    }\n  }\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_mcp_emit_webhook\",\n    \"arguments\": {\n      \"event\": \"{{mcp_agent_event}}\",\n      \"channel\": \"email\",\n      \"identity\": \"{{mcp_agent_identity}}\",\n      \"user_id\": null,\n      \"correlation_id\": \"{{mcp_agent_correlation_id}}\",\n      \"payload\": {\n        \"source\": \"postman\",\n        \"message\": \"MCP webhook emit test\"\n      }\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Test-emits a configured backend-to-agent webhook. If backend MCP_AGENT_WEBHOOK_URL is not configured, response is skipped=true."
+            "description": "Test-emits a configured backend-to-agent webhook. Argument types: event:string required; channel:string|null optional, use email/whatsapp/EMAIL/WHATSAPP; identity:string|null optional email or phone for the agent session; user_id:string|null optional; correlation_id:string|null optional; payload:object|null optional. If backend MCP_AGENT_WEBHOOK_URL is not configured, response is skipped=true."
           }
         }
       ]
@@ -1137,7 +1155,7 @@
                 }
               }
             },
-            "description": "Call FastMCP tool madad_external_send_whatsapp_text. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+            "description": "Call FastMCP tool madad_external_send_whatsapp_text. Argument types: to:string required, recipient phone in E.164/digits format without spaces; body:string required; preview_url:boolean optional default false. MCP calls the Madad backend only; the backend owns Meta credentials. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
           },
           "response": []
         },
@@ -1177,7 +1195,7 @@
                 }
               }
             },
-            "description": "Call FastMCP tool madad_external_send_whatsapp_template. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+            "description": "Call FastMCP tool madad_external_send_whatsapp_template. Argument types: to:string required, recipient phone in E.164/digits format without spaces; template_name:string required approved Meta template name; language_code:string optional, e.g. en_US; components:array<object>|null optional, use null for templates without variables. MCP calls the Madad backend only; the backend owns Meta credentials. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
           },
           "response": []
         }
@@ -1302,7 +1320,7 @@
                 }
               }
             },
-            "description": "Call FastMCP tool madad_kyc_upload_document_base64. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+            "description": "Call FastMCP tool madad_kyc_upload_document_base64. Argument types: file_name:string required; mime_type:string|null optional such as application/pdf, image/jpeg, image/png, application/zip; base64:string required raw base64 only, no data URL prefix; metadata:object required. Metadata requires access_token:string, document_entity_type:string, document_type:string. For CR use document_entity_type BUSINESS_DETAILS and document_type COMMERCIAL_REGISTRATION. For audited financials use document_entity_type BUSINESS_DETAILS and document_type AUDITED_FINANCIAL_REPORT. Optional metadata: kyc_stage:string|null, document_param:string|null, document_label:string|null, from_admin:boolean, target_user_id:string|null. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
           },
           "response": []
         },
@@ -2468,14 +2486,14 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_send_monetization_payment_link\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"payment_id\": \"{{payment_id}}\",\n      \"recipient_email\": \"{{email}}\",\n      \"recipient_phone\": \"{{mobile}}\",\n      \"message_title\": \"Madad onboarding payment\",\n      \"message_body\": \"Please complete your Madad onboarding and assessment fee payment using this secure link.\",\n      \"idempotency_key\": \"{{idempotency_key}}\"\n    }\n  }\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_payments_send_monetization_payment_link\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"payment_id\": \"{{payment_id}}\",\n      \"recipient_email\": \"{{email}}\",\n      \"recipient_phone\": null,\n      \"message_title\": \"Madad onboarding payment\",\n      \"message_body\": \"Please complete your Madad onboarding and assessment fee payment using this secure link.\",\n      \"idempotency_key\": \"{{idempotency_key}}\"\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Send an existing monetization payment link through backend email/SMS delivery. Requires user access token via MCP and an idempotency_key."
+            "description": "Send an existing monetization payment link through backend email/SMS delivery. Argument types: access_token:string required; payment_id:string required from madad_payments_create_monetization_payment; recipient_email:string|null optional; recipient_phone:string|null optional; message_title:string|null optional; message_body:string|null optional; idempotency_key:string required. Use null, not empty string, for any unused recipient channel. Reuse the same idempotency_key only when retrying the same send action."
           }
         },
         {
