@@ -37,6 +37,8 @@ async def madad_mcp_get_webhook_events() -> Dict[str, Any]:
 @mcp.tool
 async def madad_mcp_emit_webhook(
     event: str,
+    channel: Optional[str] = None,
+    identity: Optional[str] = None,
     user_id: Optional[str] = None,
     correlation_id: Optional[str] = None,
     payload: Optional[Dict[str, Any]] = None,
@@ -44,6 +46,8 @@ async def madad_mcp_emit_webhook(
     """Emit a backend-to-agent webhook event using the configured backend webhook target."""
     return await mcp_agent_api.emit_webhook(
         event=event,
+        channel=channel,
+        identity=identity,
         user_id=user_id,
         correlation_id=correlation_id,
         payload=payload,

@@ -48,6 +48,8 @@ class MadadMCPAgentAPI:
         self,
         *,
         event: str,
+        channel: Optional[str] = None,
+        identity: Optional[str] = None,
         user_id: Optional[str] = None,
         correlation_id: Optional[str] = None,
         payload: Optional[Dict[str, Any]] = None,
@@ -57,6 +59,8 @@ class MadadMCPAgentAPI:
             "/mcp-agent/webhooks/emit",
             json_body={
                 "event": event,
+                "channel": channel,
+                "identity": identity,
                 "userId": user_id,
                 "correlationId": correlation_id,
                 "payload": payload or {},
