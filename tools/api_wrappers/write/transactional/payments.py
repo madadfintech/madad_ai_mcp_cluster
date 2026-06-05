@@ -68,15 +68,17 @@ class MadadPaymentsTransactionalWriteAPI:
         message_title: Optional[str] = None,
         message_body: Optional[str] = None,
     ) -> Dict[str, Any]:
+        payload = {
+            "recipientEmail": recipient_email,
+            "recipientPhone": recipient_phone,
+            "messageTitle": message_title,
+            "messageBody": message_body,
+        }
+
         return await self.client.request(
             "POST",
             f"/payments/monetization-payments/{payment_id}/send",
-            json_body=compact_payload(
-                recipientEmail=recipient_email,
-                recipientPhone=recipient_phone,
-                messageTitle=message_title,
-                messageBody=message_body,
-            ),
+            json_body=payload,
             bearer_token=access_token,
             extra_headers=self._mcp_headers(idempotency_key),
         )
