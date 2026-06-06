@@ -1918,14 +1918,14 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_add_shareholders\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"shareholders\": [\n        {\n          \"name\": \"John Doe\",\n          \"phoneNumber\": \"{{mobile}}\",\n          \"email\": \"john@example.com\",\n          \"firstName\": \"John\",\n          \"lastName\": \"Doe\"\n        }\n      ]\n    }\n  }\n}",
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": \"{{$timestamp}}\",\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"madad_kyc_add_shareholders\",\n    \"arguments\": {\n      \"access_token\": \"{{access_token}}\",\n      \"shareholders\": [\n        {\n          \"name\": \"John Doe\",\n          \"phoneNumber\": \"97433445566\",\n          \"email\": \"john@example.com\",\n          \"firstName\": \"John\",\n          \"lastName\": \"Doe\",\n          \"middleName\": null,\n          \"address\": {\n            \"zone\": \"10\",\n            \"streetNo\": \"20\",\n            \"buildingNo\": \"30\",\n            \"floorNo\": null,\n            \"unitNo\": null\n          }\n        }\n      ]\n    }\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
             },
-            "description": "Call FastMCP tool madad_kyc_add_shareholders. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
+            "description": "Call FastMCP tool madad_kyc_add_shareholders. Per shareholder, backend-required fields are name:string and phoneNumber:string. Optional fields: firstName:string|null, lastName:string|null, middleName:string|null, email:string|null, address:object|null with zone/streetNo/buildingNo/floorNo/unitNo. The backend derives user/business from access_token; do not send businessDetailsId. Ownership percentage, nationality, documentType, and documentNumber are not accepted by this endpoint. Upload shareholder docs separately after creation. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
           },
           "response": []
         },

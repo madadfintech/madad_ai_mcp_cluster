@@ -1,5 +1,7 @@
 from typing import Any, Dict, List, Optional
 
+from pydantic import BaseModel, Field
+
 from tools.api_wrappers.read.non_transactional import MadadKYCNonTransactionalReadAPI
 from tools.api_wrappers.write.transactional import MadadKYCTransactionalWriteAPI
 
@@ -8,6 +10,24 @@ from . import mcp
 
 kyc_write_api = MadadKYCTransactionalWriteAPI()
 kyc_read_api = MadadKYCNonTransactionalReadAPI()
+
+
+class ShareholderAddressInput(BaseModel):
+    zone: Optional[str] = None
+    streetNo: Optional[str] = None
+    buildingNo: Optional[str] = None
+    floorNo: Optional[str] = None
+    unitNo: Optional[str] = None
+
+
+class ShareholderInput(BaseModel):
+    name: str = Field(description="Full shareholder name. Required by backend validation.")
+    phoneNumber: str = Field(description="Shareholder phone number. Use this exact key, not phone.")
+    firstName: Optional[str] = None
+    lastName: Optional[str] = None
+    middleName: Optional[str] = None
+    email: Optional[str] = None
+    address: Optional[ShareholderAddressInput] = None
 
 
 @mcp.tool
@@ -257,10 +277,17 @@ async def madad_kyc_complete_stage(access_token: str, stage: str) -> Dict[str, A
 @mcp.tool
 async def madad_kyc_add_shareholders(
     access_token: str,
-    shareholders: List[Dict[str, Any]],
+    shareholders: List[ShareholderInput],
 ) -> Dict[str, Any]:
-    """Add one or more shareholders to the merchant application."""
-    return await kyc_write_api.add_shareholders(access_token=access_token, shareholders=shareholders)
+    """Add one or more shareholders to the merchant application.
+
+    Required per shareholder: name and phoneNumber. The backend derives the
+    user/business from the bearer token; businessDetailsId is not accepted here.
+    Ownership percentage, nationality, and identity document fields are not part
+    of this endpoint. Upload shareholder documents separately after creation.
+    """
+    payload = [shareholder.model_dump(exclude_none=True) for shareholder in shareholders]
+    return await kyc_write_api.add_shareholders(access_token=access_token, shareholders=payload)
 
 
 @mcp.tool

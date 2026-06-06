@@ -1,4 +1,5 @@
 from typing import Any, Dict, Optional
+from datetime import datetime, timedelta, timezone
 
 from shared.config import settings
 from tools.api_wrappers.madad_client import MadadAPIClient, MadadAPIError
@@ -23,7 +24,7 @@ class MadadMCPAgentAPI:
         display_name: Optional[str] = None,
         create_onboarding_token: bool = True,
     ) -> Dict[str, Any]:
-        return await self.client.request(
+        response = await self.client.request(
             "POST",
             "/mcp-agent/channel-sessions",
             json_body={
@@ -36,6 +37,13 @@ class MadadMCPAgentAPI:
             },
             extra_headers=self._headers(),
         )
+        body = response.get("body")
+        if isinstance(body, dict) and "tokenExpiresAt" not in body:
+            expires_in = body.get("expiresInSeconds")
+            if isinstance(expires_in, (int, float)):
+                expires_at = datetime.now(timezone.utc) + timedelta(seconds=expires_in)
+                body["tokenExpiresAt"] = expires_at.isoformat().replace("+00:00", "Z")
+        return response
 
     async def get_webhook_events(self) -> Dict[str, Any]:
         return await self.client.request(

@@ -105,6 +105,25 @@ Arguments:
 | `correlation_id` | `string \| null` | No | Trace/request ID for debugging. |
 | `payload` | `object \| null` | No | Event-specific JSON object. |
 
+### `madad_mcp_create_channel_session`
+
+Response body includes `expiresInSeconds` from the backend. MCP also adds `tokenExpiresAt` as an ISO UTC timestamp for agent-side scheduling.
+
+```json
+{
+  "sessionType": "existing_user",
+  "accessToken": "eyJ...",
+  "tokenType": "Bearer",
+  "expiresInSeconds": 900,
+  "tokenExpiresAt": "2026-06-06T10:15:30Z",
+  "userOrLeadRef": "..."
+}
+```
+
+### `madad_auth_complete_onboarding`
+
+`role` is a `string` and is resolved against the backend `Role` table. The backend does not enforce a TypeScript/Prisma enum for this field; it rejects values that do not exist in the database. Use the MSME/customer role configured in the target environment for agent onboarding. Do not assume `FOUNDER`, `SHAREHOLDER`, or `DIRECTOR` are valid unless they exist as Role records in that environment.
+
 ### `madad_kyc_upload_document_base64`
 
 Used for WhatsApp/email document bytes. The `base64` value must be raw base64 only, without a `data:` URL prefix.
@@ -227,6 +246,66 @@ Arguments:
 | `message_title` | `string \| null` | No | Optional notification title. |
 | `message_body` | `string \| null` | No | Optional notification body. |
 | `idempotency_key` | `string` | Yes | Reuse the same key for retrying the same send action. |
+
+### `madad_kyc_add_shareholders`
+
+The backend derives the user/business from the bearer token. Do not send `businessDetailsId` to this tool. Ownership percentage, nationality, document type, and document number are not accepted by this endpoint today. Add shareholder profile records first, then upload shareholder documents separately with the shareholder ID returned by this tool.
+
+```json
+{
+  "access_token": "<access token>",
+  "shareholders": [
+    {
+      "name": "Aisha Karim",
+      "phoneNumber": "97455500001",
+      "firstName": "Aisha",
+      "lastName": "Karim",
+      "middleName": null,
+      "email": "aisha@example.com",
+      "address": {
+        "zone": "10",
+        "streetNo": "20",
+        "buildingNo": "30",
+        "floorNo": null,
+        "unitNo": null
+      }
+    }
+  ]
+}
+```
+
+Arguments per shareholder:
+
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `name` | `string` | Yes | Full shareholder name. Required by backend validation. |
+| `phoneNumber` | `string` | Yes | Use this exact camelCase key. |
+| `firstName` | `string \| null` | No | Stored when present. |
+| `lastName` | `string \| null` | No | Stored when present. |
+| `middleName` | `string \| null` | No | Accepted by DTO. |
+| `email` | `string \| null` | No | Must be valid email if provided. |
+| `address` | `object \| null` | No | Optional address object. |
+| `address.zone` | `string \| null` | No | Optional. |
+| `address.streetNo` | `string \| null` | No | Optional. |
+| `address.buildingNo` | `string \| null` | No | Optional. |
+| `address.floorNo` | `string \| null` | No | DTO accepts it; current service only persists zone, streetNo, buildingNo. |
+| `address.unitNo` | `string \| null` | No | DTO accepts it; current service only persists zone, streetNo, buildingNo. |
+
+### `madad_kyc_update_eligibility`
+
+The backend expects the same display values used by the MSME portal. It stores some of them as backend enums after mapping.
+
+| MCP argument | Type | Accepted/current values |
+| --- | --- | --- |
+| `is_qatar_based` | `boolean` | `true` or `false` |
+| `business_age` | `string` | `> 2 years` maps to `OVER_2_YEARS`; `< 2 years` maps to `UNDER_2_YEARS` |
+| `cr_validity` | `string` | `> 1 month` maps to `OVER_1_MONTH`; `< 1 month` maps to `UNDER_1_MONTH` |
+| `company_type` | `string` | `WLL`, `LLC`, `Corporation`, `Partnership`, `Sole Proprietorship`, `Other` |
+| `sector` | `string` | `Trading`, `Manufacturing`, `Services`, `Construction & Contracting`, `Agriculture & Agro-Processing`, `Energy & Utilities`, `Real Estate Development & Services`, `Other Emerging / High-Risk Sectors` |
+| `turnover` | `string` | `Below QAR 1,000,000`, `QAR 1,000,000 to QAR 3,000,000`, `QAR 3,000,000 to QAR 20,000,000`, `QAR 20,000,000 to QAR 100,000,000`, `Above QAR 100,000,000` |
+| `employees` | `string` | `1-5`, `6-50`, `51-250`, `Above 250` |
+
+Eligibility is marked ineligible when `is_qatar_based` is `false`, `business_age` is `< 2 years`, `turnover` is `Above QAR 100,000,000`, or `employees` is `Above 250`.
 
 ## Core Tools
 
