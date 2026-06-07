@@ -46,6 +46,12 @@ class Settings(PydanticBaseSettings):
     MADAD_API_TIMEOUT: int = 30
     MADAD_MCP_AGENT_SECRET: Optional[str] = None
 
+    # Document classifier (same service the MSME complete-onboarding page calls).
+    # Root URL of the classifier, e.g. https://document-classifier-xxxx.run.app
+    # The "/api/v1/documents/classify" path is appended automatically.
+    DOCUMENT_CLASSIFIER_URL: Optional[str] = None
+    DOCUMENT_CLASSIFIER_TIMEOUT: int = 60
+
     # WhatsApp Cloud API
     WHATSAPP_GRAPH_API_BASE_URL: str = "https://graph.facebook.com"
     WHATSAPP_GRAPH_API_VERSION: Optional[str] = None

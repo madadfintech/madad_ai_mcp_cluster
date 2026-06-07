@@ -22,9 +22,24 @@ Authorization: Bearer <MCP__AUTH_TOKEN>
 MADAD_API_BASE_URL=https://uat-api.madadfintech.com
 MADAD_API_TIMEOUT=30
 MADAD_MCP_AGENT_SECRET=<same value as backend MCP_AGENT_SHARED_SECRET>
+
+# Document classifier (the SAME service the MSME complete-onboarding page calls).
+# Set this to the same root URL as the portal's NEXT_PUBLIC_DOCUMENT_IDENTIFIER_URL.
+# Required for the classify-and-upload tools (madad_kyc_classify_and_upload_*).
+DOCUMENT_CLASSIFIER_URL=https://<document-classifier-host>
+DOCUMENT_CLASSIFIER_TIMEOUT=60
 ```
 
 The MCP cluster should not contain Meta/WhatsApp tokens. WhatsApp messages are sent through backend tools only.
+
+### Document uploads (WhatsApp/email)
+
+Prefer `madad_kyc_classify_and_upload_document_base64` (single file) and
+`madad_kyc_classify_and_upload_zip_base64` (ZIP) for inbound documents whose type is
+not known up front. They run the exact pipeline the MSME portal uses — classify →
+map to `DocumentType` → route to the correct entity/KYC stage → upload — and fall
+back to `ADDITIONAL_DOCUMENT` so a file is never lost. `DOCUMENT_CLASSIFIER_URL` must
+be set for these to work.
 
 ## Calling Tools
 

@@ -119,6 +119,62 @@ async def madad_kyc_upload_document_base64(
 
 
 @mcp.tool
+async def madad_kyc_classify_and_upload_document_base64(
+    file_name: str,
+    base64: str,
+    access_token: str,
+    mime_type: Optional[str] = None,
+    document_param: Optional[str] = None,
+    document_label: Optional[str] = None,
+    from_admin: bool = False,
+    target_user_id: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Classify a base64 document with the SAME classifier the MSME complete-onboarding
+    page uses, then upload it to the correct slot.
+
+    This is the preferred tool for WhatsApp/email uploads where the document type is
+    not known up front (CR, audited report, trade license, tax card, QID, passport,
+    bank statement, etc.). The classifier decides the type, the document is routed to
+    the right entity (business / financial / shareholder) and KYC stage, and anything
+    unrecognised is stored as an additional document so a file is never lost. Backend
+    extraction (shareholders from the CR, etc.) then runs exactly as it does for a
+    portal drag-and-drop. Returns the resolved document_type plus the upload result.
+    """
+    return await kyc_write_api.classify_and_upload_document_base64(
+        file_name=file_name,
+        file_base64=base64,
+        access_token=access_token,
+        mime_type=mime_type,
+        document_param=document_param,
+        document_label=document_label,
+        from_admin=from_admin,
+        target_user_id=target_user_id,
+    )
+
+
+@mcp.tool
+async def madad_kyc_classify_and_upload_zip_base64(
+    file_name: str,
+    base64: str,
+    access_token: str,
+    continue_on_error: bool = True,
+) -> Dict[str, Any]:
+    """Expand a base64 ZIP and classify + upload every document inside it through the
+    portal pipeline (no per-file type mapping required from the caller).
+
+    Returns a per-file checklist — file_name, resolved document_type, and whether it
+    was confidently classified — which is exactly what's needed to build the WhatsApp
+    "ZIP received / here's what I found / still missing X" status reply.
+    """
+    return await kyc_write_api.classify_and_upload_zip_base64(
+        file_name=file_name,
+        file_base64=base64,
+        access_token=access_token,
+        continue_on_error=continue_on_error,
+    )
+
+
+@mcp.tool
 async def madad_kyc_upload_commercial_registration(
     file_path: str,
     access_token: str,

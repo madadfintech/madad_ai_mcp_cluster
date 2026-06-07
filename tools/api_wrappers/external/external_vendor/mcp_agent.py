@@ -23,6 +23,7 @@ class MadadMCPAgentAPI:
         phone: Optional[str] = None,
         display_name: Optional[str] = None,
         create_onboarding_token: bool = True,
+        create_user_if_missing: bool = False,
     ) -> Dict[str, Any]:
         response = await self.client.request(
             "POST",
@@ -34,6 +35,7 @@ class MadadMCPAgentAPI:
                 "phone": phone,
                 "displayName": display_name,
                 "createOnboardingToken": create_onboarding_token,
+                "createUserIfMissing": create_user_if_missing,
             },
             extra_headers=self._headers(),
         )
@@ -44,6 +46,49 @@ class MadadMCPAgentAPI:
                 expires_at = datetime.now(timezone.utc) + timedelta(seconds=expires_in)
                 body["tokenExpiresAt"] = expires_at.isoformat().replace("+00:00", "Z")
         return response
+
+    async def update_onboarding_progress(
+        self,
+        *,
+        user_id: Optional[str] = None,
+        channel: Optional[str] = None,
+        identifier: Optional[str] = None,
+        step: Optional[int] = None,
+        touch_inbound: bool = False,
+    ) -> Dict[str, Any]:
+        return await self.client.request(
+            "POST",
+            "/mcp-agent/onboarding-progress",
+            json_body={
+                "userId": user_id,
+                "channel": channel,
+                "identifier": identifier,
+                "step": step,
+                "touchInbound": touch_inbound,
+            },
+            extra_headers=self._headers(),
+        )
+
+    async def get_onboarding_progress(
+        self,
+        *,
+        user_id: Optional[str] = None,
+        channel: Optional[str] = None,
+        identifier: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        params: Dict[str, Any] = {}
+        if user_id:
+            params["userId"] = user_id
+        if channel:
+            params["channel"] = channel
+        if identifier:
+            params["identifier"] = identifier
+        return await self.client.request(
+            "GET",
+            "/mcp-agent/onboarding-progress",
+            params=params or None,
+            extra_headers=self._headers(),
+        )
 
     async def get_webhook_events(self) -> Dict[str, Any]:
         return await self.client.request(

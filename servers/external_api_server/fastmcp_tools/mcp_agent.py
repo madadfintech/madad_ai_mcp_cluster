@@ -16,8 +16,19 @@ async def madad_mcp_create_channel_session(
     phone: Optional[str] = None,
     display_name: Optional[str] = None,
     create_onboarding_token: bool = True,
+    create_user_if_missing: bool = False,
 ) -> Dict[str, Any]:
-    """Create a scoped Madad channel session for a verified WhatsApp or email identity."""
+    """Create a scoped Madad channel session for a WhatsApp or email identity.
+
+    For WhatsApp, set create_user_if_missing=True when the lead has just shown intent
+    (replied YES). The backend then creates a SIGN_UP account immediately from the
+    phone number — no email, no password — and returns an access token you can use
+    right away for document uploads. The response distinguishes:
+      - sessionType "new_user_created" : a fresh lead was created (use accessToken).
+      - sessionType "existing_user"    : a WhatsApp lead is resuming (whatsappOnboardingStep tells you where).
+      - sessionType "existing_portal_user" (requiresPortalLogin=true) : a portal user
+        already exists for this number — tell them their application exists and to log in.
+    """
     return await mcp_agent_api.create_channel_session(
         channel=channel,
         identifier=identifier,
@@ -25,6 +36,48 @@ async def madad_mcp_create_channel_session(
         phone=phone,
         display_name=display_name,
         create_onboarding_token=create_onboarding_token,
+        create_user_if_missing=create_user_if_missing,
+    )
+
+
+@mcp.tool
+async def madad_mcp_update_onboarding_progress(
+    user_id: Optional[str] = None,
+    channel: Optional[str] = None,
+    identifier: Optional[str] = None,
+    step: Optional[int] = None,
+    touch_inbound: bool = False,
+) -> Dict[str, Any]:
+    """Record WhatsApp onboarding progress for a lead.
+
+    Set `step` to the conversational step the lead has reached so backend gates work —
+    in particular set step=3 once the lead has submitted their financials and you've
+    sent the "pre-qualification within 24 hours / account created" message, because the
+    backend only fires the pre-qualified document checklist for leads at step >= 3.
+    Set touch_inbound=True whenever the lead messages you, to keep Meta's 24h window
+    fresh. Identify the lead by user_id, or by channel + identifier (phone).
+    """
+    return await mcp_agent_api.update_onboarding_progress(
+        user_id=user_id,
+        channel=channel,
+        identifier=identifier,
+        step=step,
+        touch_inbound=touch_inbound,
+    )
+
+
+@mcp.tool
+async def madad_mcp_get_onboarding_progress(
+    user_id: Optional[str] = None,
+    channel: Optional[str] = None,
+    identifier: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Read a WhatsApp lead's current onboarding step, last-inbound time and journey
+    status. Identify the lead by user_id, or by channel + identifier (phone)."""
+    return await mcp_agent_api.get_onboarding_progress(
+        user_id=user_id,
+        channel=channel,
+        identifier=identifier,
     )
 
 

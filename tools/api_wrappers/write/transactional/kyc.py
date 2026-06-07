@@ -1,12 +1,20 @@
 import base64
 import binascii
+import io
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from typing import Any, Dict, List, Optional
 from zipfile import BadZipFile, ZipFile
 
-from tools.api_wrappers.common import MadadAPIClient
+from tools.api_wrappers.common import (
+    DocumentClassifierClient,
+    MadadAPIClient,
+    map_classification_to_doc_type,
+    route_document_type,
+)
 from tools.api_wrappers.madad_client import MadadAPIError
+
+ADDITIONAL_DOCUMENT = "ADDITIONAL_DOCUMENT"
 
 
 def compact_payload(**kwargs: Any) -> Dict[str, Any]:
@@ -16,8 +24,13 @@ def compact_payload(**kwargs: Any) -> Dict[str, Any]:
 class MadadKYCTransactionalWriteAPI:
     """Write-capable Madad KYC endpoints."""
 
-    def __init__(self, client: Optional[MadadAPIClient] = None):
+    def __init__(
+        self,
+        client: Optional[MadadAPIClient] = None,
+        classifier: Optional[DocumentClassifierClient] = None,
+    ):
         self.client = client or MadadAPIClient()
+        self._classifier = classifier or DocumentClassifierClient()
 
     async def update_eligibility(
         self,
@@ -125,6 +138,137 @@ class MadadKYCTransactionalWriteAPI:
             params=params or None,
             bearer_token=access_token,
         )
+
+    async def classify_and_upload_document_base64(
+        self,
+        *,
+        file_name: str,
+        file_base64: str,
+        access_token: str,
+        mime_type: Optional[str] = None,
+        document_param: Optional[str] = None,
+        document_label: Optional[str] = None,
+        from_admin: Optional[bool] = None,
+        target_user_id: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Classify base64 bytes with the same classifier the MSME portal uses, map
+        the result to a backend DocumentType, route it to the right entity / KYC
+        stage, then upload. Falls back to ADDITIONAL_DOCUMENT so a file is never lost
+        — identical to the portal's drag-and-drop failsafe.
+        """
+        try:
+            encoded = file_base64.split(",", 1)[1] if "," in file_base64[:128] else file_base64
+            file_bytes = base64.b64decode(encoded, validate=True)
+        except (binascii.Error, ValueError) as exc:
+            raise MadadAPIError("Invalid base64 file payload") from exc
+
+        classification: Dict[str, Any] = {}
+        doc_type: Optional[str] = None
+        try:
+            classification = await self._classifier.classify_bytes(
+                file_name=file_name,
+                file_bytes=file_bytes,
+                mime_type=mime_type,
+            )
+            doc_type = map_classification_to_doc_type(classification.get("document_type"))
+        except Exception as exc:  # never let a classifier hiccup drop the document
+            classification = {"error": str(exc)}
+
+        classified = doc_type is not None
+        if not classified:
+            doc_type = ADDITIONAL_DOCUMENT
+
+        entity_type, kyc_stage = route_document_type(doc_type)
+
+        # Audited reports need a documentParam slot so multiple yearly reports don't
+        # overwrite one another; default to the filename stem when none is supplied.
+        resolved_param = document_param
+        if doc_type == "AUDITED_FINANCIAL_REPORT" and not resolved_param:
+            resolved_param = Path(file_name).stem[:60] or None
+
+        upload = await self.upload_document_base64(
+            file_name=file_name,
+            file_base64=file_base64,
+            document_entity_type=entity_type,
+            document_type=doc_type,
+            access_token=access_token,
+            mime_type=mime_type,
+            kyc_stage=kyc_stage,
+            document_param=resolved_param,
+            document_label=document_label or classification.get("document_type"),
+            from_admin=from_admin,
+            target_user_id=target_user_id,
+        )
+
+        return {
+            "classified": classified,
+            "classification_method": classification.get("classification_method"),
+            "classification_label": classification.get("document_type"),
+            "confidence": classification.get("confidence"),
+            "document_type": doc_type,
+            "document_entity_type": entity_type,
+            "kyc_stage": kyc_stage,
+            "document_param": resolved_param,
+            "file_name": file_name,
+            "upload": upload,
+        }
+
+    async def classify_and_upload_zip_base64(
+        self,
+        *,
+        file_name: str,
+        file_base64: str,
+        access_token: str,
+        continue_on_error: bool = True,
+    ) -> Dict[str, Any]:
+        """Expand a base64 ZIP and classify + route + upload each member through the
+        portal pipeline. Returns a per-file checklist suitable for the WhatsApp
+        "ZIP received / here is what I found" status message.
+        """
+        try:
+            encoded = file_base64.split(",", 1)[1] if "," in file_base64[:128] else file_base64
+            zip_bytes = base64.b64decode(encoded, validate=True)
+        except (binascii.Error, ValueError) as exc:
+            raise MadadAPIError("Invalid base64 zip payload") from exc
+
+        documents: List[Dict[str, Any]] = []
+        errors: List[Dict[str, Any]] = []
+
+        try:
+            with ZipFile(io.BytesIO(zip_bytes)) as archive:
+                for info in archive.infolist():
+                    if not self._is_uploadable_zip_member(info.filename):
+                        continue
+                    member_name = Path(info.filename).name
+                    member_b64 = base64.b64encode(archive.read(info.filename)).decode()
+                    try:
+                        result = await self.classify_and_upload_document_base64(
+                            file_name=member_name,
+                            file_base64=member_b64,
+                            access_token=access_token,
+                        )
+                        documents.append(
+                            {
+                                "file_name": member_name,
+                                "classified": result["classified"],
+                                "document_type": result["document_type"],
+                                "classification_label": result["classification_label"],
+                            }
+                        )
+                    except Exception as exc:
+                        errors.append({"file_name": member_name, "error": str(exc)})
+                        if not continue_on_error:
+                            raise
+        except BadZipFile as exc:
+            raise MadadAPIError("Invalid zip file payload") from exc
+
+        return {
+            "success": not errors,
+            "uploaded_count": len(documents),
+            "error_count": len(errors),
+            "documents": documents,
+            "errors": errors,
+        }
 
     async def upload_commercial_registration(
         self,
