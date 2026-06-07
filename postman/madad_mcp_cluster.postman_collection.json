@@ -194,6 +194,26 @@
     {
       "key": "invoice_customer_name",
       "value": "Buyer LLC"
+    },
+    {
+      "key": "agent_base_url",
+      "value": "http://34.18.50.97:8001",
+      "type": "string"
+    },
+    {
+      "key": "demo_phone",
+      "value": "+918287611995",
+      "type": "string"
+    },
+    {
+      "key": "agent_jwt_secret",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "agent_jwt",
+      "value": "",
+      "type": "string"
     }
   ],
   "item": [
@@ -3055,6 +3075,74 @@
             "description": "Call FastMCP tool madad_offers_get_extension_request. Responses are Server-Sent Events; inspect the data line for the JSON-RPC result."
           },
           "response": []
+        }
+      ]
+    },
+    {
+      "name": "Demo — Trigger Onboarding Campaign (WhatsApp)",
+      "description": "Kicks off the Madad onboarding agent (Step 0 campaign intro) on WhatsApp for {{demo_phone}}, and starts the run so YES / questions / uploads are handled. Edit the `demo_phone` collection variable to target a different number; everything else is preset. ONE-TIME: set `agent_jwt_secret` (collection variable) to the staging SECURITY__JWT_SECRET — it is intentionally left blank so no secret is committed.",
+      "item": [
+        {
+          "name": "Start Campaign -> WhatsApp {{demo_phone}}",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Self-signs a short-lived HS256 service JWT for the Madad workflow agent.",
+                  "// REQUIRED ONE-TIME SETUP: set the collection variable `agent_jwt_secret`",
+                  "// to the staging SECURITY__JWT_SECRET (do NOT commit it).",
+                  "var secret = pm.variables.get('agent_jwt_secret');",
+                  "if (!secret) { throw new Error('Set collection variable agent_jwt_secret to SECURITY__JWT_SECRET first.'); }",
+                  "function b64url(words){",
+                  "  return CryptoJS.enc.Base64.stringify(words)",
+                  "    .replace(/=+$/,'').replace(/\\+/g,'-').replace(/\\//g,'_');",
+                  "}",
+                  "var now = Math.floor(Date.now()/1000);",
+                  "var header  = { alg: 'HS256', typ: 'JWT' };",
+                  "var payload = { sub: 'demo-campaign-trigger', iat: now, exp: now + 3600 };",
+                  "var h = b64url(CryptoJS.enc.Utf8.parse(JSON.stringify(header)));",
+                  "var pl = b64url(CryptoJS.enc.Utf8.parse(JSON.stringify(payload)));",
+                  "var sig = b64url(CryptoJS.HmacSHA256(h + '.' + pl, secret));",
+                  "pm.variables.set('agent_jwt', h + '.' + pl + '.' + sig);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{agent_jwt}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"whatsapp\",\n  \"identity\": \"{{demo_phone}}\",\n  \"locale\": \"en\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{agent_base_url}}/workflow/campaign/start",
+              "host": [
+                "{{agent_base_url}}"
+              ],
+              "path": [
+                "workflow",
+                "campaign",
+                "start"
+              ]
+            }
+          }
         }
       ]
     }
