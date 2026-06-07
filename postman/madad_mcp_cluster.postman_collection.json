@@ -3177,19 +3177,20 @@
                   "// Failsafe: manually fire the prequalification webhook to the agent so a user",
                   "// parked after the docs/coffee step gets their pre-qualification (score + payment)",
                   "// message — used if the backend's auto-emit on admin pre-qualify doesn't fire.",
+                  "//",
+                  "// Pick the phone RIGHT IN THE BODY TAB below: replace {{demo_phone}} with a",
+                  "// literal number, or just edit the `demo_phone` collection variable. The",
+                  "// signature is computed over the body EXACTLY as sent, so it always matches.",
                   "var secret = pm.variables.get('webhook_secret');",
                   "if (!secret) { throw new Error('Set collection variable webhook_secret to SECURITY__WEBHOOK_SECRET first.'); }",
+                  "// Fresh event id each fire so the agent does not dedupe a repeat trigger.",
                   "var eventId = 'failsafe-prequalify-' + Date.now();",
-                  "var body = JSON.stringify({",
-                  "  channel: 'whatsapp',",
-                  "  identity: pm.variables.get('demo_phone'),",
-                  "  event_id: eventId,",
-                  "  payload: { madadScore: 78 }",
-                  "});",
+                  "pm.variables.set('prequalify_event_id', eventId);",
+                  "// Resolve the Body tab exactly as Postman will send it (vars substituted),",
+                  "// then HMAC-sign that resolved string.",
+                  "var body = pm.variables.replaceIn(pm.request.body.raw);",
                   "var sig = CryptoJS.HmacSHA256(body, secret).toString(CryptoJS.enc.Hex);",
-                  "pm.variables.set('prequalify_body', body);",
-                  "pm.variables.set('prequalify_sig', sig);",
-                  "pm.variables.set('prequalify_event_id', eventId);"
+                  "pm.variables.set('prequalify_sig', sig);"
                 ]
               }
             }
@@ -3212,7 +3213,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{{prequalify_body}}",
+              "raw": "{\n  \"channel\": \"whatsapp\",\n  \"identity\": \"{{demo_phone}}\",\n  \"event_id\": \"{{prequalify_event_id}}\",\n  \"payload\": { \"madadScore\": 78 }\n}",
               "options": {
                 "raw": {
                   "language": "json"
