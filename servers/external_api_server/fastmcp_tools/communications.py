@@ -42,6 +42,29 @@ async def madad_external_send_whatsapp_text(
 
 
 @mcp.tool
+async def madad_external_send_whatsapp_interactive(
+    to: str,
+    body: str,
+    buttonText: str,
+    buttonUrl: str,
+    header: Optional[str] = None,
+    footer: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Send a WhatsApp interactive Call-To-Action URL button (e.g. a
+    'Pay QAR 6,000 →' button that opens a payment link) through the Madad
+    backend, instead of a raw link in the message body. The button label
+    (buttonText) is capped at 20 characters by Meta."""
+    return await communications_api.send_whatsapp_interactive_cta(
+        to=to,
+        body=body,
+        button_text=buttonText,
+        button_url=buttonUrl,
+        header=header,
+        footer=footer,
+    )
+
+
+@mcp.tool
 async def madad_external_send_whatsapp_template(
     to: str,
     template_name: str,

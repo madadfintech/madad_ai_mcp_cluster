@@ -51,6 +51,32 @@ class MadadCommunicationsAPI:
             },
         )
 
+    async def send_whatsapp_interactive_cta(
+        self,
+        to: str,
+        body: str,
+        button_text: str,
+        button_url: str,
+        header: Optional[str] = None,
+        footer: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        payload: Dict[str, Any] = {
+            "to": to,
+            "body": body,
+            "buttonText": button_text,
+            "buttonUrl": button_url,
+        }
+        if header:
+            payload["header"] = header
+        if footer:
+            payload["footer"] = footer
+
+        return await self.client.request(
+            "POST",
+            "/whatsapp/messages/interactive-cta",
+            json_body=payload,
+        )
+
     async def send_whatsapp_template(
         self,
         to: str,

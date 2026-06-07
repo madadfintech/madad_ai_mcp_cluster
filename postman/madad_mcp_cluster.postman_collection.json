@@ -3095,11 +3095,11 @@
       ]
     },
     {
-      "name": "Demo — Trigger Onboarding Campaign (WhatsApp)",
-      "description": "Kicks off the Madad onboarding agent (Step 0 campaign intro) on WhatsApp for {{demo_phone}}, and starts the run so YES / questions / uploads are handled. Edit the `demo_phone` collection variable to target a different number; everything else is preset. ONE-TIME: set `agent_jwt_secret` (collection variable) to the staging SECURITY__JWT_SECRET — it is intentionally left blank so no secret is committed.",
+      "name": "Demo — Madad Onboarding (WhatsApp) · 3 steps",
+      "description": "The full demo, driven from Postman in order:\n\n1. Start Campaign — kicks off the agent (campaign → YES → CR → audited financials → account created, then PARKS).\n2. Trigger Pre-Qualification — releases the pre-qualification result → document checklist (the SME then uploads any doc → coffee message, then PARKS).\n3. Trigger Payment — releases the Madad score + the 'Pay QAR 6,000 →' button.\n\nEdit the `demo_phone` collection variable (or the phone in each Body tab) to target a number. ONE-TIME: set `agent_jwt_secret` = SECURITY__JWT_SECRET (for step 1) and `webhook_secret` = SECURITY__WEBHOOK_SECRET (for steps 2 & 3); both are left blank so no secret is committed.",
       "item": [
         {
-          "name": "Start Campaign -> WhatsApp {{demo_phone}}",
+          "name": "1. Start Campaign → WhatsApp {{demo_phone}}",
           "event": [
             {
               "listen": "prerequest",
@@ -3159,24 +3159,18 @@
               ]
             }
           }
-        }
-      ]
-    },
-    {
-      "name": "Failsafe — Trigger Pre-Qualification (webhook)",
-      "description": "Manually fires the prequalification.completed webhook to the workflow agent for {{demo_phone}} (HMAC-signed). Use if the backend's auto-emit on admin pre-qualify doesn't deliver. The user must already be parked after the docs/coffee step. ONE-TIME: set webhook_secret = SECURITY__WEBHOOK_SECRET.",
-      "item": [
+        },
         {
-          "name": "Fire prequalification.completed -> {{demo_phone}}",
+          "name": "2. Trigger Pre-Qualification → {{demo_phone}}",
           "event": [
             {
               "listen": "prerequest",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "// Failsafe: manually fire the prequalification webhook to the agent so a user",
-                  "// parked after the docs/coffee step gets their pre-qualification (score + payment)",
-                  "// message — used if the backend's auto-emit on admin pre-qualify doesn't fire.",
+                  "// STEP 2 — fire the pre-qualification result. The run must be parked after",
+                  "// the audited-financials / account-created message. This releases the",
+                  "// '🎉 pre-qualified — share these documents' checklist to the SME.",
                   "//",
                   "// Pick the phone RIGHT IN THE BODY TAB below: replace {{demo_phone}} with a",
                   "// literal number, or just edit the `demo_phone` collection variable. The",
@@ -3184,7 +3178,7 @@
                   "var secret = pm.variables.get('webhook_secret');",
                   "if (!secret) { throw new Error('Set collection variable webhook_secret to SECURITY__WEBHOOK_SECRET first.'); }",
                   "// Fresh event id each fire so the agent does not dedupe a repeat trigger.",
-                  "var eventId = 'failsafe-prequalify-' + Date.now();",
+                  "var eventId = 'demo-prequalify-' + Date.now();",
                   "pm.variables.set('prequalify_event_id', eventId);",
                   "// Resolve the Body tab exactly as Postman will send it (vars substituted),",
                   "// then HMAC-sign that resolved string.",
@@ -3230,6 +3224,71 @@
                 "madad",
                 "events",
                 "prequalification.completed"
+              ]
+            }
+          }
+        },
+        {
+          "name": "3. Trigger Payment (Madad Score + Pay button) → {{demo_phone}}",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// STEP 3 — fire the payment step. The run must be parked after the coffee",
+                  "// ('documents received') message. This releases the Madad score + the",
+                  "// 'Pay QAR 6,000 →' button. Set the score in the Body tab (payload.madadScore).",
+                  "//",
+                  "// Pick the phone RIGHT IN THE BODY TAB below: replace {{demo_phone}} with a",
+                  "// literal number, or just edit the `demo_phone` collection variable. The",
+                  "// signature is computed over the body EXACTLY as sent, so it always matches.",
+                  "var secret = pm.variables.get('webhook_secret');",
+                  "if (!secret) { throw new Error('Set collection variable webhook_secret to SECURITY__WEBHOOK_SECRET first.'); }",
+                  "var eventId = 'demo-payment-' + Date.now();",
+                  "pm.variables.set('payment_event_id', eventId);",
+                  "var body = pm.variables.replaceIn(pm.request.body.raw);",
+                  "var sig = CryptoJS.HmacSHA256(body, secret).toString(CryptoJS.enc.Hex);",
+                  "pm.variables.set('payment_sig', sig);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Madad-Signature",
+                "value": "{{payment_sig}}"
+              },
+              {
+                "key": "X-Madad-Event-Id",
+                "value": "{{payment_event_id}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"whatsapp\",\n  \"identity\": \"{{demo_phone}}\",\n  \"event_id\": \"{{payment_event_id}}\",\n  \"payload\": { \"madadScore\": 78 }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{agent_base_url}}/workflow/madad/events/madad_score.ready",
+              "host": [
+                "{{agent_base_url}}"
+              ],
+              "path": [
+                "workflow",
+                "madad",
+                "events",
+                "madad_score.ready"
               ]
             }
           }
