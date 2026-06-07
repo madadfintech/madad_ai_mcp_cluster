@@ -224,6 +224,12 @@
       "value": "",
       "type": "string",
       "description": "Madad WhatsApp SENDER (Meta Business number). NOTE: the live sender is set in the backend Meta integration (phone_number_id); this documents which sender is active. Leave blank to use the backend's configured sender."
+    },
+    {
+      "key": "webhook_secret",
+      "value": "",
+      "type": "string",
+      "description": "ONE-TIME: set Current value to SECURITY__WEBHOOK_SECRET (agent HMAC). Never committed."
     }
   ],
   "item": [
@@ -3150,6 +3156,79 @@
                 "workflow",
                 "campaign",
                 "start"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Failsafe — Trigger Pre-Qualification (webhook)",
+      "description": "Manually fires the prequalification.completed webhook to the workflow agent for {{demo_phone}} (HMAC-signed). Use if the backend's auto-emit on admin pre-qualify doesn't deliver. The user must already be parked after the docs/coffee step. ONE-TIME: set webhook_secret = SECURITY__WEBHOOK_SECRET.",
+      "item": [
+        {
+          "name": "Fire prequalification.completed -> {{demo_phone}}",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Failsafe: manually fire the prequalification webhook to the agent so a user",
+                  "// parked after the docs/coffee step gets their pre-qualification (score + payment)",
+                  "// message — used if the backend's auto-emit on admin pre-qualify doesn't fire.",
+                  "var secret = pm.variables.get('webhook_secret');",
+                  "if (!secret) { throw new Error('Set collection variable webhook_secret to SECURITY__WEBHOOK_SECRET first.'); }",
+                  "var eventId = 'failsafe-prequalify-' + Date.now();",
+                  "var body = JSON.stringify({",
+                  "  channel: 'whatsapp',",
+                  "  identity: pm.variables.get('demo_phone'),",
+                  "  event_id: eventId,",
+                  "  payload: { madadScore: 78 }",
+                  "});",
+                  "var sig = CryptoJS.HmacSHA256(body, secret).toString(CryptoJS.enc.Hex);",
+                  "pm.variables.set('prequalify_body', body);",
+                  "pm.variables.set('prequalify_sig', sig);",
+                  "pm.variables.set('prequalify_event_id', eventId);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Madad-Signature",
+                "value": "{{prequalify_sig}}"
+              },
+              {
+                "key": "X-Madad-Event-Id",
+                "value": "{{prequalify_event_id}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{prequalify_body}}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{agent_base_url}}/workflow/madad/events/prequalification.completed",
+              "host": [
+                "{{agent_base_url}}"
+              ],
+              "path": [
+                "workflow",
+                "madad",
+                "events",
+                "prequalification.completed"
               ]
             }
           }
