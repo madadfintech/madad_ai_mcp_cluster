@@ -17,7 +17,8 @@
   "variable": [
     {
       "key": "base_url",
-      "value": "https://madad-mcp-cluster-626656664233.me-central1.run.app"
+      "value": "https://madad-mcp-cluster-626656664233.me-central1.run.app",
+      "description": "Deployed MCP cluster (Cloud Run). Used by all MCP tool requests."
     },
     {
       "key": "local_url",
@@ -198,22 +199,31 @@
     {
       "key": "agent_base_url",
       "value": "http://34.18.50.97:8001",
-      "type": "string"
+      "type": "string",
+      "description": "Workflow agent (VM). Used by the Demo campaign trigger."
     },
     {
       "key": "demo_phone",
       "value": "+918287611995",
-      "type": "string"
+      "type": "string",
+      "description": "RECIPIENT — the SME WhatsApp number the onboarding starts on. Editable."
     },
     {
       "key": "agent_jwt_secret",
       "value": "",
-      "type": "string"
+      "type": "string",
+      "description": "ONE-TIME: set this variable's CURRENT value (not initial) to SECURITY__JWT_SECRET. Stays local to your Postman, never committed. After that the Demo trigger is one-press."
     },
     {
       "key": "agent_jwt",
       "value": "",
       "type": "string"
+    },
+    {
+      "key": "sender_phone",
+      "value": "",
+      "type": "string",
+      "description": "Madad WhatsApp SENDER (Meta Business number). NOTE: the live sender is set in the backend Meta integration (phone_number_id); this documents which sender is active. Leave blank to use the backend's configured sender."
     }
   ],
   "item": [
