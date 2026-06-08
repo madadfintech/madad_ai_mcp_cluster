@@ -139,6 +139,29 @@ class MadadKYCTransactionalWriteAPI:
             bearer_token=access_token,
         )
 
+    async def upload_invoice_base64(
+        self,
+        *,
+        file_name: str,
+        file_base64: str,
+        access_token: str,
+        mime_type: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Submit an invoice for financing from base64 (ACTIVE WhatsApp user
+        uploads an invoice PDF). Reuses the portal invoice path on the backend
+        (GCS upload -> extractor -> submitted invoice record), so extraction +
+        submission happen exactly as a portal drag-and-drop, immediately."""
+        return await self.client.request(
+            "POST",
+            "/invoices/upload-base64",
+            json_body=compact_payload(
+                fileBase64=file_base64,
+                fileName=file_name,
+                mimeType=mime_type,
+            ),
+            bearer_token=access_token,
+        )
+
     async def classify_and_upload_document_base64(
         self,
         *,

@@ -175,6 +175,25 @@ async def madad_kyc_classify_and_upload_zip_base64(
 
 
 @mcp.tool
+async def madad_kyc_upload_invoice_base64(
+    file_name: str,
+    base64: str,
+    access_token: str,
+    mime_type: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Submit an invoice for financing from a base64 PDF/image (an ACTIVE SME
+    uploads an invoice over WhatsApp/email). The backend runs the same
+    extraction + submission as a portal upload and creates the invoice
+    immediately. Returns the created invoice + extracted fields."""
+    return await kyc_write_api.upload_invoice_base64(
+        file_name=file_name,
+        file_base64=base64,
+        access_token=access_token,
+        mime_type=mime_type,
+    )
+
+
+@mcp.tool
 async def madad_kyc_upload_commercial_registration(
     file_path: str,
     access_token: str,
