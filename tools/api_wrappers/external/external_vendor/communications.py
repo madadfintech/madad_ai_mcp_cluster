@@ -97,3 +97,27 @@ class MadadCommunicationsAPI:
             "/whatsapp/messages/template",
             json_body=payload,
         )
+
+    async def send_email_text(
+        self,
+        to: str,
+        subject: str,
+        body_text: str,
+        body_html: Optional[str] = None,
+        reply_to: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        payload: Dict[str, Any] = {
+            "to": to,
+            "subject": subject,
+            "bodyText": body_text,
+        }
+        if body_html:
+            payload["bodyHtml"] = body_html
+        if reply_to:
+            payload["replyTo"] = reply_to
+
+        return await self.client.request(
+            "POST",
+            "/email/send-text",
+            json_body=payload,
+        )
