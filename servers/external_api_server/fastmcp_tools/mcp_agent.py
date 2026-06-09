@@ -41,6 +41,38 @@ async def madad_mcp_create_channel_session(
 
 
 @mcp.tool
+async def madad_mcp_check_registration(
+    identifier: str,
+    channel: str = "WHATSAPP",
+    email: Optional[str] = None,
+    phone: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Read-only check of whether a phone/email is already registered, with the
+    journey state needed to route a "YES" reply. Never creates anything — call this
+    BEFORE madad_mcp_create_channel_session to decide what to send.
+
+    Returns `registered` (bool). When registered, use `route` to decide the message:
+      - 'portal_login_required'       : portal-only account → ask them to log in.
+      - 'invoice_discounting'         : credit line is ACTIVE → invite invoice upload right now.
+      - 'offer_accepted_confirmation' : they already accepted an offer → send the confirmation message.
+      - 'offers_available'            : ≥1 offer has been made → re-send the offer(s) with details (see `offers`).
+      - 'payment_received'            : QUALIFIED + onboarding fee paid → "payment received, lenders reviewing" message.
+      - 'payment_link'                : QUALIFIED + fee unpaid → re-send Madad score + payment link.
+      - 'continue_step'               : resume whichever onboarding step they're at (see whatsappOnboardingStep).
+    Also returns: whatsappOnboarding, whatsappOnboardingStep, journeyStatus, onboardingFeePaid,
+    creditLineActive, creditLine {creditLimit, interestRate, tenureDays, currency}, offerAccepted,
+    hasPendingOffers, offers [{lenderName, creditLimit, interestRate, tenureDays, processingFeeType,
+    processingFeeValue, status, currency}], userId, referenceNumber.
+    """
+    return await mcp_agent_api.lookup_identity(
+        identifier=identifier,
+        channel=channel,
+        email=email,
+        phone=phone,
+    )
+
+
+@mcp.tool
 async def madad_mcp_update_onboarding_progress(
     user_id: Optional[str] = None,
     channel: Optional[str] = None,

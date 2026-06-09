@@ -47,6 +47,26 @@ class MadadMCPAgentAPI:
                 body["tokenExpiresAt"] = expires_at.isoformat().replace("+00:00", "Z")
         return response
 
+    async def lookup_identity(
+        self,
+        *,
+        identifier: str,
+        channel: str = "WHATSAPP",
+        email: Optional[str] = None,
+        phone: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        return await self.client.request(
+            "POST",
+            "/mcp-agent/identity/lookup",
+            json_body={
+                "channel": channel,
+                "identifier": identifier,
+                "email": email,
+                "phone": phone,
+            },
+            extra_headers=self._headers(),
+        )
+
     async def update_onboarding_progress(
         self,
         *,
