@@ -89,6 +89,32 @@ class MadadMCPAgentAPI:
             extra_headers=self._headers(),
         )
 
+    async def set_business_email(
+        self,
+        *,
+        email: str,
+        user_id: Optional[str] = None,
+        channel: Optional[str] = "WHATSAPP",
+        identifier: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Attach the lead's BUSINESS email (collected right after YES).
+
+        Backend returns {ok, conflict, ...}: conflict=True means the email is
+        already registered to another account, so the agent should offer
+        "use a different email" / "contact support" instead of proceeding to CR.
+        """
+        return await self.client.request(
+            "POST",
+            "/mcp-agent/onboarding/business-email",
+            json_body={
+                "userId": user_id,
+                "channel": channel,
+                "identifier": identifier,
+                "email": email,
+            },
+            extra_headers=self._headers(),
+        )
+
     async def get_onboarding_progress(
         self,
         *,

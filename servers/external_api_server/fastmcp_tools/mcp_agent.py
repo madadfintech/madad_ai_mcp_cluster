@@ -73,6 +73,36 @@ async def madad_mcp_check_registration(
 
 
 @mcp.tool
+async def madad_mcp_set_business_email(
+    email: str,
+    user_id: Optional[str] = None,
+    channel: Optional[str] = "WHATSAPP",
+    identifier: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Attach the lead's BUSINESS email — the step right after they say YES and
+    the account is created. Call this once the lead replies with their email.
+
+    Identify the lead by user_id, or by channel + identifier (phone).
+
+    Returns {ok, conflict, ...}:
+      - conflict=false, ok=true  : email attached → proceed to the CR-number step.
+      - conflict=true            : a business is ALREADY registered with this email.
+                                   Offer two buttons: "Add a different email"
+                                   (call this tool again with the new email) or
+                                   "Contact support".
+      - alreadyPortalUser=true   : this number already has a portal account → ask
+                                   them to log in instead.
+    Attaching the email also makes the lead a normal, portal-loginable user.
+    """
+    return await mcp_agent_api.set_business_email(
+        email=email,
+        user_id=user_id,
+        channel=channel,
+        identifier=identifier,
+    )
+
+
+@mcp.tool
 async def madad_mcp_update_onboarding_progress(
     user_id: Optional[str] = None,
     channel: Optional[str] = None,
