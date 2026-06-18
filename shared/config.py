@@ -43,7 +43,7 @@ class Settings(PydanticBaseSettings):
 
     # Madad Platform API
     MADAD_API_BASE_URL: Optional[str] = None
-    MADAD_API_TIMEOUT: int = 30
+    MADAD_API_TIMEOUT: int = 300  # 5 min: scanned multi-page docs OCR for ~90s; the SME is told to wait
     MADAD_MCP_AGENT_SECRET: Optional[str] = None
 
     # Document classifier (same service the MSME complete-onboarding page calls).
