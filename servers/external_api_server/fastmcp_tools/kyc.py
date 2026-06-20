@@ -153,6 +153,25 @@ async def madad_kyc_classify_and_upload_document_base64(
 
 
 @mcp.tool
+async def madad_kyc_classify_document_base64(
+    file_name: str,
+    base64: str,
+    access_token: str,
+    mime_type: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Classify a base64 document's TYPE only — fast, NO upload and NO OCR
+    extraction. Use to gate UX decisions (e.g. 'is this a Commercial
+    Registration?') without the slow extract path. Returns
+    {classified, document_type, classification_label, confidence}."""
+    return await kyc_write_api.classify_document_base64(
+        file_name=file_name,
+        file_base64=base64,
+        access_token=access_token,
+        mime_type=mime_type,
+    )
+
+
+@mcp.tool
 async def madad_kyc_classify_and_upload_zip_base64(
     file_name: str,
     base64: str,

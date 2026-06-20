@@ -236,6 +236,41 @@ class MadadKYCTransactionalWriteAPI:
             "upload": upload,
         }
 
+    async def classify_document_base64(
+        self,
+        *,
+        file_name: str,
+        file_base64: str,
+        access_token: Optional[str] = None,
+        mime_type: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Classify a base64 document's TYPE only — NO upload, NO OCR
+        extraction. Fast (hits the /classify service), for gating UX like the
+        CR affirmation without the slow extract path. Returns
+        {classified, document_type, classification_label, confidence}."""
+        try:
+            encoded = file_base64.split(",", 1)[1] if "," in file_base64[:128] else file_base64
+            file_bytes = base64.b64decode(encoded, validate=True)
+        except (binascii.Error, ValueError) as exc:
+            raise MadadAPIError("Invalid base64 file payload") from exc
+        classification: Dict[str, Any] = {}
+        doc_type: Optional[str] = None
+        try:
+            classification = await self._classifier.classify_bytes(
+                file_name=file_name,
+                file_bytes=file_bytes,
+                mime_type=mime_type,
+            )
+            doc_type = map_classification_to_doc_type(classification.get("document_type"))
+        except Exception as exc:  # never raise on a classifier hiccup
+            classification = {"error": str(exc)}
+        return {
+            "classified": doc_type is not None,
+            "document_type": doc_type,
+            "classification_label": classification.get("document_type"),
+            "confidence": classification.get("confidence"),
+        }
+
     async def classify_and_upload_zip_base64(
         self,
         *,
