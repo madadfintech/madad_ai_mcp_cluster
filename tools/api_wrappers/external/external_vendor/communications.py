@@ -98,6 +98,30 @@ class MadadCommunicationsAPI:
             json_body=payload,
         )
 
+    async def send_whatsapp_document(
+        self,
+        to: str,
+        filename: str,
+        content_base64: str,
+        mime_type: Optional[str] = None,
+        caption: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        payload: Dict[str, Any] = {
+            "to": to,
+            "filename": filename,
+            "contentBase64": content_base64,
+        }
+        if mime_type:
+            payload["mimeType"] = mime_type
+        if caption:
+            payload["caption"] = caption
+
+        return await self.client.request(
+            "POST",
+            "/whatsapp/messages/document",
+            json_body=payload,
+        )
+
     async def send_email_text(
         self,
         to: str,

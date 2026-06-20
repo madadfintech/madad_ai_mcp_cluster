@@ -81,6 +81,30 @@ async def madad_external_send_whatsapp_template(
 
 
 @mcp.tool
+async def madad_external_send_whatsapp_document(
+    to: str,
+    filename: str,
+    content_base64: str,
+    mime_type: Optional[str] = None,
+    caption: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Send a WhatsApp DOCUMENT (file attachment) through the Madad backend.
+
+    The backend uploads the bytes to Meta's media endpoint and then sends a
+    document message referencing the resulting media id. Used for the
+    bulk-invoice review CSV the SME edits and sends back. ``content_base64`` is
+    the raw file bytes (base64, no ``data:`` prefix); ``caption`` shows under
+    the file and ``filename`` is the name the recipient downloads."""
+    return await communications_api.send_whatsapp_document(
+        to=to,
+        filename=filename,
+        content_base64=content_base64,
+        mime_type=mime_type,
+        caption=caption,
+    )
+
+
+@mcp.tool
 async def madad_external_send_email_text(
     to: str,
     subject: str,
