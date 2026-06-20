@@ -77,6 +77,30 @@ class MadadCommunicationsAPI:
             json_body=payload,
         )
 
+    async def send_whatsapp_interactive_buttons(
+        self,
+        to: str,
+        body: str,
+        buttons: List[Dict[str, Any]],
+        header: Optional[str] = None,
+        footer: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        payload: Dict[str, Any] = {
+            "to": to,
+            "body": body,
+            "buttons": buttons,
+        }
+        if header:
+            payload["header"] = header
+        if footer:
+            payload["footer"] = footer
+
+        return await self.client.request(
+            "POST",
+            "/whatsapp/messages/interactive-buttons",
+            json_body=payload,
+        )
+
     async def send_whatsapp_template(
         self,
         to: str,

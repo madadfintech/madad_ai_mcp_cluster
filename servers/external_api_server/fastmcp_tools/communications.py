@@ -65,6 +65,27 @@ async def madad_external_send_whatsapp_interactive(
 
 
 @mcp.tool
+async def madad_external_send_whatsapp_interactive_buttons(
+    to: str,
+    body: str,
+    buttons: List[Dict[str, Any]],
+    header: Optional[str] = None,
+    footer: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Send WhatsApp interactive reply (quick-reply) buttons — up to 3 tappable
+    buttons (e.g. Approve / Edit / Reject, or APPROVE ALL) instead of asking the
+    SME to type. Each button is {"id": ..., "title": ...} (title <= 20 chars).
+    When tapped, Meta returns the button title as the inbound text."""
+    return await communications_api.send_whatsapp_interactive_buttons(
+        to=to,
+        body=body,
+        buttons=buttons,
+        header=header,
+        footer=footer,
+    )
+
+
+@mcp.tool
 async def madad_external_send_whatsapp_template(
     to: str,
     template_name: str,
