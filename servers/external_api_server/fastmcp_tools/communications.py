@@ -132,15 +132,23 @@ async def madad_external_send_email_text(
     body_text: str,
     body_html: Optional[str] = None,
     reply_to: Optional[str] = None,
+    in_reply_to: Optional[str] = None,
 ) -> Dict[str, Any]:
     """Send an arbitrary-content email (subject + body) through the Madad
     backend SendGrid path. Use this for the email onboarding thread — unlike
     madad_external_send_email_otp (which only sends a verification code and
-    discards the body), this delivers full message content."""
+    discards the body), this delivers full message content.
+
+    Threading: the response includes ``provider_message_id`` (the RFC Message-ID
+    stamped on this send). Store it and pass it back as ``in_reply_to`` on the
+    NEXT email in the same conversation so the SME's inbox threads the replies
+    together (backend sets the In-Reply-To / References headers). ``reply_to``
+    is different — it only controls where a recipient's reply is routed."""
     return await communications_api.send_email_text(
         to=to,
         subject=subject,
         body_text=body_text,
         body_html=body_html,
         reply_to=reply_to,
+        in_reply_to=in_reply_to,
     )

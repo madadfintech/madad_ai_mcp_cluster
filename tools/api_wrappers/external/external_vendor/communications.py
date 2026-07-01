@@ -153,6 +153,7 @@ class MadadCommunicationsAPI:
         body_text: str,
         body_html: Optional[str] = None,
         reply_to: Optional[str] = None,
+        in_reply_to: Optional[str] = None,
     ) -> Dict[str, Any]:
         payload: Dict[str, Any] = {
             "to": to,
@@ -163,6 +164,8 @@ class MadadCommunicationsAPI:
             payload["bodyHtml"] = body_html
         if reply_to:
             payload["replyTo"] = reply_to
+        if in_reply_to:
+            payload["inReplyTo"] = in_reply_to
 
         return await self.client.request(
             "POST",
